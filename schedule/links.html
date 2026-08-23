@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Länkar — Veckoschema</title>
+<meta name="description" content="Direktlänkar till veckoschemat: appen, eller ett enskilt schema.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+<style>
+  html, body { height: auto; overflow: auto; overscroll-behavior: auto; }
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: max(24px, env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    margin: 18px 0 6px;
+  }
+  .lead {
+    color: var(--text-muted);
+    margin-bottom: 26px;
+  }
+  .group-label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 26px 0 10px;
+  }
+  .link-list {
+    display: grid;
+    gap: 10px;
+  }
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .link-card__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: none;
+  }
+  .link-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .link-card__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .link-card__desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .link-card__arrow {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    flex: none;
+  }
+  .tip {
+    margin-top: 30px;
+    padding: 14px 16px;
+    background: var(--surface-2);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .tip b { color: var(--text); }
+  footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  footer a { color: var(--text-faint); }
+</style>
+</head>
+<body>
+<main class="page">
+  <a class="back-link" href="index.html">← Till appen</a>
+  <h1>Länkar</h1>
+  <p class="lead">Bokmärk den du vill ha direkt på hemskärmen — de öppnar rakt in i respektive schema.</p>
+
+  <div class="group-label">Appen</div>
+  <div class="link-list">
+    <a class="link-card" href="index.html">
+      <span class="link-card__dot" style="background:var(--accent)"></span>
+      <span class="link-card__body">
+        <span class="link-card__title">Alla scheman</span>
+        <span class="link-card__desc">Svep upp/ner för att byta skola</span>
+      </span>
+      <span class="link-card__arrow">→</span>
+    </a>
+  </div>
+
+  <div class="group-label">Direktlänkar (ett schema)</div>
+  <div class="link-list">
+    <a class="link-card" href="lugnetgymnasiet-es26esm.html">
+      <span class="link-card__dot" style="background:var(--school-a)"></span>
+      <span class="link-card__body">
+        <span class="link-card__title">Lugnetgymnasiet / ES26ESM</span>
+        <span class="link-card__desc">Bara det här schemat</span>
+      </span>
+      <span class="link-card__arrow">→</span>
+    </a>
+    <a class="link-card" href="tunets-skola-tus-5-26.html">
+      <span class="link-card__dot" style="background:var(--school-b)"></span>
+      <span class="link-card__body">
+        <span class="link-card__title">Tunets skola / TuS-5-26</span>
+        <span class="link-card__desc">Bara det här schemat</span>
+      </span>
+      <span class="link-card__arrow">→</span>
+    </a>
+  </div>
+
+  <div class="tip">
+    <b>Landskapsläge</b> visar hela veckan på en skärm.
+    <b>Porträttläge</b> visar bara idag.
+    Svep <b>vänster/höger</b> för innevarande/nästa vecka, <b>upp/ner</b> för att
+    byta skola (fungerar inte på en direktlänk, den visar bara sin klass).
+    Tryck på ett pass för mer info.
+  </div>
+
+  <footer>
+    <span id="updated-note"></span>
+    <span> · Data från <a href="https://web.skola24.se" target="_blank" rel="noopener">Skola24</a></span>
+  </footer>
+</main>
+
+<script>
+  fetch(new URL("data/schedule.json", document.baseURI), { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      if (data && data.generated_at) {
+        document.getElementById("updated-note").textContent = `Uppdaterad ${data.generated_at}`;
+      }
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

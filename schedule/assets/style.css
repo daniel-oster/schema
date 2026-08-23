@@ -162,10 +162,15 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overscroll-behavior: none;
 }
 
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -194,245 +199,163 @@ button {
   }
 }
 
-/* ------------------------------ Shell ------------------------------ */
+/* ------------------------------ Stage shell ------------------------------ */
+/* The whole app is one fixed, full-viewport "stage": a slim chrome bar
+   (which school/class, which week or day, position dots) plus a stage-inner
+   that the fit-to-screen grid renders into. Nothing here scrolls — swipe
+   changes what's showing instead. */
 
-.page {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 20px 64px;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 20px;
-  margin-bottom: 28px;
-}
-
-.site-header__inner {
-  max-width: 1180px;
-  margin: 0 auto;
+.stage {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  width: 100dvw;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.brand {
+.stage.bounce-x {
+  animation: bounce-x 0.22s ease;
+}
+
+.stage.bounce-y {
+  animation: bounce-y 0.22s ease;
+}
+
+@keyframes bounce-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes bounce-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.chrome {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 12px;
+  min-height: 40px;
+}
+
+.chrome__main {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--text);
+  gap: 7px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
-.brand__mark {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  padding: 3px 7px;
-  border-radius: 4px;
-}
-
-.brand__name {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: -0.01em;
-}
-
-.back-link {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  color: var(--text-muted);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.back-link:hover {
-  color: var(--accent);
-}
-
-/* --------------------------- Week switcher -------------------------- */
-
-.week-switcher {
-  display: inline-flex;
-  gap: 4px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 4px;
-}
-
-.week-btn {
-  appearance: none;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  border-radius: 7px;
-  padding: 7px 14px;
-  font-weight: 600;
-  font-size: 13.5px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.week-btn[aria-pressed="true"] {
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow);
-}
-
-.week-btn__num {
-  font-family: var(--font-mono);
-  color: var(--accent);
-  margin-right: 6px;
-}
-
-.week-btn[aria-pressed="true"] .week-btn__num {
-  color: var(--accent);
-}
-
-.updated-note {
-  font-size: 12.5px;
-  color: var(--text-faint);
-  font-family: var(--font-mono);
-}
-
-/* ------------------------------ Hero -------------------------------- */
-
-.hero {
-  padding: 4px 0 28px;
-}
-
-.hero__eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 8px;
-  display: block;
-}
-
-.hero h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(28px, 4vw, 40px);
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-}
-
-.hero p {
-  margin-top: 10px;
-  color: var(--text-muted);
-  max-width: 60ch;
-}
-
-/* ---------------------------- Quick nav ------------------------------ */
-
-.quick-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 22px 0 40px;
-}
-
-.quick-nav a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 8px 16px 8px 12px;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--text);
-  box-shadow: var(--shadow);
-}
-
-.quick-nav .dot {
+.chrome__dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
   flex: none;
 }
 
-/* --------------------------- School section --------------------------- */
-
-.school-section {
-  margin-bottom: 44px;
+.chrome__class {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.school-head {
+.chrome__sep {
+  color: var(--text-faint);
+}
+
+.chrome__period {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chrome__dots {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.school-head__title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
+  gap: 8px;
   flex: none;
 }
 
-.school-head h2 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 21px;
-  letter-spacing: -0.01em;
+.dotrow {
+  display: inline-flex;
+  gap: 4px;
 }
 
-.school-head__meta {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+.dotrow i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  font-style: normal;
 }
 
-.open-link {
-  font-size: 13.5px;
-  font-weight: 600;
+.dotrow i.is-active {
+  background: var(--accent);
+}
+
+.chrome__links {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-faint);
   text-decoration: none;
-  color: var(--accent);
-  white-space: nowrap;
+  font-size: 17px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chrome__links:active {
+  background: var(--surface-2);
+}
+
+.stage-inner {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* ------------------------------ Day grid ------------------------------ */
-
-.grid-scroll {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
+/* Sized entirely in px computed from the stage-inner's real pixel box
+   (see renderFitGrid in app.js) so the whole thing fits without scrolling. */
 
 .day-grid {
   display: grid;
-  min-width: 640px;
+  height: 100%;
 }
 
 .day-grid__row-header {
@@ -442,28 +365,26 @@ button {
 }
 
 .gutter-cell {
-  padding: 12px 10px;
+  padding: 4px;
 }
 
 .day-col__header {
-  padding: 12px 10px;
+  padding: 4px 6px;
   text-align: left;
   border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  overflow: hidden;
 }
 
 .day-col__header .weekday {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
-}
-
-.day-col__header .date {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .day-col__header.is-today {
@@ -480,9 +401,9 @@ button {
   background: var(--surface-2);
   color: var(--text-muted);
   border-radius: 999px;
-  padding: 3px 9px 3px 7px;
+  padding: 2px 8px 2px 6px;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -499,7 +420,7 @@ button {
 
 .lunch-chip__icon {
   flex: none;
-  font-size: 11px;
+  font-size: 10.5px;
 }
 
 .lunch-chip__label {
@@ -521,10 +442,10 @@ button {
 
 .gutter__label {
   position: absolute;
-  right: 8px;
+  right: 6px;
   transform: translateY(-50%);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-faint);
 }
 
@@ -715,6 +636,13 @@ body.modal-open {
   padding: 10px 22px calc(22px + env(safe-area-inset-bottom, 0px));
   transform: translateY(100%);
   transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  touch-action: pan-y;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.modal-root.is-open .modal-sheet {
+  transform: translateY(0);
 }
 
 @media (min-width: 560px) {
@@ -730,10 +658,6 @@ body.modal-open {
   .modal-root.is-open .modal-sheet {
     transform: translate(-50%, 50%);
   }
-}
-
-.modal-root.is-open .modal-sheet {
-  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -871,28 +795,10 @@ body.modal-open {
   font-size: 14px;
 }
 
-/* ------------------------------- Footer -------------------------------- */
-
-.site-footer {
-  margin-top: 48px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  color: var(--text-faint);
-  font-size: 12.5px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  justify-content: space-between;
-}
-
-.site-footer a {
-  color: var(--text-faint);
-}
-
 /* ------------------------------- States --------------------------------- */
 
 .load-state {
-  padding: 60px 0;
+  padding: 60px 20px;
   text-align: center;
   color: var(--text-muted);
 }
@@ -904,14 +810,4 @@ body.modal-open {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-}
-
-@media (max-width: 640px) {
-  .page {
-    padding: 0 12px 48px;
-  }
-
-  .site-header {
-    padding: 12px;
-  }
 }
