@@ -188,3 +188,46 @@ copy an existing `schedule/<slug>.html` to a new slug, update its
 it to **both** `schedule/links.html` and the `.tool-links` list under
 the Veckoschema card in the root `index.html`. Both are hand-maintained
 — neither is generated from `schools.json`.
+
+## Checking the layout
+
+`schedule/scripts/check_layout.mjs` is the guard on the one property the
+grid exists for: **can you read every block without tapping it?** Run it
+after any change to `app.js`, `style.css`, or the data shape:
+
+```
+node schedule/scripts/check_layout.mjs             # assert; exits 1 on failure
+node schedule/scripts/check_layout.mjs --verbose   # print every case
+node schedule/scripts/check_layout.mjs --shots out # also write PNGs to out/
+```
+
+It sweeps every class x week x viewport x theme (84 checks today, and it
+reads the class and week counts out of `data/schedule.json`, so adding a
+class widens the sweep automatically) and fails on a clipped subject, two
+lessons overlapping, a block escaping the grid box, a grid that does not
+fit its container, or any page error. It also pins the clock to a weekday
+inside the data range so the "today" column and the now-line actually
+render — those states are invisible on a weekend and were shipped
+unverified once because of it.
+
+Do not eyeball this instead. The failure mode is a single subject silently
+ellipsed to "S." at one screen size, in one theme, on one week, for one
+class; there are far too many combinations to catch by looking.
+
+It needs Playwright and Chromium:
+
+```
+npm i -D playwright && npx playwright install chromium
+```
+
+In a sandbox that ships Chromium already, set `PLAYWRIGHT_BROWSERS_PATH`
+and skip the download — the script globs that directory for the versioned
+`chromium-*/chrome-linux/chrome` rather than hard-coding a version, and
+resolves the Playwright module from a global install if there is no local
+one (`NODE_PATH=/opt/node22/lib/node_modules` in Claude Code on the web).
+
+**The webfont caveat.** Sandboxes usually cannot reach Google Fonts, so a
+run there measures against the fallback face and says so at the end. That
+is the *wider* face, so a pass without the webfont still holds with it —
+but it also means the screenshots are not what a phone renders. Judge
+type and spacing from a real device, not from a sandbox PNG.
