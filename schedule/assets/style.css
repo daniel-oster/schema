@@ -27,6 +27,8 @@
      competes with a subject colour. */
   --ink: #14171f;
   --ink-wash: rgba(20, 23, 31, 0.035);
+  --now-rule: rgba(20, 23, 31, 0.26);
+  --now-mark: rgba(20, 23, 31, 0.7);
 
   --accent: #23499e;
   --accent-strong: #16326f;
@@ -87,6 +89,8 @@
 
     --ink: #e7eaf1;
     --ink-wash: rgba(231, 234, 241, 0.045);
+    --now-rule: rgba(231, 234, 241, 0.28);
+    --now-mark: rgba(231, 234, 241, 0.72);
 
     --accent: #8aa6ff;
     --accent-strong: #b3c4ff;
@@ -142,6 +146,8 @@
 
   --ink: #e7eaf1;
   --ink-wash: rgba(231, 234, 241, 0.045);
+  --now-rule: rgba(231, 234, 241, 0.28);
+  --now-mark: rgba(231, 234, 241, 0.72);
 
   --accent: #8aa6ff;
   --accent-strong: #b3c4ff;
@@ -496,15 +502,15 @@ button {
   border-top: 1px solid var(--rule);
 }
 
-/* One hairline plus a solid tab at the column edge. A heavier rule reads
-   better in isolation but strikes straight through whatever lesson is
-   running right now, which is the one block you most need to read. */
+/* Deliberately quiet: the rule that crosses the column is faint, because it
+   strikes through whatever lesson is running right now — the one block you
+   most need to read. The tab at the column edge carries the signal instead,
+   sitting clear of any text. */
 .now-line {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid var(--ink);
-  opacity: 0.75;
+  border-top: 1px solid var(--now-rule);
   z-index: 5;
   pointer-events: none;
 }
@@ -513,10 +519,10 @@ button {
   content: "";
   position: absolute;
   left: 0;
-  top: -4px;
-  width: 5px;
-  height: 9px;
-  background: var(--ink);
+  top: -3px;
+  width: 4px;
+  height: 7px;
+  background: var(--now-mark);
 }
 
 /* ------------------------------- Lessons ------------------------------- */

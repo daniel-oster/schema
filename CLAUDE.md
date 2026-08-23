@@ -21,7 +21,10 @@ themselves.
    `scripts/` generator if it needs one) inside that folder, using
    relative paths so the folder works if it's ever moved.
 3. Add a card to the root `index.html`'s `.tools` list linking to
-   `<tool-name>/`.
+   `<tool-name>/`. If the tool has meaningful sub-destinations (the way
+   Veckoschema has one page per class), hang them off that card as a
+   `.tool-links` list rather than adding them as sibling cards — they
+   are ways into one tool, not separate tools.
 4. If the tool needs to vendor logic from another repo (e.g. a client
    library from `daniel-oster/verktyg`), copy the minimal amount needed
    into `<tool-name>/scripts/` rather than adding a cross-repo runtime
@@ -181,6 +184,7 @@ Pages serves `main` directly, that commit is the deploy.
 
 Adding a class: edit `schedule/scripts/schools.json`, regenerate, then
 copy an existing `schedule/<slug>.html` to a new slug, update its
-`initApp({ lockedSlug: "..." })` call and `<title>`, and add a card for
-it to `schedule/links.html` (that page is hand-maintained, not
-generated from `schools.json`).
+`initApp({ lockedSlug: "..." })` call and `<title>`, and add a row for
+it to **both** `schedule/links.html` and the `.tool-links` list under
+the Veckoschema card in the root `index.html`. Both are hand-maintained
+— neither is generated from `schools.json`.
