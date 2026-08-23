@@ -49,15 +49,25 @@ whole thing is one fixed-viewport "stage" (see `.stage` in
 unusable on a phone. Nothing on `schedule/*.html` ever scrolls; swiping
 changes what's showing instead:
 
-- Swipe **left/right** (or press ←/→) → previous/next week.
+- **Landscape** → the whole week (Mon–Fri), sized to fit exactly.
+- **Portrait** → one day at a time — a full week is too narrow to read
+  in portrait, so don't try to cram it in; single-day is the deliberate
+  portrait behavior, not a fallback. It opens on today (clamped to
+  Mon–Fri).
+- Swipe **left/right** (or press ←/→) → **whatever the mode is showing**:
+  the previous/next *week* in the week grid, the previous/next *day* in
+  single-day mode, rolling past Friday into the next week's Monday. The
+  marker row in the chrome bar switches to match (weekdays vs. weeks) so
+  the gesture is never ambiguous. Stepping a whole week when the screen
+  shows a single day is the wrong unit and was reported as broken —
+  don't reintroduce it.
 - Swipe **up/down** (or press ↑/↓) → previous/next class (no-op on a
   locked single-class page, see below).
-- **Landscape** → the whole week (Mon–Fri), sized to fit exactly.
-- **Portrait** → just "today" (today's weekday, clamped to Mon–Fri;
-  swiping weeks keeps that same weekday and jumps to the other week's
-  date) — a full week is too narrow to read in portrait, so don't try
-  to cram it in; single-day is the deliberate portrait behavior, not a
-  fallback.
+
+Nothing scrolls, in either mode, which is *why* the fit-to-screen and
+minimum-legibility work below has to hold: if a block doesn't fit, there
+is no scrollbar to reach it with, and the vertical gesture belongs to
+class switching.
 
 Structure:
 

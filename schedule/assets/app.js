@@ -751,7 +751,10 @@ async function initApp({ lockedSlug } = {}) {
   let classIdx = 0;
   let weekIdx = data.weeks.findIndex((w) => todayIso() >= w.start_date && todayIso() <= w.end_date);
   if (weekIdx === -1) weekIdx = 0;
-  const todayDay = todayIsoWeekday();
+  // Which day single-day mode is showing. Starts on today, then moves with
+  // horizontal swipes; kept across rotations so turning the phone twice
+  // doesn't silently jump you back to today.
+  let dayIdx = todayIsoWeekday();
 
   function orientationIsPortrait() {
     return window.matchMedia("(orientation: portrait)").matches;
@@ -764,19 +767,27 @@ async function initApp({ lockedSlug } = {}) {
     const ctx = lunchContextFor(school, weekKey, categoryMaps[classIdx]);
     const [my, mm, md] = week.start_date.split("-").map(Number);
     const monday = new Date(my, mm - 1, md);
-    const dayNumbers = orientationIsPortrait() ? [todayDay] : [1, 2, 3, 4, 5];
+    const portrait = orientationIsPortrait();
+    const dayNumbers = portrait ? [dayIdx] : [1, 2, 3, 4, 5];
 
     renderFitGrid(stageInner, school.weeks[weekKey] || [], ctx, dayNumbers, monday);
 
     // chrome
     chromeDot.style.background = `var(--school-${classIdx === 0 ? "a" : "b"})`;
     chromeClass.textContent = school.class;
-    chromePeriod.textContent = orientationIsPortrait()
-      ? fullDayLabel(todayDay, computeDayDates([todayDay], monday).get(todayDay))
+    chromePeriod.textContent = portrait
+      ? `v${week.week} · ${fullDayLabel(dayIdx, computeDayDates([dayIdx], monday).get(dayIdx))}`
       : weekLabel(week);
 
+    // The horizontal swipe means different things in the two modes, so the
+    // marker row shows what it is actually stepping through: weekdays in
+    // single-day mode, weeks in the week grid.
     dotsWeek.innerHTML = "";
-    data.weeks.forEach((_, i) => dotsWeek.appendChild(el("i", { class: i === weekIdx ? "is-active" : "" })));
+    if (portrait) {
+      for (let d = 1; d <= 5; d++) dotsWeek.appendChild(el("i", { class: d === dayIdx ? "is-active" : "" }));
+    } else {
+      data.weeks.forEach((_, i) => dotsWeek.appendChild(el("i", { class: i === weekIdx ? "is-active" : "" })));
+    }
 
     dotsClass.innerHTML = "";
     dotsClass.style.display = classes.length > 1 ? "" : "none";
@@ -789,23 +800,49 @@ async function initApp({ lockedSlug } = {}) {
     frame = requestAnimationFrame(render);
   }
 
-  function go(deltaWeek, deltaClass) {
-    const newWeek = clamp(weekIdx + deltaWeek, 0, data.weeks.length - 1);
-    const newClass = clamp(classIdx + deltaClass, 0, classes.length - 1);
-    if (newWeek === weekIdx && newClass === classIdx) {
-      if (deltaWeek !== 0) bounce(stage, "x");
-      if (deltaClass !== 0) bounce(stage, "y");
-      return;
+  /** Showing one day, a horizontal swipe should walk to the neighbouring day,
+   * not skip a whole week — stepping past Friday rolls into the next week's
+   * Monday. In the week grid there is no day to step, so it moves weeks. */
+  function goHorizontal(dir) {
+    if (orientationIsPortrait()) {
+      let day = dayIdx + dir;
+      let week = weekIdx;
+      while (day > 5) {
+        day -= 5;
+        week += 1;
+      }
+      while (day < 1) {
+        day += 5;
+        week -= 1;
+      }
+      if (week < 0 || week > data.weeks.length - 1) {
+        bounce(stage, "x");
+        return;
+      }
+      dayIdx = day;
+      weekIdx = week;
+    } else {
+      const week = clamp(weekIdx + dir, 0, data.weeks.length - 1);
+      if (week === weekIdx) {
+        bounce(stage, "x");
+        return;
+      }
+      weekIdx = week;
     }
-    weekIdx = newWeek;
-    classIdx = newClass;
     render();
   }
 
-  attachSwipe(stage, {
-    onHorizontal: (dir) => go(dir, 0),
-    onVertical: (dir) => go(0, dir),
-  });
+  function goVertical(dir) {
+    const next = clamp(classIdx + dir, 0, classes.length - 1);
+    if (next === classIdx) {
+      bounce(stage, "y");
+      return;
+    }
+    classIdx = next;
+    render();
+  }
+
+  attachSwipe(stage, { onHorizontal: goHorizontal, onVertical: goVertical });
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {

@@ -223,13 +223,18 @@ for (const vp of VIEWPORTS) {
       await page.waitForTimeout(400);
       await page.focus("#stage");
 
-      // Walk to the first class and first week, then sweep every combination.
+      // A horizontal swipe steps weeks in the week grid but single days in
+      // portrait, so the sweep length differs: five weekdays per week there.
+      const portrait = vp.h > vp.w;
+      const steps = portrait ? nWeeks * 5 : nWeeks;
+
+      // Walk back to the first class and first position, then sweep forward.
       for (let i = 0; i < nClasses; i++) await page.keyboard.press("ArrowUp");
-      for (let i = 0; i < nWeeks; i++) await page.keyboard.press("ArrowLeft");
+      for (let i = 0; i < steps; i++) await page.keyboard.press("ArrowLeft");
       await page.waitForTimeout(200);
 
       for (let c = 0; c < nClasses; c++) {
-        for (let w = 0; w < nWeeks; w++) {
+        for (let w = 0; w < steps; w++) {
           await page.waitForTimeout(160);
           const r = await page.evaluate(auditPage);
           checks++;
@@ -250,9 +255,9 @@ for (const vp of VIEWPORTS) {
             const slug = `${vp.name}-${theme}${clock ? "-now" : ""}-c${c}-w${w}`;
             await page.screenshot({ path: path.join(SHOTS, `${slug}.png`) });
           }
-          if (w < nWeeks - 1) await page.keyboard.press("ArrowRight");
+          if (w < steps - 1) await page.keyboard.press("ArrowRight");
         }
-        for (let i = 0; i < nWeeks; i++) await page.keyboard.press("ArrowLeft");
+        for (let i = 0; i < steps; i++) await page.keyboard.press("ArrowLeft");
         if (c < nClasses - 1) await page.keyboard.press("ArrowDown");
       }
       await ctx.close();
@@ -289,7 +294,10 @@ for (const url of ["/", "/schedule/links.html"]) {
 await browser.close();
 server.close();
 
-console.log(`\n${checks} checks across ${nClasses} class(es) x ${nWeeks} week(s) x ${VIEWPORTS.length} viewports x ${THEMES.length} themes.`);
+console.log(
+  `\n${checks} checks across ${nClasses} class(es) x ${nWeeks} week(s) ` +
+    `(every weekday individually in single-day mode) x ${VIEWPORTS.length} viewports x ${THEMES.length} themes.`
+);
 if (!webfontSeen) {
   console.log(
     "NOTE: Archivo Narrow never loaded, so text was measured against the fallback face.\n" +
