@@ -1,0 +1,787 @@
+{
+  "generated_at": "2026-08-23",
+  "weeks": [
+    {
+      "year": 2026,
+      "week": 34,
+      "start_date": "2026-08-17",
+      "end_date": "2026-08-21"
+    },
+    {
+      "year": 2026,
+      "week": 35,
+      "start_date": "2026-08-24",
+      "end_date": "2026-08-28"
+    }
+  ],
+  "schools": [
+    {
+      "name": "Lugnetgymnasiet / ES26ESM",
+      "school": "Lugnetgymnasiet",
+      "class": "ES26ESM",
+      "slug": "lugnetgymnasiet-es26esm",
+      "weeks": {
+        "2026-W34": [
+          {
+            "subject": "Introdag",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "08:30",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Introdag",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "08:30",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02,LLA01,CEK02",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Introdag",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:30",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Samhällskunskap, Nivå 1b",
+            "teacher": "aan71",
+            "room": "428",
+            "day_of_week": 4,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "Svenska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "219",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:25"
+          },
+          {
+            "subject": "Svenska som andraspråk, Nivå 1",
+            "teacher": "AKI06",
+            "room": "315",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "12:10"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "12:10",
+            "time_end": "12:30"
+          },
+          {
+            "subject": "Matematik, Nivå 1b",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "12:30",
+            "time_end": "13:50"
+          },
+          {
+            "subject": "Idrott och hälsa, Nivå 1",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "14:15",
+            "time_end": "15:30"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Engelska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "428",
+            "day_of_week": 5,
+            "time_start": "09:55",
+            "time_end": "11:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:10",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "Film- och tv-produktion, Nivå 1",
+            "teacher": "MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 5,
+            "time_start": "11:55",
+            "time_end": "14:25"
+          }
+        ],
+        "2026-W35": [
+          {
+            "subject": "Naturkunskap, Nivå 1b",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 1,
+            "time_start": "09:50",
+            "time_end": "11:05"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "11:15",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "Idrott och hälsa, Nivå 1",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "12:00",
+            "time_end": "13:15"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "13:45",
+            "time_end": "14:05"
+          },
+          {
+            "subject": "Matematik, Nivå 1b",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "14:05",
+            "time_end": "15:25"
+          },
+          {
+            "subject": "Samhällskunskap, Nivå 1b",
+            "teacher": "aan71",
+            "room": "P151",
+            "day_of_week": 2,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "Engelska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "P149",
+            "day_of_week": 2,
+            "time_start": "10:00",
+            "time_end": "11:15"
+          },
+          {
+            "subject": "Naturkunskap, Nivå 1b",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 2,
+            "time_start": "11:40",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "13:00",
+            "time_end": "13:40"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Mentorstid",
+            "teacher": "EST36,MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "08:30",
+            "time_end": "09:00"
+          },
+          {
+            "subject": "Ljudproduktion, Nivå 1",
+            "teacher": "EST36",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "09:10",
+            "time_end": "10:25"
+          },
+          {
+            "subject": "Svenska som andraspråk, Nivå 1",
+            "teacher": "AKI06",
+            "room": "315",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "12:00"
+          },
+          {
+            "subject": "Svenska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "P149",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:15",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "Digitalt skapande, Nivå 1",
+            "teacher": "EST36",
+            "room": "936 (multimedia)",
+            "day_of_week": 3,
+            "time_start": "12:55",
+            "time_end": "15:25"
+          },
+          {
+            "subject": "Samhällskunskap, Nivå 1b",
+            "teacher": "aan71",
+            "room": "428",
+            "day_of_week": 4,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "Svenska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "219",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:25"
+          },
+          {
+            "subject": "Svenska som andraspråk, Nivå 1",
+            "teacher": "AKI06",
+            "room": "315",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "Matematik, Nivå 1b",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:50",
+            "time_end": "13:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "13:10",
+            "time_end": "13:50"
+          },
+          {
+            "subject": "Idrott och hälsa, Nivå 1",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "14:15",
+            "time_end": "15:30"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Engelska, Nivå 1",
+            "teacher": "MSO33",
+            "room": "428",
+            "day_of_week": 5,
+            "time_start": "09:55",
+            "time_end": "11:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:10",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "Film- och tv-produktion, Nivå 1",
+            "teacher": "MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 5,
+            "time_start": "11:55",
+            "time_end": "14:25"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tunets skola / TuS-5-26",
+      "school": "Tunets skola",
+      "class": "TuS-5-26",
+      "slug": "tunets-skola-tus-5-26",
+      "weeks": {
+        "2026-W34": [
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:40",
+            "time_end": "09:50"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "09:40",
+            "time_end": "10:45"
+          },
+          {
+            "subject": "MU",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "10:45",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI,CMF",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "08:00",
+            "time_end": "09:10"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "09:40",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "IDH",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "10:50",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SL",
+            "teacher": "ATå,NFr",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "12:10",
+            "time_end": "13:30"
+          }
+        ],
+        "2026-W35": [
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "08:00",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "09:40",
+            "time_end": "10:20"
+          },
+          {
+            "subject": "IDH",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "10:25",
+            "time_end": "11:20"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "BL",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "14:00",
+            "time_end": "14:45"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI,CMF",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "08:00",
+            "time_end": "09:00"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF,DTI",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:00",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:40",
+            "time_end": "09:50"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:40",
+            "time_end": "09:50"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "09:40",
+            "time_end": "10:45"
+          },
+          {
+            "subject": "MU",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "10:45",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI,CMF",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "08:00",
+            "time_end": "09:10"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "09:40",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "IDH",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "10:50",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SL",
+            "teacher": "ATå,NFr",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "12:10",
+            "time_end": "13:30"
+          }
+        ]
+      }
+    }
+  ]
+}

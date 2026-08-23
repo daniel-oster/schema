@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veckoschema</title>
+<meta name="description" content="Skolschema för Lugnetgymnasiet och Tunets skola, innevarande och nästa vecka.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">V</span>
+      <span class="brand__name">Veckoschema</span>
+    </a>
+    <div id="week-switcher-slot"></div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="hero">
+    <span class="hero__eyebrow">Lugnetgymnasiet · Tunets skola</span>
+    <h1>Två skolor, ett schema</h1>
+    <p>Innevarande och nästa vecka för båda klasserna, hämtat direkt från Skola24 och uppdaterat automatiskt varje dag.</p>
+  </div>
+
+  <div id="app">
+    <p class="load-state">Läser in schema…</p>
+  </div>
+
+  <footer class="site-footer">
+    <span id="updated-note"></span>
+    <span>Data från <a href="https://web.skola24.se" target="_blank" rel="noopener">Skola24</a> · källkod på <a href="https://github.com/daniel-oster/schema" target="_blank" rel="noopener">GitHub</a></span>
+  </footer>
+</main>
+
+<script src="assets/app.js"></script>
+<script>initIndexPage();</script>
+</body>
+</html>
