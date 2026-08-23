@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Lugnetgymnasiet ES26ESM — Veckoschema</title>
 <meta name="description" content="Skolschema för Lugnetgymnasiet, klass ES26ESM, innevarande och nästa vecka.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,30 +12,26 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header__inner">
-    <a class="back-link" href="index.html">← Alla scheman</a>
-    <div id="week-switcher-slot"></div>
+<div id="stage" class="stage" tabindex="0">
+  <div class="chrome">
+    <div class="chrome__main">
+      <span class="chrome__dot" id="chrome-dot"></span>
+      <span class="chrome__class" id="chrome-class">…</span>
+      <span class="chrome__sep">·</span>
+      <span class="chrome__period" id="chrome-period">…</span>
+    </div>
+    <div class="chrome__dots">
+      <span class="dotrow" id="dots-class"></span>
+      <span class="dotrow" id="dots-week"></span>
+    </div>
+    <a class="chrome__links" href="links.html" aria-label="Alla länkar">⋮</a>
   </div>
-</header>
-
-<main class="page">
-  <div class="hero">
-    <span class="hero__eyebrow" style="color:var(--school-a)">Lugnetgymnasiet</span>
-    <h1 id="class-title">ES26ESM</h1>
-  </div>
-
-  <div id="app">
+  <div class="stage-inner" id="stage-inner">
     <p class="load-state">Läser in schema…</p>
   </div>
-
-  <footer class="site-footer">
-    <span id="updated-note"></span>
-    <span>Data från <a href="https://web.skola24.se" target="_blank" rel="noopener">Skola24</a></span>
-  </footer>
-</main>
+</div>
 
 <script src="assets/app.js"></script>
-<script>initClassPage("lugnetgymnasiet-es26esm");</script>
+<script>initApp({ lockedSlug: "lugnetgymnasiet-es26esm" });</script>
 </body>
 </html>

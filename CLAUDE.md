@@ -40,29 +40,59 @@ toolbox) — this folder vendors a copy of that Skola24 client so the
 Pages deployment doesn't depend on that other repo being present or
 stable.
 
+This is a **swipeable, fit-to-screen app**, not a scrolling page — the
+whole thing is one fixed-viewport "stage" (see `.stage` in
+`style.css`), because a scrolling multi-day grid turned out to be
+unusable on a phone. Nothing on `schedule/*.html` ever scrolls; swiping
+changes what's showing instead:
+
+- Swipe **left/right** (or press ←/→) → previous/next week.
+- Swipe **up/down** (or press ↑/↓) → previous/next class (no-op on a
+  locked single-class page, see below).
+- **Landscape** → the whole week (Mon–Fri), sized to fit exactly.
+- **Portrait** → just "today" (today's weekday, clamped to Mon–Fri;
+  swiping weeks keeps that same weekday and jumps to the other week's
+  date) — a full week is too narrow to read in portrait, so don't try
+  to cram it in; single-day is the deliberate portrait behavior, not a
+  fallback.
+
 Structure:
 
-- `schedule/index.html` — overview page showing both schools' schedules
-  together, current + next week, with a week switcher.
-- `schedule/<slug>.html` — one page per class (e.g.
-  `lugnetgymnasiet-es26esm.html`), same rendering, focused on a single
-  class — meant to be bookmarked on a phone home screen.
-- `schedule/assets/style.css` — design tokens (light + dark themes) and
-  layout for the timetable grid.
-- `schedule/assets/app.js` — fetches `data/schedule.json` and renders
-  the proportional day-grid (lessons positioned by actual time, merges
-  Skola24's duplicate multi-teacher rows, splits genuinely overlapping
-  lessons into side-by-side columns, color-codes by subject). A block's
-  rendered height is never forced past its actual time slot — columns
-  already guarantee lessons sharing one don't overlap in time, so
-  padding a block past that would visually cover the next one. Instead,
-  blocks below a size threshold drop to a more compact single-line
-  layout (see the `TIER_*` constants and `buildLessonBlock`) so short
-  lessons stay legible instead of having their text clipped. Tapping any
-  lesson (or a day's lunch chip) opens a bottom-sheet modal
-  (`openModal`/`buildLessonModal`/`buildLunchModal`) with full detail —
-  this is a phone-first site, so the modal is a bottom sheet anchored to
-  the thumb, not a centered dialog.
+- `schedule/index.html` — the app, unlocked: swipe through every class
+  in `schools.json`.
+- `schedule/<slug>.html` — the same app **locked** to one class (e.g.
+  `lugnetgymnasiet-es26esm.html` calls `initApp({ lockedSlug:
+  "lugnetgymnasiet-es26esm" })`) — vertical swipe/the class dot-row is
+  disabled since there's only one class to show; week swipe still
+  works. These are the direct links meant for bookmarking one kid's
+  schedule to a home screen.
+- `schedule/links.html` — a plain static (mostly no-JS) page listing
+  every URL above, for whoever just wants a link rather than the app.
+  Update it by hand when adding/removing a class (see below) — it does
+  not read `schools.json`.
+- `schedule/assets/style.css` — design tokens (light + dark themes),
+  the `.stage`/`.chrome` app shell, and the day-grid/lesson/modal
+  component styles.
+- `schedule/assets/app.js` — `initApp({ lockedSlug? })` loads
+  `data/schedule.json`, then `renderFitGrid` draws the grid sized
+  exactly to `#stage-inner`'s real pixel box (`getBoundingClientRect`)
+  for the current class/week/orientation — not a fixed px-per-hour, so
+  it always fills the screen with no scroll. Lessons are positioned by
+  actual time (merges Skola24's duplicate multi-teacher rows, splits
+  genuinely overlapping lessons into side-by-side columns, color-codes
+  by subject); a block's rendered height is never forced past its
+  actual time slot — columns already guarantee lessons sharing one
+  don't overlap in time, so padding a block past that would visually
+  cover the next one. Instead, blocks below a size threshold drop to a
+  more compact single-line layout (`TIER_*` constants,
+  `buildLessonBlock`) so short lessons stay legible instead of having
+  their text clipped — this matters even more now that a whole week has
+  to fit one screen. Tapping any lesson (or a day's lunch chip) opens a
+  bottom-sheet modal (`openModal`/`buildLessonModal`/`buildLunchModal`)
+  with full detail — phone-first, so it's a bottom sheet anchored to
+  the thumb, not a centered dialog. `attachSwipe` reads pointer events
+  on `#stage` (works for touch and mouse, so it's testable with a mouse
+  drag too) and also binds arrow keys for keyboard/desktop use.
 - `schedule/data/schedule.json` — generated data. Never hand-edit;
   regenerate it instead (see below). Structure: `weeks` (list of
   `{year, week, start_date, end_date}`) and `schools` (list of
@@ -110,5 +140,7 @@ and on pushes touching `schedule/scripts/**`, committing
 Pages serves `main` directly, that commit is the deploy.
 
 Adding a class: edit `schedule/scripts/schools.json`, regenerate, then
-copy an existing `schedule/<slug>.html` to a new slug and update its
-`initClassPage("...")` call and heading/title text.
+copy an existing `schedule/<slug>.html` to a new slug, update its
+`initApp({ lockedSlug: "..." })` call and `<title>`, and add a card for
+it to `schedule/links.html` (that page is hand-maintained, not
+generated from `schools.json`).

@@ -4,14 +4,20 @@ const WEEKDAY_NAMES = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
 const WEEKDAY_FULL = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 const MONTH_NAMES = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
 const CATEGORY_COUNT = 10;
-const HOUR_HEIGHT = 64; // px per hour in the grid
-const DEFAULT_DAY_START = 8; // fallback axis bounds when a week has no lessons
-const DEFAULT_DAY_END = 16;
 
 // Pixel-height thresholds for how much a lesson block can show inline
-// before it hands off to the tap-to-open modal for the rest.
-const TIER_FULL_MIN = 56; // room for time + subject + a third line
-const TIER_COMPACT_MIN = 22; // room for one combined "time subject" line
+// before it hands off to the tap-to-open modal for the rest. Small
+// because the whole week now has to fit one screen with no scrolling.
+const TIER_FULL_MIN = 56;
+const TIER_COMPACT_MIN = 22;
+
+const HEADER_ROW_H = 44; // day-header row height inside the grid, px
+const GUTTER_W = 26; // hour-label column width, px
+const SWIPE_THRESHOLD = 40; // px
+
+function clamp(v, lo, hi) {
+  return Math.max(lo, Math.min(hi, v));
+}
 
 function fmtDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -31,6 +37,11 @@ function weekLabel(week) {
 function todayIso() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function todayIsoWeekday() {
+  const d = new Date().getDay(); // 0=Sun..6=Sat
+  return clamp(d === 0 ? 7 : d, 1, 5);
 }
 
 function hashString(str) {
@@ -84,7 +95,7 @@ function mergeLessons(lessons) {
  * block's height can never be forced past where the next one starts. */
 function layoutColumns(lessons) {
   const sorted = [...lessons].sort((a, b) => minutesOf(a.time_start) - minutesOf(b.time_start));
-  const colEnds = []; // last end-minute occupying each column
+  const colEnds = [];
   const placed = [];
   for (const lesson of sorted) {
     const start = minutesOf(lesson.time_start);
@@ -112,7 +123,7 @@ function axisBoundsFor(lessonsByDay) {
     }
   }
   if (!isFinite(minStart)) {
-    return { startHour: DEFAULT_DAY_START, endHour: DEFAULT_DAY_END };
+    return { startHour: 8, endHour: 16 };
   }
   const startHour = Math.max(0, Math.floor(minStart / 60));
   const endHour = Math.min(24, Math.ceil(maxEnd / 60));
@@ -163,7 +174,7 @@ function closeModal() {
     clear();
   } else {
     modalRoot.addEventListener("transitionend", clear, { once: true });
-    setTimeout(clear, 400); // safety net if transitionend doesn't fire
+    setTimeout(clear, 400);
   }
   if (toFocus && typeof toFocus.focus === "function") toFocus.focus();
 }
@@ -289,36 +300,60 @@ function buildLessonBlock(lesson, top, height, leftPct, widthPct, ctx, dateIso) 
   return block;
 }
 
-/** Builds the full day-grid DOM for one school entry's lessons in one week.
- * ctx: { schoolName, lunchByDay: {"1": [...]}, lunchNote } */
-function renderDayGrid(rawLessons, ctx) {
-  const merged = mergeLessons(rawLessons);
-  const daysPresent = new Set(merged.map((l) => l.day_of_week));
-  const dayNumbers = [1, 2, 3, 4, 5].concat([6, 7].filter((d) => daysPresent.has(d)));
+/* ----------------------------- Fit-to-screen grid ------------------------- */
 
+/** Skola24 doesn't give us calendar dates per lesson, only day_of_week
+ * numbers — derive real dates from the week's Monday. */
+function computeDayDates(dayNumbers, monday) {
+  const map = new Map();
+  if (!monday) return map;
+  for (const dayNum of dayNumbers) {
+    const d = new Date(monday);
+    d.setDate(d.getDate() + (dayNum - 1));
+    map.set(dayNum, `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`);
+  }
+  return map;
+}
+
+/** Renders lessons for `dayNumbers` (5 days in landscape, 1 in portrait)
+ * sized to exactly fill `container` — no scrolling, ever. Short lessons
+ * degrade to a more compact label instead of growing the container. */
+function renderFitGrid(container, rawLessons, ctx, dayNumbers, monday) {
+  container.innerHTML = "";
+  const merged = mergeLessons(rawLessons);
   const lessonsByDay = new Map(dayNumbers.map((d) => [d, merged.filter((l) => l.day_of_week === d)]));
   const { startHour, endHour } = axisBoundsFor(lessonsByDay);
   const totalMinutes = (endHour - startHour) * 60;
-  const bodyHeight = (endHour - startHour) * HOUR_HEIGHT;
-
-  const gridCols = `72px repeat(${dayNumbers.length}, 1fr)`;
+  const dayDates = computeDayDates(dayNumbers, monday);
   const today = todayIso();
-  const dayDates = computeDayDates(dayNumbers);
 
-  const wrap = el("div", { class: "grid-scroll" });
+  const single = dayNumbers.length === 1;
+  // In single-day (portrait) mode the chrome bar already names the day, so
+  // the grid's own header only needs to exist when there's a lunch chip to
+  // show — otherwise skip it entirely and hand that space to the grid.
+  const singleHasLunch = single && (ctx.lunchByDay[String(dayNumbers[0])] || []).length > 0;
+  const headerH = single ? (singleHasLunch ? 30 : 0) : HEADER_ROW_H;
+
+  const rect = container.getBoundingClientRect();
+  const W = Math.max(rect.width, 1);
+  const H = Math.max(rect.height, 1);
+  const bodyH = Math.max(40, H - headerH);
+  const dayColW = (W - GUTTER_W) / dayNumbers.length;
+  const pxPerHour = bodyH / (endHour - startHour);
+
+  const gridCols = `${GUTTER_W}px repeat(${dayNumbers.length}, ${dayColW}px)`;
+
   const grid = el("div", { class: "day-grid", style: `--grid-cols:${gridCols}` });
 
-  // Header row
-  const headerRow = el("div", { class: "day-grid__row-header" });
+  const headerRow = el("div", { class: "day-grid__row-header", style: `height:${headerH}px` });
   headerRow.appendChild(el("div", { class: "gutter-cell" }));
   for (const dayNum of dayNumbers) {
     const dateStr = dayDates.get(dayNum);
     const isToday = dateStr === today;
     const headerCell = el("div", { class: "day-col__header" + (isToday ? " is-today" : "") });
-    headerCell.appendChild(el("span", { class: "weekday", text: WEEKDAY_NAMES[dayNum - 1] }));
-    if (dateStr) {
-      headerCell.appendChild(document.createElement("br"));
-      headerCell.appendChild(el("span", { class: "date", text: fmtDate(dateStr) }));
+    if (!single) {
+      const label = `${WEEKDAY_NAMES[dayNum - 1]} ${dateStr ? fmtDate(dateStr) : ""}`;
+      headerCell.appendChild(el("span", { class: "weekday", text: label }));
     }
     const dayLunch = ctx.lunchByDay[String(dayNum)];
     if (dayLunch && dayLunch.length) {
@@ -342,15 +377,14 @@ function renderDayGrid(rawLessons, ctx) {
     }
     headerRow.appendChild(headerCell);
   }
-  grid.appendChild(headerRow);
+  if (headerH > 0) grid.appendChild(headerRow);
 
-  // Body
-  const body = el("div", { class: "day-grid__body", style: `--grid-cols:${gridCols}; height:${bodyHeight}px` });
+  const body = el("div", { class: "day-grid__body", style: `--grid-cols:${gridCols}; height:${bodyH}px` });
 
   const gutter = el("div", { class: "gutter" });
   for (let h = startHour; h <= endHour; h++) {
-    const top = (h - startHour) * HOUR_HEIGHT;
-    gutter.appendChild(el("div", { class: "gutter__label", style: `top:${top}px`, text: `${String(h).padStart(2, "0")}:00` }));
+    const top = (h - startHour) * pxPerHour;
+    gutter.appendChild(el("div", { class: "gutter__label", style: `top:${top}px`, text: String(h) }));
   }
   body.appendChild(gutter);
 
@@ -360,7 +394,7 @@ function renderDayGrid(rawLessons, ctx) {
     const col = el("div", { class: "day-col" });
 
     for (let h = startHour; h <= endHour; h++) {
-      const top = (h - startHour) * HOUR_HEIGHT;
+      const top = (h - startHour) * pxPerHour;
       col.appendChild(el("div", { class: "hour-line", style: `top:${top}px` }));
     }
 
@@ -371,12 +405,8 @@ function renderDayGrid(rawLessons, ctx) {
       for (const { lesson, col: colIdx, totalCols } of placed) {
         const startMin = minutesOf(lesson.time_start) - startHour * 60;
         const endMin = minutesOf(lesson.time_end) - startHour * 60;
-        const top = (startMin / totalMinutes) * bodyHeight;
-        // Never extend past the natural slot: columns already guarantee
-        // lessons sharing a column don't overlap in time, so leaving the
-        // proportional height alone (just a small min for tap targets)
-        // is what keeps blocks from visually covering their neighbour.
-        const height = Math.max(10, ((endMin - startMin) / totalMinutes) * bodyHeight - 2);
+        const top = (startMin / totalMinutes) * bodyH;
+        const height = Math.max(10, ((endMin - startMin) / totalMinutes) * bodyH - 2);
         const widthPct = 100 / totalCols;
         const leftPct = colIdx * widthPct;
         col.appendChild(buildLessonBlock(lesson, top, height, leftPct, widthPct, ctx, dateStr));
@@ -387,7 +417,7 @@ function renderDayGrid(rawLessons, ctx) {
       const now = new Date();
       const nowMin = now.getHours() * 60 + now.getMinutes() - startHour * 60;
       if (nowMin >= 0 && nowMin <= totalMinutes) {
-        const top = (nowMin / totalMinutes) * bodyHeight;
+        const top = (nowMin / totalMinutes) * bodyH;
         col.appendChild(el("div", { class: "now-line", style: `top:${top}px` }));
       }
     }
@@ -396,49 +426,7 @@ function renderDayGrid(rawLessons, ctx) {
   }
 
   grid.appendChild(body);
-  wrap.appendChild(grid);
-  return wrap;
-}
-
-/** Skola24 doesn't give us calendar dates per lesson, only day_of_week
- * numbers — derive real dates from the week's Monday. */
-function computeDayDates(dayNumbers) {
-  const map = new Map();
-  const monday = window.__currentWeekMonday;
-  if (!monday) return map;
-  for (const dayNum of dayNumbers) {
-    const d = new Date(monday);
-    d.setDate(d.getDate() + (dayNum - 1));
-    map.set(dayNum, `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`);
-  }
-  return map;
-}
-
-function buildWeekSwitcher(weeks, activeIndex, onChange) {
-  const wrap = el("div", { class: "week-switcher", role: "tablist" });
-  weeks.forEach((week, i) => {
-    const btn = el("button", {
-      class: "week-btn",
-      type: "button",
-      "aria-pressed": String(i === activeIndex),
-      onclick: () => onChange(i),
-    });
-    btn.appendChild(el("span", { class: "week-btn__num", text: `v${week.week}` }));
-    btn.appendChild(document.createTextNode(`${fmtDate(week.start_date)}–${fmtDate(week.end_date)}`));
-    wrap.appendChild(btn);
-  });
-  return wrap;
-}
-
-async function loadSchedule() {
-  const res = await fetch(new URL("data/schedule.json", document.baseURI), { cache: "no-cache" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-}
-
-function setWeekMonday(week) {
-  const [y, m, d] = week.start_date.split("-").map(Number);
-  window.__currentWeekMonday = new Date(y, m - 1, d);
+  container.appendChild(grid);
 }
 
 function lunchContextFor(school, weekKey) {
@@ -449,107 +437,148 @@ function lunchContextFor(school, weekKey) {
   };
 }
 
-async function initIndexPage() {
-  const root = document.getElementById("app");
-  try {
-    const data = await loadSchedule();
-    root.innerHTML = "";
+/* ------------------------------- Swipe app -------------------------------- */
 
-    let activeIndex = data.weeks.findIndex((w) => todayIso() >= w.start_date && todayIso() <= w.end_date);
-    if (activeIndex === -1) activeIndex = 0;
+function attachSwipe(el, { onHorizontal, onVertical }) {
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
 
-    const switcherSlot = document.getElementById("week-switcher-slot");
-    const updatedNote = document.getElementById("updated-note");
-    if (updatedNote) updatedNote.textContent = `Uppdaterad ${data.generated_at}`;
+  el.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      startX = e.clientX;
+      startY = e.clientY;
+      tracking = true;
+    },
+    { passive: true }
+  );
 
-    const quickNav = el("nav", { class: "quick-nav" });
-    data.schools.forEach((school, i) => {
-      const link = el("a", { href: `${school.slug}.html` });
-      link.appendChild(el("span", { class: "dot", style: `background:var(--school-${i === 0 ? "a" : "b"})` }));
-      link.appendChild(document.createTextNode(`${school.name} ↗`));
-      quickNav.appendChild(link);
-    });
+  el.addEventListener(
+    "pointerup",
+    (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > SWIPE_THRESHOLD) {
+        onHorizontal(dx < 0 ? 1 : -1);
+      } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_THRESHOLD) {
+        onVertical(dy < 0 ? 1 : -1);
+      }
+    },
+    { passive: true }
+  );
 
-    const sectionsContainer = el("div", { id: "sections" });
+  el.addEventListener("pointercancel", () => {
+    tracking = false;
+  });
 
-    function render() {
-      switcherSlot.innerHTML = "";
-      switcherSlot.appendChild(buildWeekSwitcher(data.weeks, activeIndex, (i) => {
-        activeIndex = i;
-        render();
-      }));
-
-      const week = data.weeks[activeIndex];
-      setWeekMonday(week);
-      const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
-
-      sectionsContainer.innerHTML = "";
-      data.schools.forEach((school, i) => {
-        const accentVar = i === 0 ? "--school-a" : "--school-b";
-        const section = el("section", { class: "school-section" });
-        const head = el("div", { class: "school-head" });
-        const titleWrap = el("div", { class: "school-head__title" });
-        titleWrap.appendChild(el("span", { class: "dot", style: `background:var(${accentVar})` }));
-        titleWrap.appendChild(el("h2", { text: school.name }));
-        head.appendChild(titleWrap);
-        const right = el("div", { style: "display:flex;align-items:center;gap:14px;" });
-        right.appendChild(el("span", { class: "school-head__meta", text: weekLabel(week) }));
-        right.appendChild(el("a", { class: "open-link", href: `${school.slug}.html`, text: "Eget schema →" }));
-        head.appendChild(right);
-        section.appendChild(head);
-        section.appendChild(renderDayGrid(school.weeks[weekKey] || [], lunchContextFor(school, weekKey)));
-        sectionsContainer.appendChild(section);
-      });
-    }
-
-    render();
-
-    root.appendChild(quickNav);
-    root.appendChild(sectionsContainer);
-  } catch (err) {
-    root.innerHTML = "";
-    root.appendChild(el("p", { class: "load-state is-error", text: `Kunde inte läsa schemat: ${err.message}` }));
-  }
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") onHorizontal(-1);
+    else if (e.key === "ArrowRight") onHorizontal(1);
+    else if (e.key === "ArrowUp") onVertical(-1);
+    else if (e.key === "ArrowDown") onVertical(1);
+    else return;
+    e.preventDefault();
+  });
 }
 
-async function initClassPage(slug) {
-  const root = document.getElementById("app");
+function bounce(stage, axis) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cls = axis === "x" ? "bounce-x" : "bounce-y";
+  stage.classList.remove(cls);
+  // force reflow so the animation restarts if triggered twice quickly
+  void stage.offsetWidth;
+  stage.classList.add(cls);
+  setTimeout(() => stage.classList.remove(cls), 220);
+}
+
+async function loadSchedule() {
+  const res = await fetch(new URL("data/schedule.json", document.baseURI), { cache: "no-cache" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+async function initApp({ lockedSlug } = {}) {
+  const stage = document.getElementById("stage");
+  const stageInner = document.getElementById("stage-inner");
+  const chromeClass = document.getElementById("chrome-class");
+  const chromeDot = document.getElementById("chrome-dot");
+  const chromePeriod = document.getElementById("chrome-period");
+  const dotsClass = document.getElementById("dots-class");
+  const dotsWeek = document.getElementById("dots-week");
+
+  let data;
   try {
-    const data = await loadSchedule();
-    const school = data.schools.find((s) => s.slug === slug);
-    if (!school) throw new Error(`Hittade ingen klass med slug ${slug}`);
-    root.innerHTML = "";
-
-    let activeIndex = data.weeks.findIndex((w) => todayIso() >= w.start_date && todayIso() <= w.end_date);
-    if (activeIndex === -1) activeIndex = 0;
-
-    const titleEl = document.getElementById("class-title");
-    if (titleEl) titleEl.textContent = school.name;
-    document.title = `${school.name} — Veckoschema`;
-
-    const updatedNote = document.getElementById("updated-note");
-    if (updatedNote) updatedNote.textContent = `Uppdaterad ${data.generated_at}`;
-
-    const switcherSlot = document.getElementById("week-switcher-slot");
-    const gridSlot = el("div", { id: "grid-slot" });
-
-    function render() {
-      switcherSlot.innerHTML = "";
-      switcherSlot.appendChild(buildWeekSwitcher(data.weeks, activeIndex, (i) => {
-        activeIndex = i;
-        render();
-      }));
-      const week = data.weeks[activeIndex];
-      setWeekMonday(week);
-      const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
-      gridSlot.innerHTML = "";
-      gridSlot.appendChild(renderDayGrid(school.weeks[weekKey] || [], lunchContextFor(school, weekKey)));
-    }
-
-    render();
-    root.appendChild(gridSlot);
+    data = await loadSchedule();
   } catch (err) {
-    root.innerHTML = "";
-    root.appendChild(el("p", { class: "load-state is-error", text: `Kunde inte läsa schemat: ${err.message}` }));
+    stageInner.innerHTML = "";
+    stageInner.appendChild(el("p", { class: "load-state is-error", text: `Kunde inte läsa schemat: ${err.message}` }));
+    return;
   }
+
+  const classes = lockedSlug ? data.schools.filter((s) => s.slug === lockedSlug) : data.schools;
+  if (!classes.length) {
+    stageInner.innerHTML = "";
+    stageInner.appendChild(el("p", { class: "load-state is-error", text: "Hittade inget schema." }));
+    return;
+  }
+
+  let classIdx = 0;
+  let weekIdx = data.weeks.findIndex((w) => todayIso() >= w.start_date && todayIso() <= w.end_date);
+  if (weekIdx === -1) weekIdx = 0;
+  const todayDay = todayIsoWeekday();
+
+  function orientationIsPortrait() {
+    return window.matchMedia("(orientation: portrait)").matches;
+  }
+
+  function render() {
+    const school = classes[classIdx];
+    const week = data.weeks[weekIdx];
+    const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
+    const ctx = lunchContextFor(school, weekKey);
+    const [my, mm, md] = week.start_date.split("-").map(Number);
+    const monday = new Date(my, mm - 1, md);
+    const dayNumbers = orientationIsPortrait() ? [todayDay] : [1, 2, 3, 4, 5];
+
+    renderFitGrid(stageInner, school.weeks[weekKey] || [], ctx, dayNumbers, monday);
+
+    // chrome
+    chromeDot.style.background = `var(--school-${classIdx === 0 ? "a" : "b"})`;
+    chromeClass.textContent = school.class;
+    chromePeriod.textContent = orientationIsPortrait() ? fullDayLabel(todayDay, computeDayDates([todayDay], monday).get(todayDay)) : weekLabel(week);
+
+    dotsWeek.innerHTML = "";
+    data.weeks.forEach((_, i) => dotsWeek.appendChild(el("i", { class: i === weekIdx ? "is-active" : "" })));
+
+    dotsClass.innerHTML = "";
+    dotsClass.style.display = classes.length > 1 ? "" : "none";
+    classes.forEach((_, i) => dotsClass.appendChild(el("i", { class: i === classIdx ? "is-active" : "" })));
+  }
+
+  function go(deltaWeek, deltaClass) {
+    const newWeek = clamp(weekIdx + deltaWeek, 0, data.weeks.length - 1);
+    const newClass = clamp(classIdx + deltaClass, 0, classes.length - 1);
+    if (newWeek === weekIdx && newClass === classIdx) {
+      if (deltaWeek !== 0) bounce(stage, "x");
+      if (deltaClass !== 0) bounce(stage, "y");
+      return;
+    }
+    weekIdx = newWeek;
+    classIdx = newClass;
+    render();
+  }
+
+  attachSwipe(stage, {
+    onHorizontal: (dir) => go(dir, 0),
+    onVertical: (dir) => go(0, dir),
+  });
+
+  window.addEventListener("resize", render);
+  window.matchMedia("(orientation: portrait)").addEventListener("change", render);
+
+  render();
 }
