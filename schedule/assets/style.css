@@ -585,6 +585,15 @@ button {
   filter: brightness(0.94);
 }
 
+.lesson.is-inferred {
+  border-left-style: dashed;
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 6px,
+    color-mix(in srgb, var(--cat-color, var(--accent)) 6%, transparent) 6px 12px
+  );
+}
+
 :root[data-theme="dark"] .lesson:active {
   filter: brightness(1.18);
 }

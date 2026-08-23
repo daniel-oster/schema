@@ -74,6 +74,7 @@ function mergeLessons(lessons) {
     time_end: e.time_end,
     teacher: [...e.teachers].join(", "),
     room: [...e.rooms].join(", "),
+    inferred: e.inferred || false,
   }));
 }
 
@@ -207,6 +208,9 @@ function buildLessonModal(body, { lesson, schoolName, dayLabel, lunchDishes, lun
   body.appendChild(el("span", { class: "modal-eyebrow", style: `--cat-color:var(--cat-${cat})`, text: schoolName }));
   body.appendChild(el("h3", { class: "modal-title", text: lesson.subject || "(okänt)" }));
   body.appendChild(el("p", { class: "modal-time", text: `${dayLabel} · ${lesson.time_start}–${lesson.time_end}` }));
+  if (lesson.inferred) {
+    body.appendChild(el("p", { class: "modal-note", text: "Uppskattad lunchtid utifrån schemats lucka — inte hämtad direkt från Skola24." }));
+  }
 
   const rows = [];
   if (lesson.teacher) rows.push(["Lärare", lesson.teacher]);
@@ -246,7 +250,7 @@ function buildLessonBlock(lesson, top, height, leftPct, widthPct, ctx, dateIso) 
 
   const block = el("button", {
     type: "button",
-    class: `lesson tier-${tier}`,
+    class: `lesson tier-${tier}${lesson.inferred ? " is-inferred" : ""}`,
     style: `top:${top}px; height:${height}px; left:calc(${leftPct}% + 3px); width:calc(${widthPct}% - 6px); --cat-color:var(--cat-${cat}); --cat-tint:var(--cat-${cat}-tint);`,
   });
 

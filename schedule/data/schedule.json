@@ -640,6 +640,33 @@
             "day_of_week": 5,
             "time_start": "12:10",
             "time_end": "13:30"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:30",
+            "time_end": "12:10",
+            "inferred": true
           }
         ],
         "2026-W35": [
@@ -882,6 +909,51 @@
             "day_of_week": 5,
             "time_start": "12:10",
             "time_end": "13:30"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "11:20",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:30",
+            "time_end": "12:10",
+            "inferred": true
           }
         ]
       },

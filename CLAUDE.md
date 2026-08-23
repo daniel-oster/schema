@@ -74,7 +74,17 @@ Structure:
   week (configurable via `--weeks-ahead`) from Skola24 for every entry
   in `schedule/scripts/schools.json` and writes `schedule/data/schedule.json`.
   For entries with a `lunch_id`, also fetches that week's lunch menu
-  from Matilda Menu and attaches it under `lunch`/`lunch_note`.
+  from Matilda Menu and attaches it under `lunch`/`lunch_note`. Skola24
+  lists an explicit "Lunch" lesson for some schools (Lugnetgymnasiet)
+  but not others (grundskolor, e.g. Tunets skola, just leave a gap
+  around midday). When a day has a fetched menu but no explicit lunch
+  lesson, `add_inferred_lunch`/`infer_lunch_gap` synthesize one from the
+  widest schedule gap inside a ~10:00–13:30 window, tagged
+  `"inferred": true`. The frontend carries that flag through
+  (`mergeLessons` in `app.js`) and both marks the block visually
+  (`.lesson.is-inferred`, a dashed/hatched border) and says so in its
+  modal — it's a guess from the day's timetable shape, not official
+  Skola24 data, so never present it as equally authoritative.
 - `schedule/scripts/skola24.py` — the vendored Skola24 client (same
   code as `verktyg`'s `skola24-schema/skola24.py`). If you fix a bug in
   one, port it to the other.
