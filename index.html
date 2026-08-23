@@ -11,41 +11,53 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧰</text></svg>">
 <style>
   :root {
-    --bg: #f2f3f7;
+    --bg: #e9ecf2;
     --surface: #ffffff;
-    --border: #d8dbe4;
-    --text: #1b1e27;
-    --text-muted: #5c6272;
-    --text-faint: #8990a1;
-    --accent: #3454d1;
-    --accent-tint: #e7ebfb;
-    --shadow: 0 1px 2px rgba(23, 26, 38, 0.06), 0 8px 24px -12px rgba(23, 26, 38, 0.18);
+    --surface-2: #eef0f5;
+    --border: #c9cfdb;
+    --rule: #d5dae5;
+    --text: #14171f;
+    --text-muted: #555c6c;
+    --text-faint: #838b9c;
+    --ink: #14171f;
+    --accent: #23499e;
+    --school-a: #0d7a68;
+    --school-b: #9a6410;
+    --shadow: 0 1px 0 rgba(20, 23, 31, 0.06), 0 18px 40px -22px rgba(20, 23, 31, 0.45);
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #12141b;
-      --surface: #1a1d26;
-      --border: #343a48;
-      --text: #e8eaf1;
-      --text-muted: #9aa1b3;
-      --text-faint: #6c7386;
-      --accent: #8098ff;
-      --accent-tint: #212a4a;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+      --bg: #0e1116;
+      --surface: #161a21;
+      --surface-2: #1c212a;
+      --border: #303743;
+      --rule: #232935;
+      --text: #e7eaf1;
+      --text-muted: #98a0b1;
+      --text-faint: #6a7284;
+      --ink: #e7eaf1;
+      --accent: #8aa6ff;
+      --school-a: #43cfb4;
+      --school-b: #e6ae52;
+      --shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 22px 46px -24px rgba(0, 0, 0, 0.85);
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #12141b;
-    --surface: #1a1d26;
-    --border: #343a48;
-    --text: #e8eaf1;
-    --text-muted: #9aa1b3;
-    --text-faint: #6c7386;
-    --accent: #8098ff;
-    --accent-tint: #212a4a;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+      --bg: #0e1116;
+    --surface: #161a21;
+    --surface-2: #1c212a;
+    --border: #303743;
+    --rule: #232935;
+    --text: #e7eaf1;
+    --text-muted: #98a0b1;
+    --text-faint: #6a7284;
+    --ink: #e7eaf1;
+    --accent: #8aa6ff;
+    --school-a: #43cfb4;
+    --school-b: #e6ae52;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 22px 46px -24px rgba(0, 0, 0, 0.85);
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
@@ -86,7 +98,7 @@
   }
   .tools {
     display: grid;
-    gap: 14px;
+    gap: 22px;
   }
   .tool-card {
     display: flex;
@@ -97,7 +109,7 @@
     color: var(--text);
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-left: 0;
     padding: 20px 22px;
     box-shadow: var(--shadow);
   }
@@ -117,6 +129,64 @@
     font-size: 20px;
     flex: none;
   }
+  /* Direct links to one class, hung off the tool they belong to rather
+     than listed as siblings of it — they are ways into Veckoschema, not
+     separate tools. */
+  .tool {
+    border-left: 3px solid var(--accent);
+  }
+  .tool-links {
+    display: grid;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--border);
+    border-left: 0;
+    border-top: 0;
+  }
+  .tool-links__label {
+    grid-column: 1 / -1;
+    background: var(--surface-2);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 8px 22px;
+  }
+  .tool-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    padding: 13px 22px;
+  }
+  .tool-link__dot {
+    width: 9px;
+    height: 9px;
+    flex: none;
+  }
+  .tool-link__name {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px;
+  }
+  .tool-link__class {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-left: 7px;
+  }
+  .tool-link__arrow {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--accent);
+    flex: none;
+  }
+  .tool-link:hover,
+  .tool-link:active {
+    background: var(--surface-2);
+  }
   footer {
     margin-top: 36px;
     font-size: 12.5px;
@@ -133,13 +203,33 @@
   <p class="lead">Samlingssida för digitala verktyg som publiceras här som GitHub Pages. Fler tillkommer efterhand — varje verktyg bor i sin egen mapp.</p>
 
   <div class="tools">
-    <a class="tool-card" href="schedule/">
-      <div>
-        <div class="tool-card__title">Veckoschema</div>
-        <div class="tool-card__desc">Lugnetgymnasiet och Tunets skola, innevarande + nästa vecka</div>
+    <div class="tool">
+      <a class="tool-card" href="schedule/">
+        <div>
+          <div class="tool-card__title">Veckoschema</div>
+          <div class="tool-card__desc">Lugnetgymnasiet och Tunets skola, innevarande + nästa vecka</div>
+        </div>
+        <span class="tool-card__arrow">→</span>
+      </a>
+      <div class="tool-links">
+        <span class="tool-links__label">Gå direkt till ett schema</span>
+        <a class="tool-link" href="schedule/lugnetgymnasiet-es26esm.html">
+          <span class="tool-link__dot" style="background: var(--school-a)"></span>
+          <span class="tool-link__name">Lugnetgymnasiet<span class="tool-link__class">ES26ESM</span></span>
+          <span class="tool-link__arrow">→</span>
+        </a>
+        <a class="tool-link" href="schedule/tunets-skola-tus-5-26.html">
+          <span class="tool-link__dot" style="background: var(--school-b)"></span>
+          <span class="tool-link__name">Tunets skola<span class="tool-link__class">TuS-5-26</span></span>
+          <span class="tool-link__arrow">→</span>
+        </a>
+        <a class="tool-link" href="schedule/links.html">
+          <span class="tool-link__dot" style="background: var(--text-faint)"></span>
+          <span class="tool-link__name">Alla länkar</span>
+          <span class="tool-link__arrow">→</span>
+        </a>
       </div>
-      <span class="tool-card__arrow">→</span>
-    </a>
+    </div>
   </div>
 
   <footer>Källkod på <a href="https://github.com/daniel-oster/schema" target="_blank" rel="noopener">GitHub</a></footer>

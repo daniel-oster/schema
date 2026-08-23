@@ -21,7 +21,10 @@ themselves.
    `scripts/` generator if it needs one) inside that folder, using
    relative paths so the folder works if it's ever moved.
 3. Add a card to the root `index.html`'s `.tools` list linking to
-   `<tool-name>/`.
+   `<tool-name>/`. If the tool has meaningful sub-destinations (the way
+   Veckoschema has one page per class), hang them off that card as a
+   `.tool-links` list rather than adding them as sibling cards — they
+   are ways into one tool, not separate tools.
 4. If the tool needs to vendor logic from another repo (e.g. a client
    library from `daniel-oster/verktyg`), copy the minimal amount needed
    into `<tool-name>/scripts/` rather than adding a cross-repo runtime
@@ -46,15 +49,25 @@ whole thing is one fixed-viewport "stage" (see `.stage` in
 unusable on a phone. Nothing on `schedule/*.html` ever scrolls; swiping
 changes what's showing instead:
 
-- Swipe **left/right** (or press ←/→) → previous/next week.
+- **Landscape** → the whole week (Mon–Fri), sized to fit exactly.
+- **Portrait** → one day at a time — a full week is too narrow to read
+  in portrait, so don't try to cram it in; single-day is the deliberate
+  portrait behavior, not a fallback. It opens on today (clamped to
+  Mon–Fri).
+- Swipe **left/right** (or press ←/→) → **whatever the mode is showing**:
+  the previous/next *week* in the week grid, the previous/next *day* in
+  single-day mode, rolling past Friday into the next week's Monday. The
+  marker row in the chrome bar switches to match (weekdays vs. weeks) so
+  the gesture is never ambiguous. Stepping a whole week when the screen
+  shows a single day is the wrong unit and was reported as broken —
+  don't reintroduce it.
 - Swipe **up/down** (or press ↑/↓) → previous/next class (no-op on a
   locked single-class page, see below).
-- **Landscape** → the whole week (Mon–Fri), sized to fit exactly.
-- **Portrait** → just "today" (today's weekday, clamped to Mon–Fri;
-  swiping weeks keeps that same weekday and jumps to the other week's
-  date) — a full week is too narrow to read in portrait, so don't try
-  to cram it in; single-day is the deliberate portrait behavior, not a
-  fallback.
+
+Nothing scrolls, in either mode, which is *why* the fit-to-screen and
+minimum-legibility work below has to hold: if a block doesn't fit, there
+is no scrollbar to reach it with, and the vertical gesture belongs to
+class switching.
 
 Structure:
 
@@ -72,27 +85,67 @@ Structure:
   not read `schools.json`.
 - `schedule/assets/style.css` — design tokens (light + dark themes),
   the `.stage`/`.chrome` app shell, and the day-grid/lesson/modal
-  component styles.
+  component styles. The visual direction is a **departure board**:
+  square corners everywhere (there is no `border-radius` anywhere in
+  this repo — keep it that way), a mono hour rail, hairline day
+  columns, and lessons as flat slabs with a solid signal bar down the
+  left edge. Subject colour comes from twelve `--cat-*` swatches;
+  "today" and the now-line are drawn in `--ink` (plain black/white)
+  precisely so they can never be mistaken for a subject. Lunch is
+  deliberately *not* a subject colour — it uses the neutral
+  `--lunch-*` tokens so the teaching day is the coloured thing.
 - `schedule/assets/app.js` — `initApp({ lockedSlug? })` loads
   `data/schedule.json`, then `renderFitGrid` draws the grid sized
   exactly to `#stage-inner`'s real pixel box (`getBoundingClientRect`)
   for the current class/week/orientation — not a fixed px-per-hour, so
-  it always fills the screen with no scroll. Lessons are positioned by
-  actual time (merges Skola24's duplicate multi-teacher rows, splits
-  genuinely overlapping lessons into side-by-side columns, color-codes
-  by subject); a block's rendered height is never forced past its
-  actual time slot — columns already guarantee lessons sharing one
-  don't overlap in time, so padding a block past that would visually
-  cover the next one. Instead, blocks below a size threshold drop to a
-  more compact single-line layout (`TIER_*` constants,
-  `buildLessonBlock`) so short lessons stay legible instead of having
-  their text clipped — this matters even more now that a whole week has
-  to fit one screen. Tapping any lesson (or a day's lunch chip) opens a
-  bottom-sheet modal (`openModal`/`buildLessonModal`/`buildLunchModal`)
-  with full detail — phone-first, so it's a bottom sheet anchored to
-  the thumb, not a centered dialog. `attachSwipe` reads pointer events
-  on `#stage` (works for touch and mouse, so it's testable with a mouse
-  drag too) and also binds arrow keys for keyboard/desktop use.
+  it always fills the screen with no scroll.
+
+  The layout exists to answer one question: *can you read every block
+  without tapping it?* Four things serve that, and each is easy to
+  regress:
+
+  1. `mergeLessons` folds Skola24's duplicate multi-teacher rows, then
+     `coalesceRuns` glues **contiguous rows of the same
+     subject/teacher/room** back into one block. Skola24 splits a
+     double period into e.g. 09:40–09:50 plus 09:50–10:40; rendered
+     literally that's an unlabellable 10-minute sliver. It matches on a
+     key rather than on "the previous block", because a parallel course
+     often starts between a run's two halves.
+  2. `layoutColumns` splits a day into **clusters that actually
+     overlap** and gives each cluster its own column count, then lets a
+     block expand rightwards over columns nothing occupies. Laying a
+     whole day out on the day's worst-case column count squeezes every
+     block to half width because two courses clash once at 10:40.
+  3. `enforceMinHeights` guarantees `MIN_BLOCK_H`, pushing later blocks
+     in the same column down and pinning the last one to the bottom
+     edge, so a 20-minute lesson is legible without covering its
+     neighbour.
+  4. `contentPlan` **measures** text against the fonts the browser
+     really resolved (canvas `measureText`, `wrapCount`) and steps the
+     type down through `TYPE_STEPS` until the subject genuinely fits;
+     only then does it spend leftover lines on the time and the
+     teacher/room. Never swap this back for an average-glyph-width
+     estimate — the fallback face when Google Fonts fails is much wider
+     than Archivo Narrow, which is also why the app re-renders on
+     `document.fonts.ready`. `splitSubject` strips Skola24's
+     ", Nivå 1b" suffix off the headline and shows it as metadata,
+     which is most of the width the subject needs.
+
+  Colour is assigned per school by `buildCategoryMap` from its sorted
+  set of subjects, so two courses that run against each other (Svenska
+  vs. Svenska som andraspråk) can't land on the same swatch and a
+  subject keeps its colour across weeks — don't go back to hashing the
+  subject name. A lunch block's headline is the **dish**, tagged
+  `LUNCH hh:mm` in its time line (there is no separate lunch chip in
+  the day header any more — it truncated the menu and stole height from
+  the grid); if the dish can't fit even at the smallest type step it
+  falls back to the word "Lunch" rather than ellipsing a menu into
+  nonsense. Tapping any lesson opens a bottom-sheet modal
+  (`openModal`/`buildLessonModal`) with full detail — phone-first, so
+  it's a bottom sheet anchored to the thumb, not a centered dialog.
+  `attachSwipe` reads pointer events on `#stage` (works for touch and
+  mouse, so it's testable with a mouse drag too) and also binds arrow
+  keys for keyboard/desktop use.
 - `schedule/data/schedule.json` — generated data. Never hand-edit;
   regenerate it instead (see below). Structure: `weeks` (list of
   `{year, week, start_date, end_date}`) and `schools` (list of
@@ -111,7 +164,7 @@ Structure:
   lesson, `add_inferred_lunch`/`infer_lunch_gap` synthesize one from the
   widest schedule gap inside a ~10:00–13:30 window, tagged
   `"inferred": true`. The frontend carries that flag through
-  (`mergeLessons` in `app.js`) and both marks the block visually
+  (`mergeLessons`/`coalesceRuns` in `app.js`) and both marks the block visually
   (`.lesson.is-inferred`, a dashed/hatched border) and says so in its
   modal — it's a guess from the day's timetable shape, not official
   Skola24 data, so never present it as equally authoritative.
@@ -141,6 +194,50 @@ Pages serves `main` directly, that commit is the deploy.
 
 Adding a class: edit `schedule/scripts/schools.json`, regenerate, then
 copy an existing `schedule/<slug>.html` to a new slug, update its
-`initApp({ lockedSlug: "..." })` call and `<title>`, and add a card for
-it to `schedule/links.html` (that page is hand-maintained, not
-generated from `schools.json`).
+`initApp({ lockedSlug: "..." })` call and `<title>`, and add a row for
+it to **both** `schedule/links.html` and the `.tool-links` list under
+the Veckoschema card in the root `index.html`. Both are hand-maintained
+— neither is generated from `schools.json`.
+
+## Checking the layout
+
+`schedule/scripts/check_layout.mjs` is the guard on the one property the
+grid exists for: **can you read every block without tapping it?** Run it
+after any change to `app.js`, `style.css`, or the data shape:
+
+```
+node schedule/scripts/check_layout.mjs             # assert; exits 1 on failure
+node schedule/scripts/check_layout.mjs --verbose   # print every case
+node schedule/scripts/check_layout.mjs --shots out # also write PNGs to out/
+```
+
+It sweeps every class x week x viewport x theme (84 checks today, and it
+reads the class and week counts out of `data/schedule.json`, so adding a
+class widens the sweep automatically) and fails on a clipped subject, two
+lessons overlapping, a block escaping the grid box, a grid that does not
+fit its container, or any page error. It also pins the clock to a weekday
+inside the data range so the "today" column and the now-line actually
+render — those states are invisible on a weekend and were shipped
+unverified once because of it.
+
+Do not eyeball this instead. The failure mode is a single subject silently
+ellipsed to "S." at one screen size, in one theme, on one week, for one
+class; there are far too many combinations to catch by looking.
+
+It needs Playwright and Chromium:
+
+```
+npm i -D playwright && npx playwright install chromium
+```
+
+In a sandbox that ships Chromium already, set `PLAYWRIGHT_BROWSERS_PATH`
+and skip the download — the script globs that directory for the versioned
+`chromium-*/chrome-linux/chrome` rather than hard-coding a version, and
+resolves the Playwright module from a global install if there is no local
+one (`NODE_PATH=/opt/node22/lib/node_modules` in Claude Code on the web).
+
+**The webfont caveat.** Sandboxes usually cannot reach Google Fonts, so a
+run there measures against the fallback face and says so at the end. That
+is the *wider* face, so a pass without the webfont still holds with it —
+but it also means the screenshots are not what a phone renders. Judge
+type and spacing from a real device, not from a sandbox PNG.
