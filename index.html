@@ -3,43 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Veckoschema</title>
-<meta name="description" content="Skolschema för Lugnetgymnasiet och Tunets skola, innevarande och nästa vecka.">
+<title>Verktygslådan</title>
+<meta name="description" content="Samlingssida för familjens digitala verktyg, publicerade som GitHub Pages.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧰</text></svg>">
+<style>
+  :root {
+    --bg: #f2f3f7;
+    --surface: #ffffff;
+    --border: #d8dbe4;
+    --text: #1b1e27;
+    --text-muted: #5c6272;
+    --text-faint: #8990a1;
+    --accent: #3454d1;
+    --accent-tint: #e7ebfb;
+    --shadow: 0 1px 2px rgba(23, 26, 38, 0.06), 0 8px 24px -12px rgba(23, 26, 38, 0.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12141b;
+      --surface: #1a1d26;
+      --border: #343a48;
+      --text: #e8eaf1;
+      --text-muted: #9aa1b3;
+      --text-faint: #6c7386;
+      --accent: #8098ff;
+      --accent-tint: #212a4a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12141b;
+    --surface: #1a1d26;
+    --border: #343a48;
+    --text: #e8eaf1;
+    --text-muted: #9aa1b3;
+    --text-faint: #6c7386;
+    --accent: #8098ff;
+    --accent-tint: #212a4a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 20px;
+    width: 100%;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  h1 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 5vw, 38px);
+    letter-spacing: -0.015em;
+    margin: 8px 0 10px;
+    text-wrap: balance;
+  }
+  p.lead {
+    color: var(--text-muted);
+    max-width: 55ch;
+    margin: 0 0 32px;
+  }
+  .tools {
+    display: grid;
+    gap: 14px;
+  }
+  .tool-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+  }
+  .tool-card__title {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .tool-card__desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .tool-card__arrow {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--accent);
+    font-size: 20px;
+    flex: none;
+  }
+  footer {
+    margin-top: 36px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+  footer a { color: var(--text-faint); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header__inner">
-    <a class="brand" href="index.html">
-      <span class="brand__mark">V</span>
-      <span class="brand__name">Veckoschema</span>
+<main>
+  <span class="eyebrow">daniel-oster / schema</span>
+  <h1>Verktygslådan</h1>
+  <p class="lead">Samlingssida för digitala verktyg som publiceras här som GitHub Pages. Fler tillkommer efterhand — varje verktyg bor i sin egen mapp.</p>
+
+  <div class="tools">
+    <a class="tool-card" href="schedule/">
+      <div>
+        <div class="tool-card__title">Veckoschema</div>
+        <div class="tool-card__desc">Lugnetgymnasiet och Tunets skola, innevarande + nästa vecka</div>
+      </div>
+      <span class="tool-card__arrow">→</span>
     </a>
-    <div id="week-switcher-slot"></div>
-  </div>
-</header>
-
-<main class="page">
-  <div class="hero">
-    <span class="hero__eyebrow">Lugnetgymnasiet · Tunets skola</span>
-    <h1>Två skolor, ett schema</h1>
-    <p>Innevarande och nästa vecka för båda klasserna, hämtat direkt från Skola24 och uppdaterat automatiskt varje dag.</p>
   </div>
 
-  <div id="app">
-    <p class="load-state">Läser in schema…</p>
-  </div>
-
-  <footer class="site-footer">
-    <span id="updated-note"></span>
-    <span>Data från <a href="https://web.skola24.se" target="_blank" rel="noopener">Skola24</a> · källkod på <a href="https://github.com/daniel-oster/schema" target="_blank" rel="noopener">GitHub</a></span>
-  </footer>
+  <footer>Källkod på <a href="https://github.com/daniel-oster/schema" target="_blank" rel="noopener">GitHub</a></footer>
 </main>
-
-<script src="assets/app.js"></script>
-<script>initIndexPage();</script>
 </body>
 </html>

@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "scripts/**"
+      - "schedule/scripts/**"
       - ".github/workflows/update-schedule.yml"
 
 permissions:
@@ -28,19 +28,19 @@ jobs:
           python-version: "3.12"
 
       - name: Installera beroenden
-        run: pip install -r scripts/requirements.txt
+        run: pip install -r schedule/scripts/requirements.txt
 
       - name: Generera schedule.json
-        run: python3 scripts/generate_schedule.py --weeks-ahead 1
+        run: python3 schedule/scripts/generate_schedule.py --weeks-ahead 1
 
       - name: Committa om något ändrats
         run: |
-          if git diff --quiet -- data/schedule.json; then
+          if git diff --quiet -- schedule/data/schedule.json; then
             echo "Inga ändringar."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/schedule.json
+          git add schedule/data/schedule.json
           git commit -m "Uppdatera schema ($(date -u +%Y-%m-%d))"
           git push
