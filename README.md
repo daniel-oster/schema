@@ -15,13 +15,17 @@ Sajten har en översiktssida (`schedule/index.html`) med båda skolorna, samt
 en egen sida per klass (`schedule/lugnetgymnasiet-es26esm.html`,
 `schedule/tunets-skola-tus-5-26.html`) — bra att bokmärka på telefonen.
 Alla sidor visar innevarande och nästa vecka och läser data från
-`schedule/data/schedule.json`.
+`schedule/data/schedule.json`. Byggd för mobilen: att trycka på en
+lektion (eller en dags lunch-chip) öppnar en bottom sheet med mer info
+— lärare, sal och, om skolan har ett `lunch_id` konfigurerat, dagens
+matsedel hämtad från Matilda Menu.
 
 ### Uppdatera schemat
 
 `schedule/data/schedule.json` genereras av
 `schedule/scripts/generate_schedule.py`, som hämtar schema direkt från
-Skola24 för klasserna i `schedule/scripts/schools.json`.
+Skola24 för klasserna i `schedule/scripts/schools.json`, och (för
+klasser med ett `lunch_id`) lunchmeny från Matilda Menu.
 
 Körs manuellt:
 
@@ -56,9 +60,10 @@ schedule/tunets-skola-tus-5-26.html        Egen sida för Tunets skola / TuS-5-2
 schedule/assets/style.css                  Design/tema (ljust + mörkt)
 schedule/assets/app.js                     Renderar schemat från data/schedule.json
 schedule/data/schedule.json                Genererad data (innevarande + nästa vecka)
-schedule/scripts/generate_schedule.py      Hämtar schema från Skola24 och skriver JSON
+schedule/scripts/generate_schedule.py      Hämtar schema (+ lunch) och skriver JSON
 schedule/scripts/skola24.py                Skola24-klient (vendorad kopia)
-schedule/scripts/schools.json              Vilka skolor/klasser som ska hämtas
+schedule/scripts/matilda_menu.py           Matilda Menu-klient (vendorad kopia)
+schedule/scripts/schools.json              Vilka skolor/klasser (+ ev. lunch_id) som ska hämtas
 ```
 
 ## Aktivera GitHub Pages (en gång)

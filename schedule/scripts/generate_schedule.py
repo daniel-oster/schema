@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from matilda_menu import MatildaMenuError, fetch_week_menu
 from skola24 import Lesson, Skola24Error, get_class_schedule, iso_week_for
 
 SCRIPT_DIR = Path(__file__).parent
@@ -61,6 +62,41 @@ def lesson_to_dict(lesson: Lesson) -> dict:
     }
 
 
+def fetch_lunch_weeks(lunch_id: str, week_keys: list[tuple[int, int]], name: str) -> tuple[dict, str | None, bool]:
+    """Hämtar lunchmenyn för varje given (år, vecka) och returnerar
+    {"<year>-W<week>": {"<isoweekday>": [{"name": ..., "vegetarian": bool}, ...]}}
+    plus en eventuell gemensam fotnot (t.ex. "grönsaksbuffé serveras varje dag")."""
+    weeks: dict[str, dict[str, list[dict]]] = {}
+    note: str | None = None
+    ok = True
+    for wyear, wweek in week_keys:
+        key = f"{wyear}-W{wweek:02d}"
+        monday = date.fromisocalendar(wyear, wweek, 1)
+        try:
+            days = fetch_week_menu(lunch_id, monday)
+        except MatildaMenuError as exc:
+            print(f"Fel vid hämtning av matsedel för {name} v{wweek}: {exc}", file=sys.stderr)
+            ok = False
+            weeks[key] = {}
+            continue
+        by_day: dict[str, list[dict]] = {}
+        for day in days:
+            if day.date.isoweekday() > 5 or not day.courses:
+                continue
+            if note is None and day.description:
+                note = day.description.strip()
+            dishes = [
+                {
+                    "name": f"{c.option_name}: {c.name}" if c.option_name else c.name,
+                    "vegetarian": "Vegetarisk" in c.tags,
+                }
+                for c in day.courses
+            ]
+            by_day[str(day.date.isoweekday())] = dishes
+        weeks[key] = by_day
+    return weeks, note, ok
+
+
 def build_schedule(entries: list[dict], weeks_ahead: int) -> tuple[dict, bool]:
     today = date.today()
     base_year, base_week = iso_week_for(today)
@@ -96,15 +132,24 @@ def build_schedule(entries: list[dict], weeks_ahead: int) -> tuple[dict, bool]:
                 ok = False
                 lessons = []
             week_lessons[key] = [lesson_to_dict(l) for l in lessons]
-        schools.append(
-            {
-                "name": name,
-                "school": entry["school"],
-                "class": entry["class"],
-                "slug": slug,
-                "weeks": week_lessons,
-            }
-        )
+
+        school_entry = {
+            "name": name,
+            "school": entry["school"],
+            "class": entry["class"],
+            "slug": slug,
+            "weeks": week_lessons,
+        }
+
+        lunch_id = entry.get("lunch_id")
+        if lunch_id:
+            lunch_weeks, lunch_note, lunch_ok = fetch_lunch_weeks(lunch_id, week_keys, name)
+            school_entry["lunch"] = lunch_weeks
+            if lunch_note:
+                school_entry["lunch_note"] = lunch_note
+            ok = ok and lunch_ok
+
+        schools.append(school_entry)
 
     return {
         "generated_at": today.isoformat(),

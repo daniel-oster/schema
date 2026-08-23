@@ -52,19 +52,40 @@ Structure:
 - `schedule/assets/app.js` — fetches `data/schedule.json` and renders
   the proportional day-grid (lessons positioned by actual time, merges
   Skola24's duplicate multi-teacher rows, splits genuinely overlapping
-  lessons into side-by-side columns, color-codes by subject).
+  lessons into side-by-side columns, color-codes by subject). A block's
+  rendered height is never forced past its actual time slot — columns
+  already guarantee lessons sharing one don't overlap in time, so
+  padding a block past that would visually cover the next one. Instead,
+  blocks below a size threshold drop to a more compact single-line
+  layout (see the `TIER_*` constants and `buildLessonBlock`) so short
+  lessons stay legible instead of having their text clipped. Tapping any
+  lesson (or a day's lunch chip) opens a bottom-sheet modal
+  (`openModal`/`buildLessonModal`/`buildLunchModal`) with full detail —
+  this is a phone-first site, so the modal is a bottom sheet anchored to
+  the thumb, not a centered dialog.
 - `schedule/data/schedule.json` — generated data. Never hand-edit;
   regenerate it instead (see below). Structure: `weeks` (list of
   `{year, week, start_date, end_date}`) and `schools` (list of
-  `{name, school, class, slug, weeks: {"<year>-W<week>": [lesson, ...]}}`).
+  `{name, school, class, slug, weeks: {"<year>-W<week>": [lesson, ...]},
+  lunch: {"<year>-W<week>": {"<isoweekday>": [{name, vegetarian}, ...]}},
+  lunch_note}`). `lunch`/`lunch_note` are only present for schools whose
+  config entry has a `lunch_id`.
 - `schedule/scripts/generate_schedule.py` — fetches current + next
   week (configurable via `--weeks-ahead`) from Skola24 for every entry
   in `schedule/scripts/schools.json` and writes `schedule/data/schedule.json`.
+  For entries with a `lunch_id`, also fetches that week's lunch menu
+  from Matilda Menu and attaches it under `lunch`/`lunch_note`.
 - `schedule/scripts/skola24.py` — the vendored Skola24 client (same
   code as `verktyg`'s `skola24-schema/skola24.py`). If you fix a bug in
   one, port it to the other.
+- `schedule/scripts/matilda_menu.py` — the vendored Matilda Menu client
+  (same code as `verktyg`'s `skolmat/matilda_menu.py`). Same porting
+  rule as above.
 - `schedule/scripts/schools.json` — which host/school/class combos to
-  fetch. Same format as `verktyg`'s `skola24-schema/schools.json`.
+  fetch, same format as `verktyg`'s `skola24-schema/schools.json`, plus
+  an optional `lunch_id` (a Matilda Menu distributor id, same format as
+  `verktyg`'s `skolmat/schools.json`) to pull that school's lunch menu
+  in too. Omit `lunch_id` for a school with no menu to show.
 
 Regenerating data:
 

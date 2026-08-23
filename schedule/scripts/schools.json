@@ -3,12 +3,14 @@
     "name": "Lugnetgymnasiet / ES26ESM",
     "host": "falun.skola24.se",
     "school": "Lugnetgymnasiet",
-    "class": "ES26ESM"
+    "class": "ES26ESM",
+    "lunch_id": "69c38ea3eb9f0d92aa55fc58_lugnetgymnasiet"
   },
   {
     "name": "Tunets skola / TuS-5-26",
     "host": "borlange.skola24.se",
     "school": "Tunets skola",
-    "class": "TuS-5-26"
+    "class": "TuS-5-26",
+    "lunch_id": "69c264e7eb9f0d92aa55ef37_grundskola"
   }
 ]

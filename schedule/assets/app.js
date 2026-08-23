@@ -2,14 +2,26 @@
 
 const WEEKDAY_NAMES = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
 const WEEKDAY_FULL = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
+const MONTH_NAMES = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
 const CATEGORY_COUNT = 10;
 const HOUR_HEIGHT = 64; // px per hour in the grid
 const DEFAULT_DAY_START = 8; // fallback axis bounds when a week has no lessons
 const DEFAULT_DAY_END = 16;
 
+// Pixel-height thresholds for how much a lesson block can show inline
+// before it hands off to the tap-to-open modal for the rest.
+const TIER_FULL_MIN = 56; // room for time + subject + a third line
+const TIER_COMPACT_MIN = 22; // room for one combined "time subject" line
+
 function fmtDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return `${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}`;
+}
+
+function fullDayLabel(dayNum, dateIso) {
+  if (!dateIso) return WEEKDAY_FULL[dayNum - 1] || "";
+  const [, m, d] = dateIso.split("-").map(Number);
+  return `${WEEKDAY_FULL[dayNum - 1]} ${d} ${MONTH_NAMES[m - 1]}`;
 }
 
 function weekLabel(week) {
@@ -31,6 +43,10 @@ function hashString(str) {
 
 function categoryIndex(subject) {
   return hashString(subject || "") % CATEGORY_COUNT;
+}
+
+function isLunch(subject) {
+  return /lunch/i.test(subject || "");
 }
 
 function minutesOf(hhmm) {
@@ -62,7 +78,9 @@ function mergeLessons(lessons) {
 }
 
 /** Greedy interval-graph column assignment so overlapping lessons split
- * width instead of stacking illegibly on top of each other. */
+ * width instead of stacking illegibly on top of each other. Lessons that
+ * land in the same column are guaranteed non-overlapping in time, so a
+ * block's height can never be forced past where the next one starts. */
 function layoutColumns(lessons) {
   const sorted = [...lessons].sort((a, b) => minutesOf(a.time_start) - minutesOf(b.time_start));
   const colEnds = []; // last end-minute occupying each column
@@ -114,8 +132,162 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
-/** Builds the full day-grid DOM for one school entry's lessons in one week. */
-function renderDayGrid(rawLessons) {
+/* ------------------------------- Modal ---------------------------------- */
+
+let modalRoot = null;
+let modalReturnFocus = null;
+
+function ensureModalRoot() {
+  if (modalRoot) return modalRoot;
+  modalRoot = el("div", { class: "modal-root" });
+  document.body.appendChild(modalRoot);
+  return modalRoot;
+}
+
+function onModalKeydown(e) {
+  if (e.key === "Escape") closeModal();
+}
+
+function closeModal() {
+  if (!modalRoot || !modalRoot.classList.contains("is-open")) return;
+  modalRoot.classList.remove("is-open");
+  document.body.classList.remove("modal-open");
+  window.removeEventListener("keydown", onModalKeydown);
+  const toFocus = modalReturnFocus;
+  modalReturnFocus = null;
+  const clear = () => {
+    modalRoot.innerHTML = "";
+  };
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    clear();
+  } else {
+    modalRoot.addEventListener("transitionend", clear, { once: true });
+    setTimeout(clear, 400); // safety net if transitionend doesn't fire
+  }
+  if (toFocus && typeof toFocus.focus === "function") toFocus.focus();
+}
+
+function openModal(buildContent, triggerEl) {
+  const root = ensureModalRoot();
+  modalReturnFocus = triggerEl || null;
+  root.innerHTML = "";
+
+  const backdrop = el("div", { class: "modal-backdrop", onclick: closeModal });
+  const sheet = el("div", { class: "modal-sheet", role: "dialog", "aria-modal": "true" });
+  const handle = el("div", { class: "modal-handle", "aria-hidden": "true" });
+  const closeBtn = el("button", { class: "modal-close", type: "button", "aria-label": "Stäng", onclick: closeModal });
+  closeBtn.textContent = "✕";
+  const body = el("div", { class: "modal-body" });
+  buildContent(body);
+
+  sheet.appendChild(handle);
+  sheet.appendChild(closeBtn);
+  sheet.appendChild(body);
+  root.appendChild(backdrop);
+  root.appendChild(sheet);
+
+  document.body.classList.add("modal-open");
+  window.addEventListener("keydown", onModalKeydown);
+  requestAnimationFrame(() => root.classList.add("is-open"));
+}
+
+function menuList(dishes) {
+  const list = el("ul", { class: "modal-menu" });
+  for (const dish of dishes) {
+    const item = el("li", {});
+    if (dish.vegetarian) item.appendChild(el("span", { class: "veg-mark", "aria-label": "Vegetariskt", text: "🌱" }));
+    item.appendChild(document.createTextNode(dish.name));
+    list.appendChild(item);
+  }
+  return list;
+}
+
+function buildLessonModal(body, { lesson, schoolName, dayLabel, lunchDishes, lunchNote }) {
+  const cat = categoryIndex(lesson.subject);
+  body.appendChild(el("span", { class: "modal-eyebrow", style: `--cat-color:var(--cat-${cat})`, text: schoolName }));
+  body.appendChild(el("h3", { class: "modal-title", text: lesson.subject || "(okänt)" }));
+  body.appendChild(el("p", { class: "modal-time", text: `${dayLabel} · ${lesson.time_start}–${lesson.time_end}` }));
+
+  const rows = [];
+  if (lesson.teacher) rows.push(["Lärare", lesson.teacher]);
+  if (lesson.room) rows.push(["Sal", lesson.room]);
+  if (rows.length) {
+    const dl = el("dl", { class: "modal-meta" });
+    for (const [k, v] of rows) {
+      dl.appendChild(el("dt", { text: k }));
+      dl.appendChild(el("dd", { text: v }));
+    }
+    body.appendChild(dl);
+  }
+
+  if (lunchDishes && lunchDishes.length) {
+    body.appendChild(el("h4", { class: "modal-subheading", text: "Dagens lunch" }));
+    body.appendChild(menuList(lunchDishes));
+    if (lunchNote) body.appendChild(el("p", { class: "modal-note", text: lunchNote }));
+  } else if (!rows.length) {
+    body.appendChild(el("p", { class: "modal-empty", text: "Ingen mer information tillgänglig." }));
+  }
+}
+
+function buildLunchModal(body, { schoolName, dayLabel, dishes, note }) {
+  body.appendChild(el("span", { class: "modal-eyebrow", style: "--cat-color:var(--cat-6)", text: schoolName }));
+  body.appendChild(el("h3", { class: "modal-title", text: "Dagens lunch" }));
+  body.appendChild(el("p", { class: "modal-time", text: dayLabel }));
+  body.appendChild(menuList(dishes));
+  if (note) body.appendChild(el("p", { class: "modal-note", text: note }));
+}
+
+/* ---------------------------- Lesson blocks ------------------------------ */
+
+function buildLessonBlock(lesson, top, height, leftPct, widthPct, ctx, dateIso) {
+  const cat = categoryIndex(lesson.subject);
+  const tier = height >= TIER_FULL_MIN ? "full" : height >= TIER_COMPACT_MIN ? "compact" : "minimal";
+  const lunch = isLunch(lesson.subject) ? (ctx.lunchByDay[lesson.day_of_week] || null) : null;
+
+  const block = el("button", {
+    type: "button",
+    class: `lesson tier-${tier}`,
+    style: `top:${top}px; height:${height}px; left:calc(${leftPct}% + 3px); width:calc(${widthPct}% - 6px); --cat-color:var(--cat-${cat}); --cat-tint:var(--cat-${cat}-tint);`,
+  });
+
+  if (tier === "full") {
+    block.appendChild(el("span", { class: "lesson__time", text: `${lesson.time_start}–${lesson.time_end}` }));
+    block.appendChild(el("span", { class: "lesson__subject", text: lesson.subject || "(okänt)" }));
+    if (lunch && lunch.length) {
+      block.appendChild(el("span", { class: "lesson__meta", text: lunch.map((d) => d.name).join(" · ") }));
+    } else {
+      const metaParts = [lesson.teacher, lesson.room].filter(Boolean);
+      if (metaParts.length) {
+        block.appendChild(el("span", { class: "lesson__meta", text: metaParts.join(" · ") }));
+      }
+    }
+  } else if (tier === "compact") {
+    block.appendChild(el("span", { class: "lesson__time lesson__time--inline", text: lesson.time_start }));
+    block.appendChild(el("span", { class: "lesson__subject", text: lesson.subject || "(okänt)" }));
+  } else {
+    block.appendChild(el("span", { class: "lesson__subject", text: lesson.subject || "(okänt)" }));
+  }
+
+  block.addEventListener("click", () => {
+    openModal(
+      (body) =>
+        buildLessonModal(body, {
+          lesson,
+          schoolName: ctx.schoolName,
+          dayLabel: fullDayLabel(lesson.day_of_week, dateIso),
+          lunchDishes: lunch,
+          lunchNote: ctx.lunchNote,
+        }),
+      block
+    );
+  });
+
+  return block;
+}
+
+/** Builds the full day-grid DOM for one school entry's lessons in one week.
+ * ctx: { schoolName, lunchByDay: {"1": [...]}, lunchNote } */
+function renderDayGrid(rawLessons, ctx) {
   const merged = mergeLessons(rawLessons);
   const daysPresent = new Set(merged.map((l) => l.day_of_week));
   const dayNumbers = [1, 2, 3, 4, 5].concat([6, 7].filter((d) => daysPresent.has(d)));
@@ -127,6 +299,7 @@ function renderDayGrid(rawLessons) {
 
   const gridCols = `72px repeat(${dayNumbers.length}, 1fr)`;
   const today = todayIso();
+  const dayDates = computeDayDates(dayNumbers);
 
   const wrap = el("div", { class: "grid-scroll" });
   const grid = el("div", { class: "day-grid", style: `--grid-cols:${gridCols}` });
@@ -134,15 +307,34 @@ function renderDayGrid(rawLessons) {
   // Header row
   const headerRow = el("div", { class: "day-grid__row-header" });
   headerRow.appendChild(el("div", { class: "gutter-cell" }));
-  const dayDates = computeDayDates(rawLessons, dayNumbers);
   for (const dayNum of dayNumbers) {
-    const isToday = dayDates.get(dayNum) === today;
+    const dateStr = dayDates.get(dayNum);
+    const isToday = dateStr === today;
     const headerCell = el("div", { class: "day-col__header" + (isToday ? " is-today" : "") });
     headerCell.appendChild(el("span", { class: "weekday", text: WEEKDAY_NAMES[dayNum - 1] }));
-    const dateStr = dayDates.get(dayNum);
     if (dateStr) {
       headerCell.appendChild(document.createElement("br"));
       headerCell.appendChild(el("span", { class: "date", text: fmtDate(dateStr) }));
+    }
+    const dayLunch = ctx.lunchByDay[String(dayNum)];
+    if (dayLunch && dayLunch.length) {
+      const chip = el("button", { type: "button", class: "lunch-chip" });
+      chip.appendChild(el("span", { class: "lunch-chip__icon", "aria-hidden": "true", text: "🍽" }));
+      chip.appendChild(el("span", { class: "lunch-chip__label", text: dayLunch[0].name }));
+      chip.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openModal(
+          (body) =>
+            buildLunchModal(body, {
+              schoolName: ctx.schoolName,
+              dayLabel: fullDayLabel(dayNum, dateStr),
+              dishes: dayLunch,
+              note: ctx.lunchNote,
+            }),
+          chip
+        );
+      });
+      headerCell.appendChild(chip);
     }
     headerRow.appendChild(headerCell);
   }
@@ -160,6 +352,7 @@ function renderDayGrid(rawLessons) {
 
   for (const dayNum of dayNumbers) {
     const dayLessons = lessonsByDay.get(dayNum) || [];
+    const dateStr = dayDates.get(dayNum);
     const col = el("div", { class: "day-col" });
 
     for (let h = startHour; h <= endHour; h++) {
@@ -175,26 +368,18 @@ function renderDayGrid(rawLessons) {
         const startMin = minutesOf(lesson.time_start) - startHour * 60;
         const endMin = minutesOf(lesson.time_end) - startHour * 60;
         const top = (startMin / totalMinutes) * bodyHeight;
-        const height = Math.max(20, ((endMin - startMin) / totalMinutes) * bodyHeight - 2);
+        // Never extend past the natural slot: columns already guarantee
+        // lessons sharing a column don't overlap in time, so leaving the
+        // proportional height alone (just a small min for tap targets)
+        // is what keeps blocks from visually covering their neighbour.
+        const height = Math.max(10, ((endMin - startMin) / totalMinutes) * bodyHeight - 2);
         const widthPct = 100 / totalCols;
         const leftPct = colIdx * widthPct;
-        const cat = categoryIndex(lesson.subject);
-
-        const block = el("div", {
-          class: "lesson",
-          style: `top:${top}px; height:${height}px; left:calc(${leftPct}% + 3px); width:calc(${widthPct}% - 6px); --cat-color:var(--cat-${cat}); --cat-tint:var(--cat-${cat}-tint);`,
-        });
-        block.appendChild(el("span", { class: "lesson__time", text: `${lesson.time_start}–${lesson.time_end}` }));
-        block.appendChild(el("span", { class: "lesson__subject", text: lesson.subject || "(okänt)" }));
-        const metaParts = [lesson.teacher, lesson.room].filter(Boolean);
-        if (metaParts.length) {
-          block.appendChild(el("span", { class: "lesson__meta", text: metaParts.join(" · ") }));
-        }
-        col.appendChild(block);
+        col.appendChild(buildLessonBlock(lesson, top, height, leftPct, widthPct, ctx, dateStr));
       }
     }
 
-    if (dayDates.get(dayNum) === today) {
+    if (dateStr === today) {
       const now = new Date();
       const nowMin = now.getHours() * 60 + now.getMinutes() - startHour * 60;
       if (nowMin >= 0 && nowMin <= totalMinutes) {
@@ -213,7 +398,7 @@ function renderDayGrid(rawLessons) {
 
 /** Skola24 doesn't give us calendar dates per lesson, only day_of_week
  * numbers — derive real dates from the week's Monday. */
-function computeDayDates(rawLessons, dayNumbers) {
+function computeDayDates(dayNumbers) {
   const map = new Map();
   const monday = window.__currentWeekMonday;
   if (!monday) return map;
@@ -230,6 +415,7 @@ function buildWeekSwitcher(weeks, activeIndex, onChange) {
   weeks.forEach((week, i) => {
     const btn = el("button", {
       class: "week-btn",
+      type: "button",
       "aria-pressed": String(i === activeIndex),
       onclick: () => onChange(i),
     });
@@ -249,6 +435,14 @@ async function loadSchedule() {
 function setWeekMonday(week) {
   const [y, m, d] = week.start_date.split("-").map(Number);
   window.__currentWeekMonday = new Date(y, m - 1, d);
+}
+
+function lunchContextFor(school, weekKey) {
+  return {
+    schoolName: school.name,
+    lunchByDay: (school.lunch && school.lunch[weekKey]) || {},
+    lunchNote: school.lunch_note || null,
+  };
 }
 
 async function initIndexPage() {
@@ -299,7 +493,7 @@ async function initIndexPage() {
         right.appendChild(el("a", { class: "open-link", href: `${school.slug}.html`, text: "Eget schema →" }));
         head.appendChild(right);
         section.appendChild(head);
-        section.appendChild(renderDayGrid(school.weeks[weekKey] || []));
+        section.appendChild(renderDayGrid(school.weeks[weekKey] || [], lunchContextFor(school, weekKey)));
         sectionsContainer.appendChild(section);
       });
     }
@@ -345,7 +539,7 @@ async function initClassPage(slug) {
       setWeekMonday(week);
       const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
       gridSlot.innerHTML = "";
-      gridSlot.appendChild(renderDayGrid(school.weeks[weekKey] || []));
+      gridSlot.appendChild(renderDayGrid(school.weeks[weekKey] || [], lunchContextFor(school, weekKey)));
     }
 
     render();

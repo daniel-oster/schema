@@ -393,7 +393,110 @@
             "time_end": "14:25"
           }
         ]
-      }
+      },
+      "lunch": {
+        "2026-W34": {
+          "1": [
+            {
+              "name": "Vegoburgare med potatis och gräddsåssås",
+              "vegetarian": true
+            },
+            {
+              "name": "Pannbiff med potatis och gräddsås",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Kryddig kebabgryta av ekologisk ärta och bondböna med bulgur",
+              "vegetarian": true
+            },
+            {
+              "name": "Paj med broccoli och soltorkade tomater",
+              "vegetarian": true
+            }
+          ],
+          "3": [
+            {
+              "name": "Vegetarisk frestelse och smörgåsgurka",
+              "vegetarian": true
+            },
+            {
+              "name": "Sprödbakad Västerhavsfisk med potatis och remouladsås",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Pasta och Klimatsmart Bolognese",
+              "vegetarian": true
+            },
+            {
+              "name": "Blomkål- och broccoligratäng serveras med pasta",
+              "vegetarian": true
+            }
+          ],
+          "5": [
+            {
+              "name": "Quornfilé BBQ med ris och BBQ-sås",
+              "vegetarian": true
+            },
+            {
+              "name": "Kyckling BBQ med ris och BBQ-sås",
+              "vegetarian": false
+            }
+          ]
+        },
+        "2026-W35": {
+          "1": [
+            {
+              "name": "Pasta och stekt vegokorv",
+              "vegetarian": true
+            },
+            {
+              "name": "Pasta och stekt falukorv",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Currydoftande vitkålspaj",
+              "vegetarian": true
+            },
+            {
+              "name": "Fiskgratäng med dillsås och potatis",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Vegetarisk Gulaschgryta och ris",
+              "vegetarian": true
+            },
+            {
+              "name": "Gulaschgryta och ris",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Pannkaka med sylt",
+              "vegetarian": true
+            },
+            {
+              "name": "Champinjonsoppa med sopptopp",
+              "vegetarian": true
+            }
+          ],
+          "5": [
+            {
+              "name": "Kockens val",
+              "vegetarian": false
+            }
+          ]
+        }
+      },
+      "lunch_note": "Varje dag serveras även grönsaksbuffé, bröd, mjölk och vatten. Smaklig måltid!\r\nMed reservation för eventuella ändringar."
     },
     {
       "name": "Tunets skola / TuS-5-26",
@@ -781,7 +884,122 @@
             "time_end": "13:30"
           }
         ]
-      }
+      },
+      "lunch": {
+        "2026-W34": {
+          "1": [
+            {
+              "name": "Alt 1: Kebabgryta med kokt ris eller bulgur",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Kebabkryddad veggryta med ris eller bulgur",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Alt 1: Kökets nyhet",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 1*: Potatisbullar eller blodpudding med valfri sylt",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Nudelsallad",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Alt 1: Kycklingköttbullar med kokta makaroner",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegobullar/biffar med kokta makaroner",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Alt 1: Tacobuffé",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegetarisk tacobuffé",
+              "vegetarian": false
+            }
+          ],
+          "5": [
+            {
+              "name": "Alt 1: Pannkaka med sylt",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Kökets valfria gröna rätt ",
+              "vegetarian": false
+            }
+          ]
+        },
+        "2026-W35": {
+          "1": [
+            {
+              "name": "Alt 1: Korvstroganoff med ris eller bulgur",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegansk stroganof med ris eller bulgur",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Alt 1: Thaigryta med kyckling och kokt ris",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Thaigryta med ris",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Alt 1: Köttfärssås med pasta",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Färssås med pasta och rostade grönsaker",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Alt 1: Lasagnesoppa med bröd och hummus",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
+              "vegetarian": false
+            }
+          ],
+          "5": [
+            {
+              "name": "Alt 1: Stekt panerad fisk med dressing, klyftpotatis och bröd",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 1*: Kökets valfria gröna rätt",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Stekt vegetarisk schnitzel med dressing, klyftpotatis och bröd",
+              "vegetarian": false
+            }
+          ]
+        }
+      },
+      "lunch_note": "Varje dag serveras salladsbuffé, vatten, mjölk, bröd och smörgåsmargarin\r\n\r\nMed reservation för eventuella förändringar!"
     }
   ]
 }
