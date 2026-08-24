@@ -93,6 +93,22 @@ Structure:
   stale part — `loadSchedule` already revalidates with `cache:
   "no-cache"` — so if you ever drop the asset re-fetch, the button stops
   doing anything a reload didn't.
+- **Standalone / full screen.** `schedule/manifest.webmanifest` plus the
+  `apple-mobile-web-app-*` metas mean that adding any of these pages to
+  the home screen launches it with no URL bar and no tab bar. That is not
+  cosmetic: Safari's chrome costs roughly a third of the height in
+  landscape, and this grid spends every pixel it has — at 852x250 (a tab
+  bar showing) only 3 of 27 blocks can afford to print their times, at
+  852x372 (standalone) 18 of them can. `start_url` is deliberately
+  **omitted** so each page launches itself; adding it would make every
+  home-screen icon open `index.html` and break the per-class direct
+  links. `apple-mobile-web-app-status-bar-style` is `default` rather than
+  `black-translucent` because a translucent bar draws white glyphs it
+  cannot theme, which vanish on the light palette; the two media-queried
+  `theme-color` metas colour the bar per theme instead. Icons live in
+  `assets/icon-180.png` (the one iOS uses) and `assets/icon-512.png`;
+  without an `apple-touch-icon` iOS puts a blurry screenshot of the page
+  on the home screen.
 - `schedule/links.html` — a plain static (mostly no-JS) page listing
   every URL above, for whoever just wants a link rather than the app.
   Update it by hand when adding/removing a class (see below) — it does
