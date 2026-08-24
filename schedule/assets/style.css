@@ -369,6 +369,11 @@ button {
 }
 
 .chrome__btn {
+  /* Without this iOS gives a <button> its native bezel — a grey rounded pill,
+     which is both off-design and the one rounded corner in the repo. Every
+     other button here resets it; this one was missed. */
+  appearance: none;
+  -webkit-appearance: none;
   flex: none;
   width: 26px;
   height: 26px;
