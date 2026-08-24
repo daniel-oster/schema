@@ -14,6 +14,9 @@ const SWIPE_THRESHOLD = 40; // px
 // collapse into an unreadable sliver (see enforceMinHeights).
 const MIN_BLOCK_H = 17;
 const BLOCK_GAP = 2; // vertical breathing room between stacked blocks, px
+// Empty axis kept below the last lesson of the week, minutes. Without it a day
+// that ends on a half hour puts its final block flush against the bottom rule.
+const AXIS_TAIL = 30;
 const BLOCK_PAD_V = 4; // total vertical padding inside .lesson, px
 const BLOCK_PAD_H = 14; // padding + left signal bar inside .lesson, px
 
@@ -318,9 +321,11 @@ function enforceMinHeights(items, bodyH) {
   }
 }
 
-/** Snap the visible day to the half hour around the first and last lesson.
- * Rounding out to whole hours donated up to an hour of dead band to a grid
- * that has to fit a whole week on one phone screen. */
+/** Snap the visible day to the half hour around the first and last lesson,
+ * then keep a clear half hour below the last one. Rounding out to whole hours
+ * donated up to an hour of dead band to a grid that has to fit a whole week on
+ * one phone screen; ending exactly on the last lesson went too far the other
+ * way and left the final block welded to the bottom edge. */
 function axisBoundsFor(lessonsByDay) {
   let minStart = Infinity;
   let maxEnd = -Infinity;
@@ -332,7 +337,7 @@ function axisBoundsFor(lessonsByDay) {
   }
   if (!isFinite(minStart)) return { startMin: 8 * 60, endMin: 16 * 60 };
   const startMin = Math.max(0, Math.floor(minStart / 30) * 30);
-  const endMin = Math.min(24 * 60, Math.ceil(maxEnd / 30) * 30);
+  const endMin = Math.min(24 * 60, Math.ceil(maxEnd / 30) * 30 + AXIS_TAIL);
   return { startMin, endMin: Math.max(endMin, startMin + 60) };
 }
 
