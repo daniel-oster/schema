@@ -368,30 +368,58 @@ button {
   background: var(--ink);
 }
 
-.chrome__links {
+.chrome__btn {
   flex: none;
   width: 26px;
   height: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--text-faint);
   text-decoration: none;
   font-size: 16px;
   line-height: 1;
+  cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.chrome__links:active {
+.chrome__btn:active {
   background: var(--surface-2);
   color: var(--text);
 }
 
-/* On a narrow phone the bar has to carry the class, the date, two marker rows
-   and the menu. Rather than let the class name ellipse away, tighten the type
-   and the markers so all of it still fits at 320px. */
-@media (max-width: 380px) {
+.chrome__btn:disabled {
+  cursor: default;
+  color: var(--text);
+}
+
+.chrome__btn.is-busy {
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chrome__btn.is-busy {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* On a phone the bar carries the class, the date, two marker rows, refresh and
+   the menu. Rather than let the class name ellipse away — it is the page's
+   identity — tighten the type and markers in two steps so all of it still fits
+   down to 320px. The first step has to start above 390px: that is the common
+   iPhone width, and it was the one size that overflowed. */
+@media (max-width: 420px) {
   .chrome {
     gap: 7px;
     padding-left: 8px;
@@ -408,6 +436,50 @@ button {
 
   .chrome__dots {
     gap: 7px;
+  }
+
+  .chrome__btn {
+    width: 22px;
+    font-size: 15px;
+  }
+
+  /* The dot separator costs its own width plus two gaps, and the date beside
+     it already reads as a separate field. */
+  .chrome__sep {
+    display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .chrome {
+    gap: 5px;
+    padding-left: 6px;
+  }
+
+  .chrome__class {
+    font-size: 12px;
+  }
+
+  .chrome__period {
+    font-size: 9.5px;
+  }
+
+  .chrome__dots {
+    gap: 5px;
+  }
+
+  .dotrow i {
+    width: 3px;
+    height: 2px;
+  }
+
+  .dotrow i.is-active {
+    width: 8px;
+  }
+
+  .chrome__btn {
+    width: 20px;
+    font-size: 14px;
   }
 
   .dotrow {

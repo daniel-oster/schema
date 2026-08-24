@@ -79,6 +79,20 @@ Structure:
   disabled since there's only one class to show; week swipe still
   works. These are the direct links meant for bookmarking one kid's
   schedule to a home screen.
+- The chrome bar's **⟳ button** (`hardRefresh` in `app.js`) is a real
+  hard refresh, not a `location.reload()`. Pages serves `main` directly
+  and a phone that has the site on its home screen will happily keep
+  running the build from before the last deploy. A page cannot reach
+  into Safari's cache the way ⌘⇧R does, but `cache: "reload"` both
+  bypasses the HTTP cache *and* writes the fresh response back into it —
+  so the button re-fetches `app.js`, `style.css` and `schedule.json`
+  that way, then reloads with a changed query string (which is what
+  keeps the document itself out of the back/forward cache). Verified
+  against a server sending `immutable`: a plain reload kept the stale
+  CSS, the button picked up the new one. Note the *data* was never the
+  stale part — `loadSchedule` already revalidates with `cache:
+  "no-cache"` — so if you ever drop the asset re-fetch, the button stops
+  doing anything a reload didn't.
 - `schedule/links.html` — a plain static (mostly no-JS) page listing
   every URL above, for whoever just wants a link rather than the app.
   Update it by hand when adding/removing a class (see below) — it does

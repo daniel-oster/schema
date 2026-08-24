@@ -781,10 +781,53 @@ function bounce(stage, axis) {
   setTimeout(() => stage.classList.remove(cls), 220);
 }
 
+/** Files the app is built from. A hard refresh re-fetches exactly these,
+ * bypassing the cache, before reloading the document. */
+const APP_FILES = ["assets/app.js", "assets/style.css", "data/schedule.json"];
+
 async function loadSchedule() {
   const res = await fetch(new URL("data/schedule.json", document.baseURI), { cache: "no-cache" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
+}
+
+/** Pull everything from the server again, for when the phone is showing a
+ * build that has since been replaced.
+ *
+ * A page can't reach into Safari's cache the way ⌘⇧R does, but `cache:
+ * "reload"` both bypasses the HTTP cache *and* writes the fresh response back
+ * into it — so re-fetching the app's own files here leaves the cache holding
+ * current copies, and the reload that follows picks those up rather than the
+ * stale ones. The changed query string is what stops the document itself
+ * coming from the back/forward cache. */
+async function hardRefresh(button) {
+  if (button) {
+    button.disabled = true;
+    button.classList.add("is-busy");
+  }
+
+  // Cache Storage throws rather than returning empty in some private modes.
+  try {
+    if (window.caches) {
+      const keys = await window.caches.keys();
+      await Promise.all(keys.map((k) => window.caches.delete(k)));
+    }
+  } catch {
+    /* nothing cached there to clear */
+  }
+
+  await Promise.all(
+    APP_FILES.map((file) =>
+      fetch(new URL(file, document.baseURI), { cache: "reload" }).catch(() => {
+        // Offline, or the file moved. The reload below still gets us somewhere
+        // honest — an error state beats sitting on a stale render.
+      })
+    )
+  );
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("r", Date.now().toString(36));
+  window.location.replace(url.toString());
 }
 
 async function initApp({ lockedSlug } = {}) {
@@ -912,6 +955,17 @@ async function initApp({ lockedSlug } = {}) {
   }
 
   attachSwipe(stage, { onHorizontal: goHorizontal, onVertical: goVertical });
+
+  const refreshBtn = document.getElementById("chrome-refresh");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      hardRefresh(refreshBtn);
+    });
+    // The stage owns pointer gestures; without this a tap on the button reads
+    // as the start of a swipe.
+    refreshBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+  }
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
