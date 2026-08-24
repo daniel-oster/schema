@@ -42,30 +42,30 @@
   --shadow: 0 1px 0 rgba(20, 23, 31, 0.06), 0 18px 40px -22px rgba(20, 23, 31, 0.45);
 
   --cat-0: #2f5fd0;
-  --cat-1: #0f7a68;
-  --cat-2: #92610f;
+  --cat-1: #0e7d63;
+  --cat-2: #8a6410;
   --cat-3: #7a3ea8;
-  --cat-4: #bb4444;
-  --cat-5: #16788f;
-  --cat-6: #5d7818;
-  --cat-7: #a8447c;
-  --cat-8: #4a4fbe;
-  --cat-9: #178a53;
-  --cat-10: #9c5220;
-  --cat-11: #44647f;
+  --cat-4: #c04141;
+  --cat-5: #1a6fa8;
+  --cat-6: #6d7a12;
+  --cat-7: #b03d78;
+  --cat-8: #55499f;
+  --cat-9: #2f8a2f;
+  --cat-10: #a8501c;
+  --cat-11: #4d6475;
 
-  --cat-0-tint: #e5eafa;
-  --cat-1-tint: #ddf1ed;
-  --cat-2-tint: #f6ecd7;
-  --cat-3-tint: #f0e6f8;
-  --cat-4-tint: #f9e6e6;
-  --cat-5-tint: #dff0f4;
-  --cat-6-tint: #ecf1d8;
-  --cat-7-tint: #f9e4ef;
-  --cat-8-tint: #e7e8fa;
-  --cat-9-tint: #daf1e5;
-  --cat-10-tint: #f8e8dc;
-  --cat-11-tint: #e4ebf2;
+  --cat-0-tint: #dae3f9;
+  --cat-1-tint: #cbe8e0;
+  --cat-2-tint: #f3e4c4;
+  --cat-3-tint: #ebd9f5;
+  --cat-4-tint: #f9d9d9;
+  --cat-5-tint: #d6e8f5;
+  --cat-6-tint: #e6eec4;
+  --cat-7-tint: #f8d7e8;
+  --cat-8-tint: #dedcf6;
+  --cat-9-tint: #d3edd3;
+  --cat-10-tint: #f6ddc9;
+  --cat-11-tint: #dde6ed;
 
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-narrow: "Archivo Narrow", "Archivo", "Arial Narrow", Arial, sans-serif;
@@ -108,26 +108,26 @@
     --cat-2: #e3ac4f;
     --cat-3: #c58ce2;
     --cat-4: #e58585;
-    --cat-5: #63c2dd;
+    --cat-5: #5fb0e0;
     --cat-6: #b0c552;
     --cat-7: #e28fbd;
-    --cat-8: #9ba3ff;
-    --cat-9: #5fd394;
+    --cat-8: #a79bff;
+    --cat-9: #63cc63;
     --cat-10: #e39a66;
-    --cat-11: #8fb2d4;
+    --cat-11: #93aec2;
 
     --cat-0-tint: #1c2440;
     --cat-1-tint: #0f2e2a;
     --cat-2-tint: #33260f;
     --cat-3-tint: #2c1b34;
     --cat-4-tint: #331c1c;
-    --cat-5-tint: #132b33;
+    --cat-5-tint: #132734;
     --cat-6-tint: #262c10;
     --cat-7-tint: #321b29;
-    --cat-8-tint: #1e2140;
-    --cat-9-tint: #102e21;
+    --cat-8-tint: #221f40;
+    --cat-9-tint: #12300f;
     --cat-10-tint: #332114;
-    --cat-11-tint: #1b2733;
+    --cat-11-tint: #1d2731;
 
     color-scheme: dark;
   }
@@ -165,26 +165,26 @@
   --cat-2: #e3ac4f;
   --cat-3: #c58ce2;
   --cat-4: #e58585;
-  --cat-5: #63c2dd;
+  --cat-5: #5fb0e0;
   --cat-6: #b0c552;
   --cat-7: #e28fbd;
-  --cat-8: #9ba3ff;
-  --cat-9: #5fd394;
+  --cat-8: #a79bff;
+  --cat-9: #63cc63;
   --cat-10: #e39a66;
-  --cat-11: #8fb2d4;
+  --cat-11: #93aec2;
 
   --cat-0-tint: #1c2440;
   --cat-1-tint: #0f2e2a;
   --cat-2-tint: #33260f;
   --cat-3-tint: #2c1b34;
   --cat-4-tint: #331c1c;
-  --cat-5-tint: #132b33;
+  --cat-5-tint: #132734;
   --cat-6-tint: #262c10;
   --cat-7-tint: #321b29;
-  --cat-8-tint: #1e2140;
-  --cat-9-tint: #102e21;
+  --cat-8-tint: #221f40;
+  --cat-9-tint: #12300f;
   --cat-10-tint: #332114;
-  --cat-11-tint: #1b2733;
+  --cat-11-tint: #1d2731;
 
   color-scheme: dark;
 }
@@ -321,8 +321,7 @@ button {
   font-size: 14px;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  flex: none;
 }
 
 .chrome__sep {
@@ -337,6 +336,8 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .chrome__dots {
@@ -385,6 +386,41 @@ button {
 .chrome__links:active {
   background: var(--surface-2);
   color: var(--text);
+}
+
+/* On a narrow phone the bar has to carry the class, the date, two marker rows
+   and the menu. Rather than let the class name ellipse away, tighten the type
+   and the markers so all of it still fits at 320px. */
+@media (max-width: 380px) {
+  .chrome {
+    gap: 7px;
+    padding-left: 8px;
+  }
+
+  .chrome__class {
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  .chrome__period {
+    font-size: 10.5px;
+  }
+
+  .chrome__dots {
+    gap: 7px;
+  }
+
+  .dotrow {
+    gap: 2px;
+  }
+
+  .dotrow i {
+    width: 4px;
+  }
+
+  .dotrow i.is-active {
+    width: 10px;
+  }
 }
 
 .stage-inner {
@@ -449,15 +485,18 @@ button {
   text-overflow: ellipsis;
 }
 
-/* Today is marked in ink: a solid rule under the header and a barely-there
-   wash down the column. No hue, so it can't read as a subject. */
+/* Today is marked by inverting its header — solid ink, knocked-out text. The
+   previous treatment washed the header and the whole column grey, which on a
+   light ground made the current day the dimmest thing on screen: emphasis
+   reading as "disabled", exactly backwards. Still no hue, so it can't be
+   mistaken for a subject. */
 .day-col__header.is-today {
-  background: var(--surface-3);
-  box-shadow: inset 0 -3px 0 var(--ink);
+  background: var(--ink);
 }
 
+.day-col__header.is-today .weekday,
 .day-col__header.is-today .daydate {
-  color: var(--text-muted);
+  color: var(--surface);
 }
 
 .day-grid__body {
@@ -485,10 +524,6 @@ button {
 .day-col {
   position: relative;
   border-left: 1px solid var(--rule);
-}
-
-.day-col.is-today {
-  background: var(--ink-wash);
 }
 
 .hour-line {
@@ -531,7 +566,7 @@ button {
   appearance: none;
   position: absolute;
   border: 0;
-  border-left: 3px solid var(--cat-color, var(--accent));
+  border-left: 4px solid var(--cat-color, var(--accent));
   background: var(--cat-tint, var(--surface-2));
   padding: 2px 5px;
   overflow: hidden;
@@ -614,6 +649,17 @@ button {
 .lesson.is-lunch .lesson__time {
   letter-spacing: 0.08em;
   color: var(--text-faint);
+}
+
+/* When a lunch block is too short for its own time line, the tag rides inline
+   ahead of the dish — a grey bar with nothing but a food name on it doesn't
+   read as lunch. */
+.lesson__tag {
+  font-family: var(--font-mono);
+  font-size: calc(var(--ls, 11px) - 2px);
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-right: 6px;
 }
 
 .lesson__meta {

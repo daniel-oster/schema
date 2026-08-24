@@ -15,7 +15,7 @@ const SWIPE_THRESHOLD = 40; // px
 const MIN_BLOCK_H = 17;
 const BLOCK_GAP = 2; // vertical breathing room between stacked blocks, px
 const BLOCK_PAD_V = 4; // total vertical padding inside .lesson, px
-const BLOCK_PAD_H = 13; // padding + left signal bar inside .lesson, px
+const BLOCK_PAD_H = 14; // padding + left signal bar inside .lesson, px
 
 // Type steps for lesson text, picked from the block's real pixel width so a
 // half-width block shrinks its type instead of ellipsing the subject away.
@@ -26,6 +26,7 @@ const TYPE_STEPS = [
 ];
 
 const NARROW_STACK = '"Archivo Narrow", "Archivo", "Arial Narrow", Arial, sans-serif';
+const LUNCH_TAG = "LUNCH";
 const MONO_STACK = '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace';
 
 // Text is measured against the fonts the browser actually resolved, not
@@ -98,6 +99,17 @@ function todayIsoWeekday() {
   return clamp(d === 0 ? 7 : d, 1, 5);
 }
 
+/** FNV-ish string hash. Only needs to be stable and well spread — it decides
+ * which of the twelve swatches a subject gets, and must give the same answer
+ * across reloads, devices and regenerated data. */
+function hashString(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
+
 function minutesOf(hhmm) {
   const [h, m] = hhmm.split(":").map(Number);
   return h * 60 + m;
@@ -119,21 +131,58 @@ function splitSubject(subject) {
 
 /* ------------------------------ Colour map -------------------------------- */
 
-/** Colour is assigned per school from its full set of subjects, sorted, so
- * two courses that run against each other (Svenska vs. Svenska som
- * andraspråk) can never land on the same swatch — and so a subject keeps its
- * colour when you swipe to another week. */
+/** Spread a school's subjects evenly across the twelve swatches by walking
+ * them in sorted order — hashing each name independently was stable across
+ * regenerations but clustered: six of ES26ESM's subjects landed in the
+ * blue-green corner and the week read as one colour.
+ *
+ * With more subjects than swatches the walk wraps, so a second pass nudges
+ * any pair that actually runs against each other off a shared slot. That is
+ * decided once per school, not per day, so a subject looks the same
+ * everywhere. */
 function buildCategoryMap(school) {
   const subjects = new Set();
+  const conflicts = new Map(); // subject -> subjects it ever overlaps in time
+
   for (const lessons of Object.values(school.weeks || {})) {
+    const byDay = new Map();
     for (const l of lessons) {
       const { base } = splitSubject(l.subject);
-      if (base && !isLunch(base)) subjects.add(base);
+      if (!base || isLunch(base)) continue;
+      subjects.add(base);
+      if (!byDay.has(l.day_of_week)) byDay.set(l.day_of_week, []);
+      byDay.get(l.day_of_week).push({ base, start: minutesOf(l.time_start), end: minutesOf(l.time_end) });
+    }
+    for (const items of byDay.values()) {
+      for (let i = 0; i < items.length; i++) {
+        for (let j = i + 1; j < items.length; j++) {
+          const a = items[i];
+          const b = items[j];
+          if (a.base === b.base || a.start >= b.end || b.start >= a.end) continue;
+          if (!conflicts.has(a.base)) conflicts.set(a.base, new Set());
+          if (!conflicts.has(b.base)) conflicts.set(b.base, new Set());
+          conflicts.get(a.base).add(b.base);
+          conflicts.get(b.base).add(a.base);
+        }
+      }
     }
   }
+
   const sorted = [...subjects].sort((a, b) => a.localeCompare(b, "sv"));
   const map = new Map();
   sorted.forEach((name, i) => map.set(name, i % CATEGORY_COUNT));
+
+  for (const name of sorted) {
+    const rivals = [...(conflicts.get(name) || [])];
+    if (!rivals.some((other) => map.get(other) === map.get(name))) continue;
+    for (let step = 1; step < CATEGORY_COUNT; step++) {
+      const candidate = (map.get(name) + step) % CATEGORY_COUNT;
+      if (!rivals.some((other) => map.get(other) === candidate)) {
+        map.set(name, candidate);
+        break;
+      }
+    }
+  }
   return map;
 }
 
@@ -467,10 +516,20 @@ function buildLessonBlock(lesson, geom, ctx, dateIso) {
   const timeText = lunch ? `LUNCH ${lesson.time_start}` : span;
   let plan = contentPlan(headline, timeText, geom.width, geom.height);
 
-  // A 40-minute lunch on a short screen is one small line. Rather than
-  // ellipse a dish name into nonsense there, fall back to naming the slot —
-  // the menu is intact in the sheet a tap away.
+  // A short lunch block has no room for the time line, and a bare dish name in
+  // a grey bar doesn't say "lunch" — so the tag moves inline. It only earns
+  // its place when the dish still fits on one line beside it: measured in the
+  // tag's own mono face and letter-spacing, not as if it were body text.
   let label = headline;
+  let inlineTag = false;
+  if (lunch && !plan.showTime && !plan.clipped) {
+    const size = plan.step.size;
+    const tagSize = size - 2;
+    const tagWidth =
+      textWidth(LUNCH_TAG, `${tagSize}px ${MONO_STACK}`) + LUNCH_TAG.length * tagSize * 0.08 + 6;
+    const dishWidth = textWidth(headline, `700 ${size}px ${NARROW_STACK}`);
+    inlineTag = dishWidth <= geom.width - BLOCK_PAD_H - tagWidth;
+  }
   if (lunch && plan.clipped && label !== "Lunch") {
     label = "Lunch";
     plan = contentPlan(label, timeText, geom.width, geom.height);
@@ -498,7 +557,9 @@ function buildLessonBlock(lesson, geom, ctx, dateIso) {
   });
 
   if (plan.showTime) block.appendChild(el("span", { class: "lesson__time", text: timeText }));
-  block.appendChild(el("span", { class: "lesson__subject", text: label }));
+  const subject = el("span", { class: "lesson__subject", text: label });
+  if (inlineTag) subject.prepend(el("span", { class: "lesson__tag", text: LUNCH_TAG }));
+  block.appendChild(subject);
   if (plan.showMeta && meta) block.appendChild(el("span", { class: "lesson__meta", text: meta }));
 
   block.addEventListener("click", () => {
@@ -775,8 +836,11 @@ async function initApp({ lockedSlug } = {}) {
     // chrome
     chromeDot.style.background = `var(--school-${classIdx === 0 ? "a" : "b"})`;
     chromeClass.textContent = school.class;
+    // Short form in portrait: the full "Måndag 24 augusti" plus a week number
+    // plus seven markers overflowed a 390px bar and ellipsised the class name.
+    const dayDate = computeDayDates([dayIdx], monday).get(dayIdx);
     chromePeriod.textContent = portrait
-      ? `v${week.week} · ${fullDayLabel(dayIdx, computeDayDates([dayIdx], monday).get(dayIdx))}`
+      ? `v${week.week} · ${WEEKDAY_NAMES[dayIdx - 1]} ${dayDate ? fmtDate(dayDate) : ""}`
       : weekLabel(week);
 
     // The horizontal swipe means different things in the two modes, so the
