@@ -77,8 +77,14 @@ function findChromium() {
 
 /* -------------------------------- Server --------------------------------- */
 
+// Point the pages at a local font cache when one exists (see FONT_CACHE in
+// CLAUDE.md). Without it a sandbox measures the fallback face, which is wider
+// — safe, but not what a phone renders.
+const FONT_CACHE = process.env.FONT_CACHE && fs.existsSync(process.env.FONT_CACHE) ? process.env.FONT_CACHE : null;
+
 const MIME = {
   ".html": "text/html",
+  ".woff2": "font/woff2",
   ".css": "text/css",
   ".js": "text/javascript",
   ".mjs": "text/javascript",
@@ -89,6 +95,16 @@ const MIME = {
 function serve() {
   const server = http.createServer((req, res) => {
     const rel = decodeURIComponent(req.url.split("?")[0]);
+    if (FONT_CACHE && rel.startsWith("/__fonts/")) {
+      const f = path.join(FONT_CACHE, path.basename(rel));
+      if (!fs.existsSync(f)) {
+        res.writeHead(404).end();
+        return;
+      }
+      res.writeHead(200, { "content-type": MIME[path.extname(f)] || "application/octet-stream" });
+      fs.createReadStream(f).pipe(res);
+      return;
+    }
     let file = path.join(ROOT, rel);
     if (!file.startsWith(ROOT)) {
       res.writeHead(403).end();
@@ -97,6 +113,14 @@ function serve() {
     if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
     if (!fs.existsSync(file)) {
       res.writeHead(404).end();
+      return;
+    }
+    if (FONT_CACHE && path.extname(file) === ".html") {
+      const html = fs
+        .readFileSync(file, "utf8")
+        .replace(/<link href="https:\/\/fonts\.googleapis\.com[^"]*"[^>]*>/, '<link rel="stylesheet" href="/__fonts/fonts.css">');
+      res.writeHead(200, { "content-type": "text/html" });
+      res.end(html);
       return;
     }
     res.writeHead(200, { "content-type": MIME[path.extname(file)] || "application/octet-stream" });
@@ -148,6 +172,16 @@ function auditPage() {
     }
   }
 
+  // The chrome bar is part of "can you read it". A class name ellipsed to
+  // "ES26E…" shipped once because this only looked inside the grid.
+  out.chromeCut = [];
+  for (const id of ["chrome-class", "chrome-period"]) {
+    const e = document.getElementById(id);
+    if (e && e.scrollWidth > e.clientWidth + 1) out.chromeCut.push(`${id}: "${e.textContent}"`);
+  }
+  const bar = document.querySelector(".chrome");
+  if (bar && bar.scrollWidth > bar.clientWidth + 1) out.chromeCut.push("chrome bar overflows");
+
   const grid = document.querySelector(".day-grid");
   const inner = document.getElementById("stage-inner");
   if (grid && inner) out.fits = grid.getBoundingClientRect().bottom <= inner.getBoundingClientRect().bottom + 1;
@@ -177,6 +211,7 @@ const VIEWPORTS = [
   { name: "landscape-1366", w: 1366, h: 620 },
   { name: "portrait-390", w: 390, h: 844 },
   { name: "portrait-360", w: 360, h: 740 },
+  { name: "portrait-320", w: 320, h: 568 },
 ];
 const THEMES = ["light", "dark"];
 // A weekday inside the data's range, so "today" and the now-line actually render.
@@ -245,6 +280,7 @@ for (const vp of VIEWPORTS) {
           if (r.overlaps.length) problems.push(`overlap: ${[...new Set(r.overlaps)].join(" | ")}`);
           if (r.escapes.length) problems.push(`escapes grid: ${[...new Set(r.escapes)].join(" | ")}`);
           if (!r.fits) problems.push("grid does not fit its container");
+          if (r.chromeCut.length) problems.push(`chrome truncated: ${r.chromeCut.join(" | ")}`);
           if (jsErrors.length) problems.push(`js: ${jsErrors.splice(0).join(" | ")}`);
 
           if (problems.length) failures.push(`${tag}\n    ${problems.join("\n    ")}`);

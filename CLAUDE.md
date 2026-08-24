@@ -79,6 +79,20 @@ Structure:
   disabled since there's only one class to show; week swipe still
   works. These are the direct links meant for bookmarking one kid's
   schedule to a home screen.
+- The chrome bar's **⟳ button** (`hardRefresh` in `app.js`) is a real
+  hard refresh, not a `location.reload()`. Pages serves `main` directly
+  and a phone that has the site on its home screen will happily keep
+  running the build from before the last deploy. A page cannot reach
+  into Safari's cache the way ⌘⇧R does, but `cache: "reload"` both
+  bypasses the HTTP cache *and* writes the fresh response back into it —
+  so the button re-fetches `app.js`, `style.css` and `schedule.json`
+  that way, then reloads with a changed query string (which is what
+  keeps the document itself out of the back/forward cache). Verified
+  against a server sending `immutable`: a plain reload kept the stale
+  CSS, the button picked up the new one. Note the *data* was never the
+  stale part — `loadSchedule` already revalidates with `cache:
+  "no-cache"` — so if you ever drop the asset re-fetch, the button stops
+  doing anything a reload didn't.
 - `schedule/links.html` — a plain static (mostly no-JS) page listing
   every URL above, for whoever just wants a link rather than the app.
   Update it by hand when adding/removing a class (see below) — it does
@@ -131,11 +145,16 @@ Structure:
      ", Nivå 1b" suffix off the headline and shows it as metadata,
      which is most of the width the subject needs.
 
-  Colour is assigned per school by `buildCategoryMap` from its sorted
-  set of subjects, so two courses that run against each other (Svenska
-  vs. Svenska som andraspråk) can't land on the same swatch and a
-  subject keeps its colour across weeks — don't go back to hashing the
-  subject name. A lunch block's headline is the **dish**, tagged
+  Colour is assigned per school by `buildCategoryMap`, which walks the
+  sorted subject list so the twelve swatches are spread evenly, then
+  nudges any pair that actually overlaps in time off a shared slot
+  (Svenska vs. Svenska som andraspråk). The nudge is decided once per
+  school, not per day, so a subject looks the same on every day of every
+  week. Hashing each subject name independently was tried because it
+  survives the nightly regeneration unchanged — but it clusters: six of
+  ES26ESM's subjects landed in the blue-green corner and the whole week
+  read as one colour. Even spread won; the cost is that colours can
+  shift when a genuinely new subject enters the data window. A lunch block's headline is the **dish**, tagged
   `LUNCH hh:mm` in its time line (there is no separate lunch chip in
   the day header any more — it truncated the menu and stole height from
   the grid); if the dish can't fit even at the smallest type step it
@@ -211,11 +230,12 @@ node schedule/scripts/check_layout.mjs --verbose   # print every case
 node schedule/scripts/check_layout.mjs --shots out # also write PNGs to out/
 ```
 
-It sweeps every class x week x viewport x theme (84 checks today, and it
-reads the class and week counts out of `data/schedule.json`, so adding a
-class widens the sweep automatically) and fails on a clipped subject, two
-lessons overlapping, a block escaping the grid box, a grid that does not
-fit its container, or any page error. It also pins the clock to a weekday
+It sweeps every class x week x weekday x viewport x theme (292 checks
+today, and it reads the class and week counts out of `data/schedule.json`,
+so adding a class widens the sweep automatically) and fails on a clipped
+subject, two lessons overlapping, a block escaping the grid box, a grid
+that does not fit its container, **a truncated chrome bar**, or any page
+error. It also pins the clock to a weekday
 inside the data range so the "today" column and the now-line actually
 render — those states are invisible on a weekend and were shipped
 unverified once because of it.
@@ -239,5 +259,26 @@ one (`NODE_PATH=/opt/node22/lib/node_modules` in Claude Code on the web).
 **The webfont caveat.** Sandboxes usually cannot reach Google Fonts, so a
 run there measures against the fallback face and says so at the end. That
 is the *wider* face, so a pass without the webfont still holds with it —
-but it also means the screenshots are not what a phone renders. Judge
-type and spacing from a real device, not from a sandbox PNG.
+but the screenshots are then not what a phone renders, and judging colour
+or density from them will mislead you.
+
+To render what a phone actually gets, cache the fonts once with a tool
+that *can* reach the network (curl works where Chromium's proxy does not)
+and point the check at the directory:
+
+```
+mkdir -p /tmp/fc && cd /tmp/fc
+curl -s -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 \
+  (KHTML, like Gecko) Chrome/120.0 Safari/537.36" \
+  "$(grep -o 'https://fonts.googleapis.com/css2[^\"]*' \
+     "$OLDPWD/schedule/index.html")" -o fonts.css
+grep -o 'https://fonts.gstatic.com[^)]*' fonts.css | sort -u | \
+  while read -r u; do f="$(basename "$u")"; curl -s "$u" -o "$f"; \
+    sed -i "s|$u|/__fonts/$f|g" fonts.css; done
+
+FONT_CACHE=/tmp/fc node schedule/scripts/check_layout.mjs --shots out
+```
+
+The script serves that directory at `/__fonts/` and rewrites the Google
+Fonts link in each page to point at it. Without `FONT_CACHE` nothing
+changes — it just falls back to the fallback face.
