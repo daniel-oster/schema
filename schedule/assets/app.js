@@ -78,6 +78,33 @@ function clamp(v, lo, hi) {
   return Math.max(lo, Math.min(hi, v));
 }
 
+/* -------------------------------- Theme ----------------------------------- */
+
+const THEME_KEY = "schema-theme";
+
+function storedTheme() {
+  try {
+    return localStorage.getItem(THEME_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function effectiveTheme() {
+  const stored = storedTheme();
+  if (stored === "dark" || stored === "light") return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function setStoredTheme(theme) {
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch {
+    /* private mode or storage disabled — theme still applies for this load */
+  }
+  document.documentElement.setAttribute("data-theme", theme);
+}
+
 function fmtDate(iso) {
   const [, m, d] = iso.split("-").map(Number);
   return `${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}`;
@@ -715,6 +742,11 @@ function renderFitGrid(container, rawLessons, ctx, dayNumbers, monday) {
   container.appendChild(grid);
 }
 
+function mondayOf(week) {
+  const [y, m, d] = week.start_date.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
 function lunchContextFor(school, weekKey, categories) {
   return {
     schoolName: school.name,
@@ -875,8 +907,7 @@ async function initApp({ lockedSlug } = {}) {
     const week = data.weeks[weekIdx];
     const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
     const ctx = lunchContextFor(school, weekKey, categoryMaps[classIdx]);
-    const [my, mm, md] = week.start_date.split("-").map(Number);
-    const monday = new Date(my, mm - 1, md);
+    const monday = mondayOf(week);
     const portrait = orientationIsPortrait();
     const dayNumbers = portrait ? [dayIdx] : [1, 2, 3, 4, 5];
 
@@ -1012,6 +1043,141 @@ async function initApp({ lockedSlug } = {}) {
     // The stage owns pointer gestures; without this a tap on the button reads
     // as the start of a swipe.
     refreshBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+  }
+
+  /* ------------------------------- Chrome menu ----------------------------- */
+  const menuBtn = document.getElementById("chrome-menu-btn");
+  const menuPanel = document.getElementById("chrome-menu-panel");
+  const menuItemHome = document.getElementById("menu-item-home");
+  const menuItemTheme = document.getElementById("menu-item-theme");
+  const menuItemPrint = document.getElementById("menu-item-print");
+
+  function updateThemeLabel() {
+    if (menuItemTheme) menuItemTheme.textContent = effectiveTheme() === "dark" ? "Ljust läge" : "Mörkt läge";
+  }
+
+  function onMenuKeydown(e) {
+    if (e.key === "Escape") closeMenu();
+  }
+
+  function onDocPointerDown(e) {
+    if (menuPanel.contains(e.target) || e.target === menuBtn) return;
+    closeMenu();
+  }
+
+  function closeMenu() {
+    if (!menuPanel || menuPanel.hidden) return;
+    menuPanel.hidden = true;
+    menuBtn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", onDocPointerDown);
+    document.removeEventListener("keydown", onMenuKeydown);
+  }
+
+  function openMenu() {
+    if (!menuPanel) return;
+    updateThemeLabel();
+    menuPanel.hidden = false;
+    menuBtn.setAttribute("aria-expanded", "true");
+    document.addEventListener("pointerdown", onDocPointerDown);
+    document.addEventListener("keydown", onMenuKeydown);
+  }
+
+  if (menuBtn && menuPanel) {
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (menuPanel.hidden) openMenu();
+      else closeMenu();
+    });
+    // Same reason as the refresh button: the stage owns pointer gestures.
+    menuBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+    menuPanel.addEventListener("pointerdown", (e) => e.stopPropagation());
+
+    if (menuItemHome) {
+      menuItemHome.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+    }
+
+    if (menuItemTheme) {
+      menuItemTheme.addEventListener("click", () => {
+        setStoredTheme(effectiveTheme() === "dark" ? "light" : "dark");
+        updateThemeLabel();
+        closeMenu();
+      });
+    }
+
+    if (menuItemPrint) {
+      menuItemPrint.addEventListener("click", () => {
+        closeMenu();
+        window.print();
+      });
+    }
+  }
+
+  /* --------------------------------- Print --------------------------------- */
+  // Printing is always the current week, landscape, full week — never the
+  // single day portrait might be showing. The unlocked view prints every
+  // class it holds (one on a locked per-class page), stacked on one sheet, by
+  // rebuilding print-root with the same renderFitGrid used on screen.
+  const printRoot = document.getElementById("print-root");
+  let printThemeRestore;
+  // Chromium fires beforeprint/afterprint *and* a matchMedia("print") change
+  // for the same print job, so begin/end must be idempotent — otherwise the
+  // second beginPrint call captures "light" (already applied by the first)
+  // as the theme to restore, and the page is left stuck without one.
+  let isPrinting = false;
+
+  function buildPrintContent() {
+    if (!printRoot) return;
+    printRoot.innerHTML = "";
+    const week = data.weeks[weekIdx];
+    if (!week) return;
+    const weekKey = `${week.year}-W${String(week.week).padStart(2, "0")}`;
+    const monday = mondayOf(week);
+    classes.forEach((school, i) => {
+      const section = el("section", { class: "print-class" });
+      const header = el("div", { class: "print-class__header" });
+      header.appendChild(el("span", { class: "print-class__name", text: `${school.name} · ${school.class}` }));
+      header.appendChild(el("span", { class: "print-class__week", text: weekLabel(week) }));
+      const gridBox = el("div", { class: "print-class__grid" });
+      section.appendChild(header);
+      section.appendChild(gridBox);
+      printRoot.appendChild(section);
+      const ctx = lunchContextFor(school, weekKey, categoryMaps[i]);
+      renderFitGrid(gridBox, school.weeks[weekKey] || [], ctx, [1, 2, 3, 4, 5], monday);
+    });
+  }
+
+  // Print is always on a white background regardless of the on-screen theme —
+  // a dark page burns ink and reads poorly on paper. Toggling [data-theme] on
+  // the root reuses the existing light palette rather than duplicating it.
+  function beginPrint() {
+    if (!isPrinting) {
+      isPrinting = true;
+      printThemeRestore = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+    buildPrintContent();
+  }
+
+  function endPrint() {
+    if (!isPrinting) return;
+    isPrinting = false;
+    if (printThemeRestore) document.documentElement.setAttribute("data-theme", printThemeRestore);
+    else document.documentElement.removeAttribute("data-theme");
+    printThemeRestore = undefined;
+  }
+
+  window.addEventListener("beforeprint", beginPrint);
+  window.addEventListener("afterprint", endPrint);
+  if (window.matchMedia) {
+    // Firefox never fired beforeprint/afterprint reliably for a while — this
+    // is the documented fallback, and harmless to run alongside the events
+    // above on browsers that fire both.
+    const printMq = window.matchMedia("print");
+    const onPrintMqChange = (e) => (e.matches ? beginPrint() : endPrint());
+    if (printMq.addEventListener) printMq.addEventListener("change", onPrintMqChange);
+    else if (printMq.addListener) printMq.addListener(onPrintMqChange);
   }
 
   if (document.fonts && document.fonts.ready) {

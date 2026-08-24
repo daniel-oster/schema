@@ -2,6 +2,12 @@
 <html lang="sv">
 <head>
 <meta charset="utf-8">
+<script>
+  try {
+    var t = localStorage.getItem("schema-theme");
+    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Veckoschema</title>
 <meta name="description" content="Svep mellan Lugnetgymnasiet och Tunets skolas scheman, och mellan innevarande och nästa vecka.">
@@ -35,12 +41,19 @@
       <span class="dotrow" id="dots-week"></span>
     </div>
     <button class="chrome__btn" id="chrome-refresh" type="button" aria-label="Hämta om från servern" title="Hämta om från servern">⟳</button>
-    <a class="chrome__btn" href="links.html" aria-label="Alla länkar">⋮</a>
+    <div class="chrome__menu">
+      <button class="chrome__btn" id="chrome-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Meny">⋮</button>
+      <div class="menu-panel" id="chrome-menu-panel" role="menu" hidden>
+        <button class="menu-panel__item" id="menu-item-theme" type="button" role="menuitem">Mörkt läge</button>
+        <button class="menu-panel__item" id="menu-item-print" type="button" role="menuitem">Skriv ut vecka</button>
+      </div>
+    </div>
   </div>
   <div class="stage-inner" id="stage-inner">
     <p class="load-state">Läser in schema…</p>
   </div>
 </div>
+<div id="print-root" class="print-root" aria-hidden="true"></div>
 
 <script src="assets/app.js"></script>
 <script>initApp({});</script>
