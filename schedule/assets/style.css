@@ -419,6 +419,54 @@ button {
   }
 }
 
+.chrome__menu {
+  position: relative;
+  flex: none;
+}
+
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  z-index: 50;
+}
+
+.menu-panel[hidden] {
+  display: none;
+}
+
+.menu-panel__item {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  padding: 11px 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-panel__item + .menu-panel__item {
+  border-top: 1px solid var(--rule);
+}
+
+.menu-panel__item:active {
+  background: var(--surface-2);
+}
+
 /* On a phone the bar carries the class, the date, two marker rows, refresh and
    the menu. Rather than let the class name ellipse away — it is the page's
    identity — tighten the type and markers in two steps so all of it still fits
@@ -993,4 +1041,91 @@ body.modal-open {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
+}
+
+/* ------------------------------- Print ----------------------------------- */
+/* Printing is always the full week, landscape, regardless of what the app
+   happens to be showing on screen (single day in portrait, one locked class,
+   whatever). print-root is built fresh in app.js right before printing, off
+   the same renderFitGrid used on screen, and is the only thing visible in
+   print media — the swipeable stage never prints. One print-class per class
+   being shown (one for a locked page, two for the unlocked view), stacked so
+   both fit one landscape sheet. */
+
+.print-root {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 10mm;
+  }
+
+  html, body {
+    height: auto;
+    overflow: visible;
+  }
+
+  .stage,
+  .modal-root {
+    display: none !important;
+  }
+
+  .print-root {
+    display: flex;
+    flex-direction: column;
+    gap: 6mm;
+    /* A4 landscape (210mm tall) minus the @page margin above, on both edges.
+       A taller sheet (e.g. US Letter) just leaves a little spare room. */
+    height: 190mm;
+    color: #000;
+  }
+
+  .print-root,
+  .print-root * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-class {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-class__header {
+    flex: none;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 2mm;
+    margin-bottom: 2mm;
+    border-bottom: 1px solid #000;
+  }
+
+  .print-class__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  .print-class__week {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #333;
+  }
+
+  .print-class__grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #000;
+  }
 }
