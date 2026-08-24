@@ -134,7 +134,11 @@ function serve() {
 /** Runs in the page. Everything here is a "you cannot read this" condition. */
 function auditPage() {
   const out = { clipped: [], overlaps: [], escapes: [], fits: true };
-  const blocks = [...document.querySelectorAll(".lesson")];
+  // A swipe leaves a transient "ghost" copy of the outgoing content sliding
+  // off-screen (see slideRender in app.js) — an unscoped query would double
+  // up on it mid-animation, so everything here reads only the live #stage-inner.
+  const scope = document.getElementById("stage-inner") || document;
+  const blocks = [...scope.querySelectorAll(".lesson")];
 
   for (const b of blocks) {
     const subject = b.querySelector(".lesson__subject");
@@ -146,7 +150,7 @@ function auditPage() {
     }
   }
 
-  for (const col of document.querySelectorAll(".day-col")) {
+  for (const col of scope.querySelectorAll(".day-col")) {
     const rects = [...col.querySelectorAll(".lesson")].map((e) => ({
       t: e.querySelector(".lesson__subject")?.textContent.trim(),
       r: e.getBoundingClientRect(),
@@ -162,7 +166,7 @@ function auditPage() {
     }
   }
 
-  const body = document.querySelector(".day-grid__body")?.getBoundingClientRect();
+  const body = scope.querySelector(".day-grid__body")?.getBoundingClientRect();
   if (body) {
     for (const b of blocks) {
       const r = b.getBoundingClientRect();
@@ -182,7 +186,7 @@ function auditPage() {
   const bar = document.querySelector(".chrome");
   if (bar && bar.scrollWidth > bar.clientWidth + 1) out.chromeCut.push("chrome bar overflows");
 
-  const grid = document.querySelector(".day-grid");
+  const grid = scope.querySelector(".day-grid");
   const inner = document.getElementById("stage-inner");
   if (grid && inner) out.fits = grid.getBoundingClientRect().bottom <= inner.getBoundingClientRect().bottom + 1;
 

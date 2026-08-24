@@ -8,6 +8,7 @@ const CATEGORY_COUNT = 12;
 const HEADER_ROW_H = 24; // weekday/date strip above the grid, px
 const GUTTER_W = 28; // hour-rail width, px
 const SWIPE_THRESHOLD = 40; // px
+const SLIDE_DURATION = 220; // ms
 
 // A block shorter than this can't carry a readable line of text, so the
 // layout grows it and pushes its neighbours down instead of letting it
@@ -912,6 +913,52 @@ async function initApp({ lockedSlug } = {}) {
     frame = requestAnimationFrame(render);
   }
 
+  /** Re-renders for a step that actually moved (day/week/class changed),
+   * sliding the old content out and the new content in along `axis` so the
+   * swipe's direction stays visible instead of the view just jumping. `dir`
+   * matches the sign passed to onHorizontal/onVertical: positive moves the
+   * content toward the top/left (finger dragging that way), negative the
+   * other way. */
+  function slideRender(axis, dir) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      render();
+      return;
+    }
+
+    // A swipe landing mid-animation shouldn't stack ghosts or animate from a
+    // half-finished transform.
+    stage.querySelectorAll(".stage-inner--ghost").forEach((g) => g.remove());
+    stageInner.style.transition = "none";
+    stageInner.style.transform = "none";
+
+    const prop = axis === "x" ? "translateX" : "translateY";
+    const distance = axis === "x" ? stageInner.offsetWidth : stageInner.offsetHeight;
+    const sign = dir > 0 ? -1 : 1;
+
+    const outgoing = document.createElement("div");
+    outgoing.className = "stage-inner stage-inner--ghost";
+    outgoing.style.top = `${stageInner.offsetTop}px`;
+    outgoing.style.left = `${stageInner.offsetLeft}px`;
+    outgoing.style.width = `${stageInner.offsetWidth}px`;
+    outgoing.style.height = `${stageInner.offsetHeight}px`;
+    while (stageInner.firstChild) outgoing.appendChild(stageInner.firstChild);
+    stage.insertBefore(outgoing, stageInner);
+
+    render();
+
+    // Start both layers at the pre-slide position (new content off to one
+    // side, old content in place), then force a reflow so the transition
+    // below animates from there instead of jumping straight to the end.
+    stageInner.style.transform = `${prop}(${-sign * distance}px)`;
+    void stageInner.offsetWidth;
+
+    outgoing.style.transition = stageInner.style.transition = `transform ${SLIDE_DURATION}ms ease`;
+    outgoing.style.transform = `${prop}(${sign * distance}px)`;
+    stageInner.style.transform = `${prop}(0px)`;
+
+    outgoing.addEventListener("transitionend", () => outgoing.remove(), { once: true });
+  }
+
   /** Showing one day, a horizontal swipe should walk to the neighbouring day,
    * not skip a whole week — stepping past Friday rolls into the next week's
    * Monday. In the week grid there is no day to step, so it moves weeks. */
@@ -941,7 +988,7 @@ async function initApp({ lockedSlug } = {}) {
       }
       weekIdx = week;
     }
-    render();
+    slideRender("x", dir);
   }
 
   function goVertical(dir) {
@@ -951,7 +998,7 @@ async function initApp({ lockedSlug } = {}) {
       return;
     }
     classIdx = next;
-    render();
+    slideRender("y", dir);
   }
 
   attachSwipe(stage, { onHorizontal: goHorizontal, onVertical: goVertical });

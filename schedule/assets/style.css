@@ -508,6 +508,17 @@ button {
   background: var(--surface);
 }
 
+/* The outgoing snapshot a swipe slides off-screen while the live
+   .stage-inner (already holding the new content) slides in — see
+   slideRender in app.js. Positioned to sit exactly over the live element for
+   the moment both are on screen together. */
+.stage-inner--ghost {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform;
+}
+
 /* ------------------------------ Day grid ------------------------------ */
 /* Sized entirely in px computed from the stage-inner's real pixel box
    (see renderFitGrid in app.js) so the whole thing fits without scrolling. */
