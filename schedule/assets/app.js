@@ -1048,7 +1048,6 @@ async function initApp({ lockedSlug } = {}) {
   /* ------------------------------- Chrome menu ----------------------------- */
   const menuBtn = document.getElementById("chrome-menu-btn");
   const menuPanel = document.getElementById("chrome-menu-panel");
-  const menuItemHome = document.getElementById("menu-item-home");
   const menuItemTheme = document.getElementById("menu-item-theme");
   const menuItemPrint = document.getElementById("menu-item-print");
 
@@ -1091,12 +1090,6 @@ async function initApp({ lockedSlug } = {}) {
     // Same reason as the refresh button: the stage owns pointer gestures.
     menuBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
     menuPanel.addEventListener("pointerdown", (e) => e.stopPropagation());
-
-    if (menuItemHome) {
-      menuItemHome.addEventListener("click", () => {
-        window.location.href = "index.html";
-      });
-    }
 
     if (menuItemTheme) {
       menuItemTheme.addEventListener("click", () => {
