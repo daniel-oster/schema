@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-26",
+  "generated_at": "2026-08-27",
   "weeks": [
     {
       "year": 2026,
@@ -491,112 +491,9 @@
         ]
       },
       "lunch": {
-        "2026-W35": {
-          "1": [
-            {
-              "name": "Pasta och stekt vegokorv",
-              "vegetarian": true
-            },
-            {
-              "name": "Pasta och stekt falukorv",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Currydoftande vitkålspaj",
-              "vegetarian": true
-            },
-            {
-              "name": "Fiskgratäng med dillsås och potatis",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Vegetarisk Gulaschgryta och ris",
-              "vegetarian": true
-            },
-            {
-              "name": "Gulaschgryta och ris",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Pannkaka med sylt",
-              "vegetarian": true
-            },
-            {
-              "name": "Champinjonsoppa med sopptopp",
-              "vegetarian": true
-            }
-          ],
-          "5": [
-            {
-              "name": "Kockens val",
-              "vegetarian": false
-            }
-          ]
-        },
-        "2026-W36": {
-          "1": [
-            {
-              "name": "Potatisbullar med lingonsylt och rödbetshummus",
-              "vegetarian": true
-            },
-            {
-              "name": "Blodpudding med lingonsylt",
-              "vegetarian": false
-            },
-            {
-              "name": "Havslasagne",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Pasta och sojafärssås",
-              "vegetarian": true
-            },
-            {
-              "name": "Pasta och köttfärssås",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Kikärtsbiff med potatis och kall sås med vitlök",
-              "vegetarian": true
-            },
-            {
-              "name": "Hokipanett med potatis och citron- o dillsås",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": " Tacogratäng veggie och vitlökssås",
-              "vegetarian": true
-            },
-            {
-              "name": "Paj med broccoli och soltorkade tomater",
-              "vegetarian": true
-            }
-          ],
-          "5": [
-            {
-              "name": "Indisk vegansk gryta och bulgur",
-              "vegetarian": true
-            },
-            {
-              "name": "Indisk kycklinggryta och bulgur",
-              "vegetarian": false
-            }
-          ]
-        }
-      },
-      "lunch_note": "Varje dag serveras även grönsaksbuffé, bröd, mjölk och vatten. Smaklig måltid!\r\nMed reservation för eventuella ändringar."
+        "2026-W35": {},
+        "2026-W36": {}
+      }
     },
     {
       "name": "Tunets skola / TuS-5-26",
@@ -844,51 +741,6 @@
             "day_of_week": 5,
             "time_start": "12:10",
             "time_end": "13:30"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "11:20",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "11:30",
-            "time_end": "12:10",
-            "inferred": true
           }
         ],
         "2026-W36": [
@@ -1131,169 +983,13 @@
             "day_of_week": 5,
             "time_start": "12:10",
             "time_end": "13:30"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "11:20",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "11:30",
-            "time_end": "12:10",
-            "inferred": true
           }
         ]
       },
       "lunch": {
-        "2026-W35": {
-          "1": [
-            {
-              "name": "Alt 1: Korvstroganoff med ris eller bulgur",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Vegansk stroganof med ris eller bulgur",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Alt 1: Thaigryta med kyckling och kokt ris",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Thaigryta med ris",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Alt 1: Köttfärssås med pasta",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Färssås med pasta och rostade grönsaker",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Alt 1: Lasagnesoppa med bröd och hummus",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Alt 1: Stekt panerad fisk med dressing, klyftpotatis och bröd",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 1*: Kökets valfria gröna rätt",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Stekt vegetarisk schnitzel med dressing, klyftpotatis och bröd",
-              "vegetarian": false
-            }
-          ]
-        },
-        "2026-W36": {
-          "1": [
-            {
-              "name": "Alt 1: Pastasås med rökt kyckling ",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Vegfärs med pasta",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Alt 1: Kökets valfria fiskrätt",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 1*: Potatisbullar eller blodpudding med valfri sylt",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets valfria gröna rätt ",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Alt 1: Pannkaka med sylt",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Husets gröna pastagratäng",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Alt 1: Italiensk tomatsoppa med frötopping, bröd och hummus",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Alt 1: Chili con carne med ris eller bulgur ",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Chili sin carne med ris eller bulgur",
-              "vegetarian": false
-            }
-          ]
-        }
-      },
-      "lunch_note": "Varje dag serveras salladsbuffé, vatten, mjölk, bröd och smörgåsmargarin\r\n\r\nMed reservation för eventuella förändringar!"
+        "2026-W35": {},
+        "2026-W36": {}
+      }
     }
   ]
 }
