@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27",
+  "generated_at": "2026-08-28",
   "weeks": [
     {
       "year": 2026,
@@ -361,14 +361,6 @@
             "time_end": "10:20"
           },
           {
-            "subject": "Svenska som andraspråk, Nivå 1",
-            "teacher": "AKI06",
-            "room": "315",
-            "day_of_week": 3,
-            "time_start": "10:40",
-            "time_end": "12:00"
-          },
-          {
             "subject": "Svenska, Nivå 1",
             "teacher": "MSO33",
             "room": "P149",
@@ -407,14 +399,6 @@
             "day_of_week": 4,
             "time_start": "10:10",
             "time_end": "11:25"
-          },
-          {
-            "subject": "Svenska som andraspråk, Nivå 1",
-            "teacher": "AKI06",
-            "room": "315",
-            "day_of_week": 4,
-            "time_start": "10:10",
-            "time_end": "11:30"
           },
           {
             "subject": "Ö. steget före",
