@@ -1,21 +1,21 @@
 """Hämtar skolmatsedlar från Matilda Menu (menu.matildaplatform.com).
 
-Matilda Menu är en Next.js-app som server-renderar sidan
-`/meals/week/<distributor-id>` med all data inbäddad i ett
-`__NEXT_DATA__`-script-block. Den datan parsas härifrån istället för att
-skrapa synlig HTML.
+Sidan `/meals/week/<distributor-id>` är statiskt genererad och innehåller
+ingen matsedel i sin HTML — frontend hämtar veckans måltider klientsidan
+från `/api/menu`, samma JSON-endpoint som denna modul anropar direkt.
+`distributor-id` i schools.json/URL:en är `<id>_<skolnamn>` (för
+läsbarhet); API:et vill bara ha `<id>`, så suffixet klipps bort här,
+precis som sidans egen kod gör (`id.split("_")[0]`).
 """
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 
 import requests
 
 BASE_URL = "https://menu.matildaplatform.com"
-NEXT_DATA_RE = re.compile(r'__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
 
 class MatildaMenuError(Exception):
@@ -44,30 +44,33 @@ def iso_week_monday(year: int, week: int) -> date:
 def fetch_week_menu(distributor_id: str, monday: date) -> list[DayMenu]:
     """Hämtar matsedeln för veckan som börjar på `monday`."""
     sunday = monday + timedelta(days=6)
-    url = f"{BASE_URL}/meals/week/{distributor_id}"
-    params = {"startDate": monday.isoformat(), "endDate": sunday.isoformat()}
+    bare_id = distributor_id.split("_", 1)[0]
+    params = {
+        "distributorId": bare_id,
+        "startDate": monday.isoformat(),
+        "endDate": sunday.isoformat(),
+        "lang": "sv",
+    }
 
     try:
-        resp = requests.get(url, params=params, timeout=15)
+        resp = requests.get(f"{BASE_URL}/api/menu", params=params, timeout=15)
+    except requests.RequestException as exc:
+        raise MatildaMenuError(f"Kunde inte hämta matsedel: {exc}") from exc
+
+    if resp.status_code == 404:
+        raise MatildaMenuError(f"Hittade ingen matsedel för distributor-id {distributor_id!r} (kontrollera id:t).")
+    try:
         resp.raise_for_status()
     except requests.RequestException as exc:
         raise MatildaMenuError(f"Kunde inte hämta matsedel: {exc}") from exc
 
-    match = NEXT_DATA_RE.search(resp.text)
-    if not match:
-        raise MatildaMenuError("Kunde inte tolka svaret från Matilda Menu (hittade inte __NEXT_DATA__).")
-
     try:
-        data = json.loads(match.group(1))
-        page_props = data["props"]["pageProps"]
+        meals = resp.json()["meals"]
     except (json.JSONDecodeError, KeyError) as exc:
         raise MatildaMenuError(f"Oväntat svarsformat från Matilda Menu: {exc}") from exc
 
-    if "meals" not in page_props:
-        raise MatildaMenuError(f"Hittade ingen matsedel för distributor-id {distributor_id!r} (kontrollera id:t).")
-
     days = []
-    for meal in page_props["meals"]:
+    for meal in meals:
         meal_date = date.fromisoformat(meal["date"][:10])
         courses = [
             Course(
