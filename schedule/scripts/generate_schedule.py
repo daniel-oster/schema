@@ -168,6 +168,11 @@ def is_lunch_subject(subject: str) -> bool:
 def build_schedule(entries: list[dict], weeks_ahead: int) -> tuple[dict, bool]:
     today = date.today()
     base_year, base_week = iso_week_for(today)
+    # A week whose last school day (Friday) has already passed is over —
+    # skip straight to the next one instead of showing a stale week (e.g.
+    # when this runs on a weekend).
+    while week_range(base_year, base_week)[1] < today:
+        base_year, base_week = iso_week_for(week_range(base_year, base_week)[0] + timedelta(days=7))
 
     weeks: list[dict] = []
     week_keys: list[tuple[int, int]] = []
@@ -211,11 +216,13 @@ def build_schedule(entries: list[dict], weeks_ahead: int) -> tuple[dict, bool]:
 
         lunch_id = entry.get("lunch_id")
         if lunch_id:
-            lunch_weeks, lunch_note, lunch_ok = fetch_lunch_weeks(lunch_id, week_keys, name)
+            # A missing lunch menu (upstream outage, not yet published, ...)
+            # is not fatal: write the schedule without it rather than
+            # failing the whole build over food data.
+            lunch_weeks, lunch_note, _lunch_ok = fetch_lunch_weeks(lunch_id, week_keys, name)
             school_entry["lunch"] = lunch_weeks
             if lunch_note:
                 school_entry["lunch_note"] = lunch_note
-            ok = ok and lunch_ok
             add_inferred_lunch(week_lessons, lunch_weeks)
 
         schools.append(school_entry)
