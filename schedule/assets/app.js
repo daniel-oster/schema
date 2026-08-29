@@ -553,7 +553,6 @@ function buildLessonBlock(lesson, geom, ctx, dateIso) {
   // a grey bar doesn't say "lunch" — so the tag moves inline. It only earns
   // its place when the dish still fits on one line beside it: measured in the
   // tag's own mono face and letter-spacing, not as if it were body text.
-  let label = headline;
   let inlineTag = false;
   if (lunch && !plan.showTime && !plan.clipped) {
     const size = plan.step.size;
@@ -562,10 +561,6 @@ function buildLessonBlock(lesson, geom, ctx, dateIso) {
       textWidth(LUNCH_TAG, `${tagSize}px ${MONO_STACK}`) + LUNCH_TAG.length * tagSize * 0.08 + 6;
     const dishWidth = textWidth(headline, `700 ${size}px ${NARROW_STACK}`);
     inlineTag = dishWidth <= geom.width - BLOCK_PAD_H - tagWidth;
-  }
-  if (lunch && plan.clipped && label !== "Lunch") {
-    label = "Lunch";
-    plan = contentPlan(label, timeText, geom.width, geom.height);
   }
   const classes = ["lesson"];
   if (lunch) classes.push("is-lunch");
@@ -590,7 +585,7 @@ function buildLessonBlock(lesson, geom, ctx, dateIso) {
   });
 
   if (plan.showTime) block.appendChild(el("span", { class: "lesson__time", text: timeText }));
-  const subject = el("span", { class: "lesson__subject", text: label });
+  const subject = el("span", { class: "lesson__subject", text: headline });
   if (inlineTag) subject.prepend(el("span", { class: "lesson__tag", text: LUNCH_TAG }));
   block.appendChild(subject);
   if (plan.showMeta && meta) block.appendChild(el("span", { class: "lesson__meta", text: meta }));
