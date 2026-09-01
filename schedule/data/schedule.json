@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-01",
   "weeks": [
     {
       "year": 2026,
@@ -63,17 +63,17 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Samhällskunskap, Nivå 1b",
-            "teacher": "aan71",
+            "subject": "Engelska, Nivå 1",
+            "teacher": "MSO33",
             "room": "P151",
             "day_of_week": 2,
             "time_start": "08:30",
             "time_end": "09:45"
           },
           {
-            "subject": "Engelska, Nivå 1",
-            "teacher": "MSO33",
-            "room": "P149",
+            "subject": "Samhällskunskap, Nivå 1b",
+            "teacher": "aan71",
+            "room": "P151",
             "day_of_week": 2,
             "time_start": "10:00",
             "time_end": "11:15"
@@ -281,17 +281,17 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Samhällskunskap, Nivå 1b",
-            "teacher": "aan71",
+            "subject": "Engelska, Nivå 1",
+            "teacher": "MSO33",
             "room": "P151",
             "day_of_week": 2,
             "time_start": "08:30",
             "time_end": "09:45"
           },
           {
-            "subject": "Engelska, Nivå 1",
-            "teacher": "MSO33",
-            "room": "P149",
+            "subject": "Samhällskunskap, Nivå 1b",
+            "teacher": "aan71",
+            "room": "P151",
             "day_of_week": 2,
             "time_start": "10:00",
             "time_end": "11:15"
