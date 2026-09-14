@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13",
+  "generated_at": "2026-09-14",
   "weeks": [
     {
       "year": 2026,
@@ -23,7 +23,7 @@
       "weeks": {
         "2026-W38": [
           {
-            "subject": "Naturkunskap, Nivå 1b",
+            "subject": "NATU1B00X",
             "teacher": "HKA15",
             "room": "219",
             "day_of_week": 1,
@@ -39,7 +39,7 @@
             "time_end": "11:55"
           },
           {
-            "subject": "Idrott och hälsa, Nivå 1",
+            "subject": "IDRO1000X",
             "teacher": "DVU01",
             "room": "",
             "day_of_week": 1,
@@ -55,7 +55,7 @@
             "time_end": "14:05"
           },
           {
-            "subject": "Matematik, Nivå 1b",
+            "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "306",
             "day_of_week": 1,
@@ -63,7 +63,7 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Engelska, Nivå 1",
+            "subject": "ENGE1000X",
             "teacher": "MSO33",
             "room": "P151",
             "day_of_week": 2,
@@ -71,7 +71,7 @@
             "time_end": "09:45"
           },
           {
-            "subject": "Samhällskunskap, Nivå 1b",
+            "subject": "SAMH1B00X",
             "teacher": "aan71",
             "room": "P151",
             "day_of_week": 2,
@@ -79,7 +79,7 @@
             "time_end": "11:15"
           },
           {
-            "subject": "Naturkunskap, Nivå 1b",
+            "subject": "NATU1B00X",
             "teacher": "HKA15",
             "room": "219",
             "day_of_week": 2,
@@ -111,7 +111,7 @@
             "time_end": "18:00"
           },
           {
-            "subject": "Ljudproduktion, Nivå 1",
+            "subject": "LJUD1000X",
             "teacher": "EST36",
             "room": "944 (filmstudion)",
             "day_of_week": 3,
@@ -127,7 +127,7 @@
             "time_end": "10:20"
           },
           {
-            "subject": "Svenska, Nivå 1",
+            "subject": "SVEN1000X",
             "teacher": "MSO33",
             "room": "P149",
             "day_of_week": 3,
@@ -143,7 +143,7 @@
             "time_end": "12:55"
           },
           {
-            "subject": "Digitalt skapande, Nivå 1",
+            "subject": "DIGA1000X",
             "teacher": "EST36",
             "room": "936 (multimedia)",
             "day_of_week": 3,
@@ -159,7 +159,7 @@
             "time_end": "10:00"
           },
           {
-            "subject": "Svenska, Nivå 1",
+            "subject": "SVEN1000X",
             "teacher": "MSO33",
             "room": "219",
             "day_of_week": 4,
@@ -175,7 +175,7 @@
             "time_end": "11:50"
           },
           {
-            "subject": "Matematik, Nivå 1b",
+            "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "202",
             "day_of_week": 4,
@@ -191,7 +191,7 @@
             "time_end": "13:50"
           },
           {
-            "subject": "Idrott och hälsa, Nivå 1",
+            "subject": "IDRO1000X",
             "teacher": "DVU01",
             "room": "",
             "day_of_week": 4,
@@ -215,7 +215,7 @@
             "time_end": "17:00"
           },
           {
-            "subject": "Engelska, Nivå 1",
+            "subject": "ENGE1000X",
             "teacher": "MSO33",
             "room": "428",
             "day_of_week": 5,
@@ -231,7 +231,7 @@
             "time_end": "11:50"
           },
           {
-            "subject": "Film- och tv-produktion, Nivå 1",
+            "subject": "FILO1000X",
             "teacher": "MBE23",
             "room": "944 (filmstudion)",
             "day_of_week": 5,
@@ -241,7 +241,7 @@
         ],
         "2026-W39": [
           {
-            "subject": "Naturkunskap, Nivå 1b",
+            "subject": "NATU1B00X",
             "teacher": "HKA15",
             "room": "219",
             "day_of_week": 1,
@@ -257,7 +257,7 @@
             "time_end": "11:55"
           },
           {
-            "subject": "Idrott och hälsa, Nivå 1",
+            "subject": "IDRO1000X",
             "teacher": "DVU01",
             "room": "",
             "day_of_week": 1,
@@ -273,7 +273,7 @@
             "time_end": "14:05"
           },
           {
-            "subject": "Matematik, Nivå 1b",
+            "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "306",
             "day_of_week": 1,
@@ -281,7 +281,7 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Engelska, Nivå 1",
+            "subject": "ENGE1000X",
             "teacher": "MSO33",
             "room": "P151",
             "day_of_week": 2,
@@ -289,7 +289,7 @@
             "time_end": "09:45"
           },
           {
-            "subject": "Samhällskunskap, Nivå 1b",
+            "subject": "SAMH1B00X",
             "teacher": "aan71",
             "room": "P151",
             "day_of_week": 2,
@@ -297,7 +297,7 @@
             "time_end": "11:15"
           },
           {
-            "subject": "Naturkunskap, Nivå 1b",
+            "subject": "NATU1B00X",
             "teacher": "HKA15",
             "room": "219",
             "day_of_week": 2,
@@ -329,7 +329,7 @@
             "time_end": "18:00"
           },
           {
-            "subject": "Ljudproduktion, Nivå 1",
+            "subject": "LJUD1000X",
             "teacher": "EST36",
             "room": "944 (filmstudion)",
             "day_of_week": 3,
@@ -345,7 +345,7 @@
             "time_end": "10:20"
           },
           {
-            "subject": "Svenska, Nivå 1",
+            "subject": "SVEN1000X",
             "teacher": "MSO33",
             "room": "P149",
             "day_of_week": 3,
@@ -361,7 +361,7 @@
             "time_end": "12:55"
           },
           {
-            "subject": "Digitalt skapande, Nivå 1",
+            "subject": "DIGA1000X",
             "teacher": "EST36",
             "room": "936 (multimedia)",
             "day_of_week": 3,
@@ -369,7 +369,7 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Samhällskunskap, Nivå 1b",
+            "subject": "SAMH1B00X",
             "teacher": "aan71",
             "room": "P151",
             "day_of_week": 4,
@@ -377,7 +377,7 @@
             "time_end": "09:45"
           },
           {
-            "subject": "Svenska, Nivå 1",
+            "subject": "SVEN1000X",
             "teacher": "MSO33",
             "room": "219",
             "day_of_week": 4,
@@ -393,7 +393,7 @@
             "time_end": "11:50"
           },
           {
-            "subject": "Matematik, Nivå 1b",
+            "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "202",
             "day_of_week": 4,
@@ -409,7 +409,7 @@
             "time_end": "13:50"
           },
           {
-            "subject": "Idrott och hälsa, Nivå 1",
+            "subject": "IDRO1000X",
             "teacher": "DVU01",
             "room": "",
             "day_of_week": 4,
@@ -433,7 +433,7 @@
             "time_end": "17:00"
           },
           {
-            "subject": "Engelska, Nivå 1",
+            "subject": "ENGE1000X",
             "teacher": "MSO33",
             "room": "428",
             "day_of_week": 5,
@@ -449,7 +449,7 @@
             "time_end": "11:50"
           },
           {
-            "subject": "Film- och tv-produktion, Nivå 1",
+            "subject": "FILO1000X",
             "teacher": "MBE23",
             "room": "944 (filmstudion)",
             "day_of_week": 5,
