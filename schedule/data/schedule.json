@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-18",
+  "generated_at": "2026-09-19",
   "weeks": [
-    {
-      "year": 2026,
-      "week": 38,
-      "start_date": "2026-09-14",
-      "end_date": "2026-09-18"
-    },
     {
       "year": 2026,
       "week": 39,
       "start_date": "2026-09-21",
       "end_date": "2026-09-25"
+    },
+    {
+      "year": 2026,
+      "week": 40,
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-02"
     }
   ],
   "schools": [
@@ -21,7 +21,225 @@
       "class": "ES26ESM",
       "slug": "lugnetgymnasiet-es26esm",
       "weeks": {
-        "2026-W38": [
+        "2026-W39": [
+          {
+            "subject": "NATU1B00X",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 1,
+            "time_start": "09:50",
+            "time_end": "11:05"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "11:15",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "IDRO1000X",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "12:00",
+            "time_end": "13:15"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "13:45",
+            "time_end": "14:05"
+          },
+          {
+            "subject": "MATE1B00X",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "14:05",
+            "time_end": "15:25"
+          },
+          {
+            "subject": "ENGE1000X",
+            "teacher": "MSO33",
+            "room": "P151",
+            "day_of_week": 2,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "SAMH1B00X",
+            "teacher": "aan71",
+            "room": "P151",
+            "day_of_week": 2,
+            "time_start": "10:00",
+            "time_end": "11:15"
+          },
+          {
+            "subject": "NATU1B00X",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 2,
+            "time_start": "11:40",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "13:00",
+            "time_end": "13:40"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "LJUD1000X",
+            "teacher": "EST36",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "Mentorstid",
+            "teacher": "EST36,MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:20"
+          },
+          {
+            "subject": "SVEN1000X",
+            "teacher": "MSO33",
+            "room": "P149",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:15",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "DIGA1000X",
+            "teacher": "EST36",
+            "room": "936 (multimedia)",
+            "day_of_week": 3,
+            "time_start": "12:55",
+            "time_end": "14:30"
+          },
+          {
+            "subject": "SAMH1B00X",
+            "teacher": "aan71",
+            "room": "P151",
+            "day_of_week": 4,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "SVEN1000X",
+            "teacher": "MSO33",
+            "room": "219",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:25"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "MATE1B00X",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:50",
+            "time_end": "13:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "13:10",
+            "time_end": "13:50"
+          },
+          {
+            "subject": "IDRO1000X",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "14:15",
+            "time_end": "15:30"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "ENGE1000X",
+            "teacher": "MSO33",
+            "room": "428",
+            "day_of_week": 5,
+            "time_start": "09:55",
+            "time_end": "11:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:10",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "FILO1000X",
+            "teacher": "MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 5,
+            "time_start": "11:55",
+            "time_end": "14:25"
+          }
+        ],
+        "2026-W40": [
           {
             "subject": "NATU1B00X",
             "teacher": "HKA15",
@@ -151,224 +369,6 @@
             "time_end": "15:25"
           },
           {
-            "subject": "Skoljoggen",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "09:00",
-            "time_end": "10:00"
-          },
-          {
-            "subject": "SVEN1000X",
-            "teacher": "MSO33",
-            "room": "219",
-            "day_of_week": 4,
-            "time_start": "10:10",
-            "time_end": "11:25"
-          },
-          {
-            "subject": "Ö. steget före",
-            "teacher": "MLE06",
-            "room": "202",
-            "day_of_week": 4,
-            "time_start": "11:30",
-            "time_end": "11:50"
-          },
-          {
-            "subject": "MATE1B00X",
-            "teacher": "MLE06",
-            "room": "202",
-            "day_of_week": 4,
-            "time_start": "11:50",
-            "time_end": "13:10"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "13:10",
-            "time_end": "13:50"
-          },
-          {
-            "subject": "IDRO1000X",
-            "teacher": "DVU01",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "14:15",
-            "time_end": "15:30"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "MSO33",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "16:00",
-            "time_end": "17:00"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "16:00",
-            "time_end": "17:00"
-          },
-          {
-            "subject": "ENGE1000X",
-            "teacher": "MSO33",
-            "room": "428",
-            "day_of_week": 5,
-            "time_start": "09:55",
-            "time_end": "11:10"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "11:10",
-            "time_end": "11:50"
-          },
-          {
-            "subject": "FILO1000X",
-            "teacher": "MBE23",
-            "room": "944 (filmstudion)",
-            "day_of_week": 5,
-            "time_start": "11:55",
-            "time_end": "14:25"
-          }
-        ],
-        "2026-W39": [
-          {
-            "subject": "NATU1B00X",
-            "teacher": "HKA15",
-            "room": "219",
-            "day_of_week": 1,
-            "time_start": "09:50",
-            "time_end": "11:05"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "11:15",
-            "time_end": "11:55"
-          },
-          {
-            "subject": "IDRO1000X",
-            "teacher": "DVU01",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "12:00",
-            "time_end": "13:15"
-          },
-          {
-            "subject": "Ö. steget före",
-            "teacher": "MLE06",
-            "room": "306",
-            "day_of_week": 1,
-            "time_start": "13:45",
-            "time_end": "14:05"
-          },
-          {
-            "subject": "MATE1B00X",
-            "teacher": "MLE06",
-            "room": "306",
-            "day_of_week": 1,
-            "time_start": "14:05",
-            "time_end": "15:25"
-          },
-          {
-            "subject": "ENGE1000X",
-            "teacher": "MSO33",
-            "room": "P151",
-            "day_of_week": 2,
-            "time_start": "08:30",
-            "time_end": "09:45"
-          },
-          {
-            "subject": "SAMH1B00X",
-            "teacher": "aan71",
-            "room": "P151",
-            "day_of_week": 2,
-            "time_start": "10:00",
-            "time_end": "11:15"
-          },
-          {
-            "subject": "NATU1B00X",
-            "teacher": "HKA15",
-            "room": "219",
-            "day_of_week": 2,
-            "time_start": "11:40",
-            "time_end": "12:55"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "13:00",
-            "time_end": "13:40"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "MSO33",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "16:00",
-            "time_end": "18:00"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "16:00",
-            "time_end": "18:00"
-          },
-          {
-            "subject": "LJUD1000X",
-            "teacher": "EST36",
-            "room": "944 (filmstudion)",
-            "day_of_week": 3,
-            "time_start": "08:30",
-            "time_end": "09:45"
-          },
-          {
-            "subject": "Mentorstid",
-            "teacher": "EST36,MBE23",
-            "room": "944 (filmstudion)",
-            "day_of_week": 3,
-            "time_start": "09:50",
-            "time_end": "10:20"
-          },
-          {
-            "subject": "SVEN1000X",
-            "teacher": "MSO33",
-            "room": "P149",
-            "day_of_week": 3,
-            "time_start": "10:40",
-            "time_end": "11:55"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "12:15",
-            "time_end": "12:55"
-          },
-          {
-            "subject": "DIGA1000X",
-            "teacher": "EST36",
-            "room": "936 (multimedia)",
-            "day_of_week": 3,
-            "time_start": "12:55",
-            "time_end": "15:25"
-          },
-          {
             "subject": "SAMH1B00X",
             "teacher": "aan71",
             "room": "P151",
@@ -426,7 +426,7 @@
           },
           {
             "subject": "Studiestuga",
-            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02",
+            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
             "room": "",
             "day_of_week": 4,
             "time_start": "16:00",
@@ -459,54 +459,6 @@
         ]
       },
       "lunch": {
-        "2026-W38": {
-          "1": [
-            {
-              "name": "Broccolimedaljong med potatis och remouladsås",
-              "vegetarian": true
-            },
-            {
-              "name": "Alaska polloc med potatis och remouladsås",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Pasta och Klimatsmart Bolognese",
-              "vegetarian": true
-            },
-            {
-              "name": "Blomkål- och broccoligratäng serveras med pasta",
-              "vegetarian": true
-            }
-          ],
-          "3": [
-            {
-              "name": "Vegetariska nuggets med bulgur och currysås ",
-              "vegetarian": true
-            },
-            {
-              "name": "Chicken kebab med bulgur och currysås",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Kockens val",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Kryddig kebabgryta av ekologisk ärta och bondböna med bulgur",
-              "vegetarian": true
-            },
-            {
-              "name": "Kebabgryta och ris",
-              "vegetarian": false
-            }
-          ]
-        },
         "2026-W39": {
           "1": [
             {
@@ -558,6 +510,66 @@
               "vegetarian": false
             }
           ]
+        },
+        "2026-W40": {
+          "1": [
+            {
+              "name": "Potatisbullar med lingonsylt och rödbetshummus",
+              "vegetarian": true
+            },
+            {
+              "name": "Currydoftande vitkålspaj",
+              "vegetarian": true
+            },
+            {
+              "name": "Blodpudding med lingonsylt",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Pasta och sojafärssås",
+              "vegetarian": true
+            },
+            {
+              "name": "Pasta och köttfärssås",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Grönsaksburgare med potatis och kryddgrön sås",
+              "vegetarian": true
+            },
+            {
+              "name": "Hokipanett med potatis och kryddgrön sås",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Vegetariska världsdagen",
+              "vegetarian": false
+            },
+            {
+              "name": " Tacogratäng veggie och vitlökssås",
+              "vegetarian": true
+            },
+            {
+              "name": "Paj med broccoli och soltorkade tomater",
+              "vegetarian": true
+            }
+          ],
+          "5": [
+            {
+              "name": "Vegogryta med curry- och mango chutney serveras med bulgur",
+              "vegetarian": true
+            },
+            {
+              "name": "Kycklinggryta med curry- och mango chutney serveras med bulgur",
+              "vegetarian": false
+            }
+          ]
         }
       },
       "lunch_note": "Varje dag serveras även grönsaksbuffé, bröd, mjölk och vatten. Smaklig måltid!\r\nMed reservation för eventuella ändringar."
@@ -568,7 +580,7 @@
       "class": "TuS-5-26",
       "slug": "tunets-skola-tus-5-26",
       "weeks": {
-        "2026-W38": [
+        "2026-W39": [
           {
             "subject": "SV",
             "teacher": "DTI",
@@ -855,7 +867,7 @@
             "inferred": true
           }
         ],
-        "2026-W39": [
+        "2026-W40": [
           {
             "subject": "SV",
             "teacher": "DTI",
@@ -1144,58 +1156,6 @@
         ]
       },
       "lunch": {
-        "2026-W38": {
-          "1": [
-            {
-              "name": "Alt 1: Kycklinggryta med Mangochutney samt kokt ris",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Grönsaksrätt med Mangochutney samt kokt ris",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Alt 1: Kebab med tomat samt klyftpotatis och vitlökssås",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Vegankebab med klyftpotatis och vitlökssås",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Alt 1: Köttfärsröra med pasta och dressing",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Vegfärs med pasta",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Alt 1: Kökets soppa med mjukt bröd och ost",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Alt 1: Kökets buffé",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets buffé",
-              "vegetarian": false
-            }
-          ]
-        },
         "2026-W39": {
           "1": [
             {
@@ -1248,6 +1208,62 @@
             },
             {
               "name": "Alt 2: Färssås med pasta och rostade grönsaker",
+              "vegetarian": false
+            }
+          ]
+        },
+        "2026-W40": {
+          "1": [
+            {
+              "name": "Alt 1: Kebabgryta med kokt ris eller bulgur",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Kebabkryddad veggryta med ris eller bulgur",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Alt 1: Kökets nyhet",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 1*: Potatisbullar eller blodpudding med valfri sylt",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Nudelsallad",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Alt 1: Elevens val",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Elevens val",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Alt 1: Vegetariska världsdagen soppa med sopptopp, mjukt bröd och pålägg",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegetariska världsdagen soppa med sopptopp, mjukt bröd och pålägg",
+              "vegetarian": false
+            }
+          ],
+          "5": [
+            {
+              "name": "Alt 1: Vegetarisk buffé med bröd",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegetarisk buffé med bröd",
               "vegetarian": false
             }
           ]
