@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23",
+  "generated_at": "2026-09-24",
   "weeks": [
     {
       "year": 2026,
@@ -172,23 +172,23 @@
             "room": "202",
             "day_of_week": 4,
             "time_start": "11:30",
-            "time_end": "11:50"
+            "time_end": "11:45"
           },
           {
             "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "202",
             "day_of_week": 4,
-            "time_start": "11:50",
-            "time_end": "13:10"
+            "time_start": "11:45",
+            "time_end": "13:05"
           },
           {
             "subject": "Lunch",
             "teacher": "",
             "room": "",
             "day_of_week": 4,
-            "time_start": "13:10",
-            "time_end": "13:50"
+            "time_start": "13:05",
+            "time_end": "13:45"
           },
           {
             "subject": "IDRO1000X",
@@ -270,15 +270,15 @@
             "room": "306",
             "day_of_week": 1,
             "time_start": "13:45",
-            "time_end": "14:05"
+            "time_end": "14:10"
           },
           {
             "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "306",
             "day_of_week": 1,
-            "time_start": "14:05",
-            "time_end": "15:25"
+            "time_start": "14:10",
+            "time_end": "15:30"
           },
           {
             "subject": "ENGE1000X",
@@ -390,23 +390,23 @@
             "room": "202",
             "day_of_week": 4,
             "time_start": "11:30",
-            "time_end": "11:50"
+            "time_end": "11:45"
           },
           {
             "subject": "MATE1B00X",
             "teacher": "MLE06",
             "room": "202",
             "day_of_week": 4,
-            "time_start": "11:50",
-            "time_end": "13:10"
+            "time_start": "11:45",
+            "time_end": "13:05"
           },
           {
             "subject": "Lunch",
             "teacher": "",
             "room": "",
             "day_of_week": 4,
-            "time_start": "13:10",
-            "time_end": "13:50"
+            "time_start": "13:05",
+            "time_end": "13:45"
           },
           {
             "subject": "IDRO1000X",
@@ -1225,15 +1225,15 @@
           ],
           "2": [
             {
-              "name": "Alt 1: Kökets nyhet",
+              "name": "Alt 1: Internationella svinndagen",
               "vegetarian": false
             },
             {
-              "name": "Alt 1*: Potatisbullar eller blodpudding med valfri sylt",
+              "name": "Alt 1*: Internationella svinndagen",
               "vegetarian": false
             },
             {
-              "name": "Alt 2: Nudelsallad",
+              "name": "Alt 2: Internationella svinndagen",
               "vegetarian": false
             }
           ],
