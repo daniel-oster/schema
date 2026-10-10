@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-09",
+  "generated_at": "2026-10-10",
   "weeks": [
-    {
-      "year": 2026,
-      "week": 41,
-      "start_date": "2026-10-05",
-      "end_date": "2026-10-09"
-    },
     {
       "year": 2026,
       "week": 42,
       "start_date": "2026-10-12",
       "end_date": "2026-10-16"
+    },
+    {
+      "year": 2026,
+      "week": 43,
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-23"
     }
   ],
   "schools": [
@@ -21,224 +21,6 @@
       "class": "ES26ESM",
       "slug": "lugnetgymnasiet-es26esm",
       "weeks": {
-        "2026-W41": [
-          {
-            "subject": "NATU1B00X",
-            "teacher": "HKA15",
-            "room": "219",
-            "day_of_week": 1,
-            "time_start": "09:50",
-            "time_end": "11:05"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "11:15",
-            "time_end": "11:55"
-          },
-          {
-            "subject": "IDRO1000X",
-            "teacher": "DVU01",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "12:00",
-            "time_end": "13:15"
-          },
-          {
-            "subject": "Ö. steget före",
-            "teacher": "MLE06",
-            "room": "306",
-            "day_of_week": 1,
-            "time_start": "13:45",
-            "time_end": "14:10"
-          },
-          {
-            "subject": "MATE1B00X",
-            "teacher": "MLE06",
-            "room": "306",
-            "day_of_week": 1,
-            "time_start": "14:10",
-            "time_end": "15:30"
-          },
-          {
-            "subject": "ENGE1000X",
-            "teacher": "MSO33",
-            "room": "P151",
-            "day_of_week": 2,
-            "time_start": "08:30",
-            "time_end": "09:45"
-          },
-          {
-            "subject": "SAMH1B00X",
-            "teacher": "aan71",
-            "room": "P151",
-            "day_of_week": 2,
-            "time_start": "10:00",
-            "time_end": "11:15"
-          },
-          {
-            "subject": "NATU1B00X",
-            "teacher": "HKA15",
-            "room": "219",
-            "day_of_week": 2,
-            "time_start": "11:40",
-            "time_end": "12:55"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "13:00",
-            "time_end": "13:40"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "MSO33",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "16:00",
-            "time_end": "18:00"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "16:00",
-            "time_end": "18:00"
-          },
-          {
-            "subject": "LJUD1000X",
-            "teacher": "EST36",
-            "room": "944 (filmstudion)",
-            "day_of_week": 3,
-            "time_start": "08:30",
-            "time_end": "09:45"
-          },
-          {
-            "subject": "Mentorstid",
-            "teacher": "EST36,MBE23",
-            "room": "944 (filmstudion)",
-            "day_of_week": 3,
-            "time_start": "09:50",
-            "time_end": "10:20"
-          },
-          {
-            "subject": "SVEN1000X",
-            "teacher": "MSO33",
-            "room": "P149",
-            "day_of_week": 3,
-            "time_start": "10:40",
-            "time_end": "11:55"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "12:15",
-            "time_end": "12:55"
-          },
-          {
-            "subject": "DIGA1000X",
-            "teacher": "EST36",
-            "room": "936 (multimedia)",
-            "day_of_week": 3,
-            "time_start": "12:55",
-            "time_end": "15:25"
-          },
-          {
-            "subject": "SAMH1B00X",
-            "teacher": "aan71",
-            "room": "P151",
-            "day_of_week": 4,
-            "time_start": "08:30",
-            "time_end": "09:45"
-          },
-          {
-            "subject": "SVEN1000X",
-            "teacher": "MSO33",
-            "room": "219",
-            "day_of_week": 4,
-            "time_start": "10:10",
-            "time_end": "11:25"
-          },
-          {
-            "subject": "Ö. steget före",
-            "teacher": "MLE06",
-            "room": "202",
-            "day_of_week": 4,
-            "time_start": "11:30",
-            "time_end": "11:45"
-          },
-          {
-            "subject": "MATE1B00X",
-            "teacher": "MLE06",
-            "room": "202",
-            "day_of_week": 4,
-            "time_start": "11:45",
-            "time_end": "13:05"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "13:05",
-            "time_end": "13:45"
-          },
-          {
-            "subject": "IDRO1000X",
-            "teacher": "DVU01",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "14:15",
-            "time_end": "15:30"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "MSO33",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "16:00",
-            "time_end": "17:00"
-          },
-          {
-            "subject": "Studiestuga",
-            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "16:00",
-            "time_end": "17:00"
-          },
-          {
-            "subject": "ENGE1000X",
-            "teacher": "MSO33",
-            "room": "428",
-            "day_of_week": 5,
-            "time_start": "09:55",
-            "time_end": "11:10"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "11:10",
-            "time_end": "11:50"
-          },
-          {
-            "subject": "FILO1000X",
-            "teacher": "MBE23",
-            "room": "944 (filmstudion)",
-            "day_of_week": 5,
-            "time_start": "11:55",
-            "time_end": "14:25"
-          }
-        ],
         "2026-W42": [
           {
             "subject": "NATU1B00X",
@@ -456,57 +238,219 @@
             "time_start": "11:55",
             "time_end": "14:25"
           }
+        ],
+        "2026-W43": [
+          {
+            "subject": "NATU1B00X",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 1,
+            "time_start": "09:50",
+            "time_end": "11:05"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "11:15",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "IDRO1000X",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "12:00",
+            "time_end": "13:15"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "13:45",
+            "time_end": "14:10"
+          },
+          {
+            "subject": "MATE1B00X",
+            "teacher": "MLE06",
+            "room": "306",
+            "day_of_week": 1,
+            "time_start": "14:10",
+            "time_end": "15:30"
+          },
+          {
+            "subject": "Brytdag",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "08:30",
+            "time_end": "12:30"
+          },
+          {
+            "subject": "NATU1B00X",
+            "teacher": "HKA15",
+            "room": "219",
+            "day_of_week": 2,
+            "time_start": "12:30",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "13:00",
+            "time_end": "13:40"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "EMA38,EGU24,SPE02,EAB02,JER46,SWI07,LLA37",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "16:00",
+            "time_end": "18:00"
+          },
+          {
+            "subject": "LJUD1000X",
+            "teacher": "EST36",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "Mentorstid",
+            "teacher": "EST36,MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:20"
+          },
+          {
+            "subject": "SVEN1000X",
+            "teacher": "MSO33",
+            "room": "P149",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:55"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:15",
+            "time_end": "12:55"
+          },
+          {
+            "subject": "DIGA1000X",
+            "teacher": "EST36",
+            "room": "936 (multimedia)",
+            "day_of_week": 3,
+            "time_start": "12:55",
+            "time_end": "15:25"
+          },
+          {
+            "subject": "SAMH1B00X",
+            "teacher": "aan71",
+            "room": "P151",
+            "day_of_week": 4,
+            "time_start": "08:30",
+            "time_end": "09:45"
+          },
+          {
+            "subject": "SVEN1000X",
+            "teacher": "MSO33",
+            "room": "219",
+            "day_of_week": 4,
+            "time_start": "10:10",
+            "time_end": "11:25"
+          },
+          {
+            "subject": "Ö. steget före",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "11:45"
+          },
+          {
+            "subject": "MATE1B00X",
+            "teacher": "MLE06",
+            "room": "202",
+            "day_of_week": 4,
+            "time_start": "11:45",
+            "time_end": "13:05"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "13:05",
+            "time_end": "13:45"
+          },
+          {
+            "subject": "IDRO1000X",
+            "teacher": "DVU01",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "14:15",
+            "time_end": "15:30"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "MSO33",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "Studiestuga",
+            "teacher": "UDA08,BSJ03,MGR36,OMA03,MLE06,VOS02",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "16:00",
+            "time_end": "17:00"
+          },
+          {
+            "subject": "ENGE1000X",
+            "teacher": "MSO33",
+            "room": "428",
+            "day_of_week": 5,
+            "time_start": "09:55",
+            "time_end": "11:10"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:10",
+            "time_end": "11:50"
+          },
+          {
+            "subject": "FILO1000X",
+            "teacher": "MBE23",
+            "room": "944 (filmstudion)",
+            "day_of_week": 5,
+            "time_start": "11:55",
+            "time_end": "14:25"
+          }
         ]
       },
       "lunch": {
-        "2026-W41": {
-          "1": [
-            {
-              "name": "Pasta och vegobullar ",
-              "vegetarian": true
-            },
-            {
-              "name": "Pasta och köttbullar",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Wraps med vegofärsfyllning och bulgur",
-              "vegetarian": true
-            },
-            {
-              "name": "Ugnspannkaka med oliver och salladsost",
-              "vegetarian": true
-            }
-          ],
-          "3": [
-            {
-              "name": "Raggmunk med lingonsylt alternativ rödbetshummus",
-              "vegetarian": true
-            },
-            {
-              "name": "Fiskgratäng med krämig ostsås och potatis",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Kockens val",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Vegetarisk schnitzel och potatisgratäng",
-              "vegetarian": true
-            },
-            {
-              "name": "Vegokorv med potatisgratäng",
-              "vegetarian": true
-            }
-          ]
-        },
         "2026-W42": {
           "1": [
             {
@@ -562,6 +506,58 @@
               "vegetarian": false
             }
           ]
+        },
+        "2026-W43": {
+          "1": [
+            {
+              "name": "Pasta och stekt vegokorv",
+              "vegetarian": true
+            },
+            {
+              "name": "Pasta och stekt falukorv",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Currydoftande vitkålspaj",
+              "vegetarian": true
+            },
+            {
+              "name": "Fiskgratäng med dillsås och potatis",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Chili sin carne och ris",
+              "vegetarian": true
+            },
+            {
+              "name": "Chili con carne och ris",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Pannkaka med sylt",
+              "vegetarian": true
+            },
+            {
+              "name": "Linssoppa med sopptopp",
+              "vegetarian": true
+            }
+          ],
+          "5": [
+            {
+              "name": "Lasagnettgratäng vego",
+              "vegetarian": true
+            },
+            {
+              "name": "Vegetarisk frestelse och smörgåsgurka",
+              "vegetarian": true
+            }
+          ]
         }
       },
       "lunch_note": "Varje dag serveras även grönsaksbuffé, bröd, mjölk och vatten. Smaklig måltid!\r\nMed reservation för eventuella ändringar."
@@ -572,293 +568,6 @@
       "class": "TuS-5-26",
       "slug": "tunets-skola-tus-5-26",
       "weeks": {
-        "2026-W41": [
-          {
-            "subject": "SV",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "08:00",
-            "time_end": "09:20"
-          },
-          {
-            "subject": "EN",
-            "teacher": "ÅER",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "09:40",
-            "time_end": "10:20"
-          },
-          {
-            "subject": "IDH",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "10:25",
-            "time_end": "11:20"
-          },
-          {
-            "subject": "NO",
-            "teacher": "CMF",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "12:20",
-            "time_end": "13:30"
-          },
-          {
-            "subject": "BL",
-            "teacher": "CMF",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "14:00",
-            "time_end": "14:45"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI,CMF",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "08:00",
-            "time_end": "09:00"
-          },
-          {
-            "subject": "NO",
-            "teacher": "CMF,DTI",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "09:00",
-            "time_end": "09:20"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "09:40",
-            "time_end": "09:50"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "09:50",
-            "time_end": "10:40"
-          },
-          {
-            "subject": "EN",
-            "teacher": "ÅER",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "09:50",
-            "time_end": "10:40"
-          },
-          {
-            "subject": "EN",
-            "teacher": "ÅER",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "10:40",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "10:40",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "SO",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "12:20",
-            "time_end": "13:30"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "08:00",
-            "time_end": "08:20"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL,DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "08:20",
-            "time_end": "09:20"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "09:40",
-            "time_end": "09:50"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "09:50",
-            "time_end": "10:40"
-          },
-          {
-            "subject": "EN",
-            "teacher": "ÅER",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "09:50",
-            "time_end": "10:40"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "10:40",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "EN",
-            "teacher": "ÅER",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "10:40",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "SO",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "12:20",
-            "time_end": "13:30"
-          },
-          {
-            "subject": "SV",
-            "teacher": "UOL",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "08:00",
-            "time_end": "08:20"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL,DTI",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "08:20",
-            "time_end": "09:20"
-          },
-          {
-            "subject": "SO",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "09:40",
-            "time_end": "10:45"
-          },
-          {
-            "subject": "MU",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "10:45",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "SV",
-            "teacher": "DTI,CMF",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "12:20",
-            "time_end": "13:30"
-          },
-          {
-            "subject": "NO",
-            "teacher": "CMF",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "08:00",
-            "time_end": "09:10"
-          },
-          {
-            "subject": "MA",
-            "teacher": "UOL",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "09:40",
-            "time_end": "10:40"
-          },
-          {
-            "subject": "IDH",
-            "teacher": "DTI",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "10:50",
-            "time_end": "11:30"
-          },
-          {
-            "subject": "SL",
-            "teacher": "ATå,NFr",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "12:10",
-            "time_end": "13:30"
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 1,
-            "time_start": "11:20",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 2,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 3,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 4,
-            "time_start": "11:30",
-            "time_end": "12:20",
-            "inferred": true
-          },
-          {
-            "subject": "Lunch",
-            "teacher": "",
-            "room": "",
-            "day_of_week": 5,
-            "time_start": "11:30",
-            "time_end": "12:10",
-            "inferred": true
-          }
-        ],
         "2026-W42": [
           {
             "subject": "SV",
@@ -1145,65 +854,296 @@
             "time_end": "12:10",
             "inferred": true
           }
+        ],
+        "2026-W43": [
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "08:00",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "09:40",
+            "time_end": "10:20"
+          },
+          {
+            "subject": "IDH",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "10:25",
+            "time_end": "11:20"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "BL",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "14:00",
+            "time_end": "14:45"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI,CMF",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "08:00",
+            "time_end": "09:00"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF,DTI",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:00",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:40",
+            "time_end": "09:50"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:40",
+            "time_end": "09:50"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "09:50",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "EN",
+            "teacher": "ÅER",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "10:40",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:00",
+            "time_end": "08:20"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL,DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "08:20",
+            "time_end": "09:20"
+          },
+          {
+            "subject": "SO",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "09:40",
+            "time_end": "10:45"
+          },
+          {
+            "subject": "MU",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "10:45",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SV",
+            "teacher": "DTI,CMF",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "12:20",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "NO",
+            "teacher": "CMF",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "08:00",
+            "time_end": "09:10"
+          },
+          {
+            "subject": "MA",
+            "teacher": "UOL",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "09:40",
+            "time_end": "10:40"
+          },
+          {
+            "subject": "IDH",
+            "teacher": "DTI",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "10:50",
+            "time_end": "11:30"
+          },
+          {
+            "subject": "SL",
+            "teacher": "ATå,NFr",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "12:10",
+            "time_end": "13:30"
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 1,
+            "time_start": "11:20",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 2,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 3,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 4,
+            "time_start": "11:30",
+            "time_end": "12:20",
+            "inferred": true
+          },
+          {
+            "subject": "Lunch",
+            "teacher": "",
+            "room": "",
+            "day_of_week": 5,
+            "time_start": "11:30",
+            "time_end": "12:10",
+            "inferred": true
+          }
         ]
       },
       "lunch": {
-        "2026-W41": {
-          "1": [
-            {
-              "name": "Alt 1: Korvstroganoff med ris eller bulgur",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Vegansk stroganof med ris eller bulgur",
-              "vegetarian": false
-            }
-          ],
-          "2": [
-            {
-              "name": "Alt 1: Thaigryta med kyckling och kokt ris",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Thaigryta med ris",
-              "vegetarian": false
-            }
-          ],
-          "3": [
-            {
-              "name": "Alt 1: Köttfärssås med pasta",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Färssås med pasta och rostade grönsaker",
-              "vegetarian": false
-            }
-          ],
-          "4": [
-            {
-              "name": "Alt 1: Lasagnesoppa med bröd och ost",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
-              "vegetarian": false
-            }
-          ],
-          "5": [
-            {
-              "name": "Alt 1: Stekt panerad fisk med dressing, klyftpotatis och bröd",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 1*: Kökets valfria gröna rätt",
-              "vegetarian": false
-            },
-            {
-              "name": "Alt 2: Stekt vegetarisk schnitzel med dressing, klyftpotatis och bröd",
-              "vegetarian": false
-            }
-          ]
-        },
         "2026-W42": {
           "1": [
             {
@@ -1256,6 +1196,62 @@
             },
             {
               "name": "Alt 2: Chili sin carne med ris eller bulgur",
+              "vegetarian": false
+            }
+          ]
+        },
+        "2026-W43": {
+          "1": [
+            {
+              "name": "Alt 1: Kycklingköttbullar med brunsås och kokt potatis",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegobullar/biffar med gräddsås och kokt potatis",
+              "vegetarian": false
+            }
+          ],
+          "2": [
+            {
+              "name": "Alt 1: Stekt panerad fisk med kall sås och ugnsrostad potatis",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 1*: Potatisbullar med sylt",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Vegetarisk pastasallad med kall sås",
+              "vegetarian": false
+            }
+          ],
+          "3": [
+            {
+              "name": "Alt 1: Elevens val",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Elevens val",
+              "vegetarian": false
+            }
+          ],
+          "4": [
+            {
+              "name": "Alt 1: Minestronesoppa med mjuk bröd och ost",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Kökets valfria soppa med mjukt bröd och pålägg",
+              "vegetarian": false
+            }
+          ],
+          "5": [
+            {
+              "name": "Alt 1: Lasagne med tomat och ost",
+              "vegetarian": false
+            },
+            {
+              "name": "Alt 2: Svamplasagne med rostade kikärtor",
               "vegetarian": false
             }
           ]
