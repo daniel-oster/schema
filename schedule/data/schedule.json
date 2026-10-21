@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-20",
+  "generated_at": "2026-10-21",
   "weeks": [
     {
       "year": 2026,
@@ -69,14 +69,6 @@
             "day_of_week": 2,
             "time_start": "08:30",
             "time_end": "12:30"
-          },
-          {
-            "subject": "NATU1B00X",
-            "teacher": "HKA15",
-            "room": "219",
-            "day_of_week": 2,
-            "time_start": "12:30",
-            "time_end": "12:55"
           },
           {
             "subject": "Lunch",
