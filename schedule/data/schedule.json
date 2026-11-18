@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-17",
+  "generated_at": "2026-11-18",
   "weeks": [
     {
       "year": 2026,
@@ -117,14 +117,6 @@
             "day_of_week": 3,
             "time_start": "08:30",
             "time_end": "09:45"
-          },
-          {
-            "subject": "Mentorstid",
-            "teacher": "EST36,MBE23",
-            "room": "944 (filmstudion)",
-            "day_of_week": 3,
-            "time_start": "09:50",
-            "time_end": "10:20"
           },
           {
             "subject": "SVEN1000X",
